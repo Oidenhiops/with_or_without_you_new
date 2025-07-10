@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91ef4e234a16f9e4788bff02d4c3247d, type: 3}
+  m_Name: HealPotion
+  m_EditorClassIdentifier: 
+  objectId: 2
+  typeObject: 1
+  statistics:
+  - typeStatistics: 1
+    baseValue: 20
+    buffValue: 0
+    objectValue: 0
+    currentValue: 0
+    maxValue: 0
+  isPorcent: 1
+  canStack: 1
+  maxStack: 5
+  objectSprite: {fileID: 21300000, guid: 17cb1ee2462cbe74e9a9d074af0f9335, type: 3}
+  objectInstance: {fileID: 6912661780190433456, guid: 419f23047e15896499de3e197e2952fe,
+    type: 3}
+  objectInstanceForUse: {fileID: 0}
+  colorEffect: {r: 1, g: 0, b: 0, a: 1}
+  effectAudio: {fileID: 8300000, guid: 3227ae164cdfb4346a0a64a75cbab6b0, type: 3}
+  isOnlyForMonsters: 0

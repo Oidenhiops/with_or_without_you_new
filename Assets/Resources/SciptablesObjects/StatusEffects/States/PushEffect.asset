@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92648e2aae4d8174fb0e4c189dc5b093, type: 3}
+  m_Name: PushEffect
+  m_EditorClassIdentifier: 
+  typeStatusEffect: 1
+  statusEffectInstance: {fileID: 5782676205259397931, guid: 46d808f68fd210e4b84b6a62363a20fd,
+    type: 3}
+  maxAccumulations: 1
+  timePerAcumulation: 0.6

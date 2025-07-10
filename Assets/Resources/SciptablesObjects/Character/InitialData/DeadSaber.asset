@@ -1,0 +1,159 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49e3971aa8d9bc34381fe79816550a9a, type: 3}
+  m_Name: DeadSaber
+  m_EditorClassIdentifier: 
+  isHuman: 0
+  atlas: {fileID: 2800000, guid: f9b4a6675f07119489ecf11c733a09a5, type: 3}
+  atlasHand: {fileID: 0}
+  characterInfo:
+    characterScripts:
+      managementCharacterHud: {fileID: 0}
+      managementCharacterModelDirection: {fileID: 0}
+      managementCharacterObjects: {fileID: 0}
+      managementCharacterSkills: {fileID: 0}
+      managementPlayerCamera: {fileID: 0}
+      managementCharacterInteract: {fileID: 0}
+      characterAttack: {fileID: 0}
+      characterAnimations: {fileID: 0}
+      managementStatusEffect: {fileID: 0}
+      dissolve: {fileID: 0}
+      owner: {fileID: 0}
+    initialData: {fileID: 11400000}
+    isPlayer: 0
+    isActive: 0
+    rb: {fileID: 0}
+    characterStatistics:
+      _serializedList:
+      - Key: 1
+        Value:
+          typeStatistics: 1
+          baseValue: 210
+          buffValue: 0
+          objectValue: 0
+          currentValue: 0
+          maxValue: 0
+      - Key: 3
+        Value:
+          typeStatistics: 3
+          baseValue: 100
+          buffValue: 0
+          objectValue: 0
+          currentValue: 0
+          maxValue: 0
+      - Key: 2
+        Value:
+          typeStatistics: 2
+          baseValue: 50
+          buffValue: 0
+          objectValue: 0
+          currentValue: 0
+          maxValue: 0
+      - Key: 4
+        Value:
+          typeStatistics: 4
+          baseValue: 160
+          buffValue: 0
+          objectValue: 0
+          currentValue: 0
+          maxValue: 0
+      - Key: 5
+        Value:
+          typeStatistics: 5
+          baseValue: 1
+          buffValue: 0
+          objectValue: 0
+          currentValue: 0
+          maxValue: 0
+      - Key: 6
+        Value:
+          typeStatistics: 6
+          baseValue: 60
+          buffValue: 0
+          objectValue: 0
+          currentValue: 0
+          maxValue: 0
+      - Key: 7
+        Value:
+          typeStatistics: 7
+          baseValue: 90
+          buffValue: 0
+          objectValue: 0
+          currentValue: 0
+          maxValue: 0
+      - Key: 8
+        Value:
+          typeStatistics: 8
+          baseValue: 60
+          buffValue: 0
+          objectValue: 0
+          currentValue: 0
+          maxValue: 0
+      - Key: 9
+        Value:
+          typeStatistics: 9
+          baseValue: 3
+          buffValue: 0
+          objectValue: 0
+          currentValue: 0
+          maxValue: 0
+      - Key: 10
+        Value:
+          typeStatistics: 10
+          baseValue: 5
+          buffValue: 0
+          objectValue: 0
+          currentValue: 0
+          maxValue: 0
+      - Key: 11
+        Value:
+          typeStatistics: 11
+          baseValue: 50
+          buffValue: 0
+          objectValue: 0
+          currentValue: 0
+          maxValue: 0
+    colorBlood: {r: 0.3679245, g: 0, b: 0, a: 1}
+  skills:
+  - idSkill: 0
+    skillData: {fileID: 11400000, guid: 79155538a9ecbf24bb0076ced960536d, type: 2}
+    cdInfo:
+      cd: 0
+      currentCD: 0
+  - idSkill: 0
+    skillData: {fileID: 11400000, guid: b5b6ccb435b9db14aa8e7d20cc84bdc8, type: 2}
+    cdInfo:
+      cd: 0
+      currentCD: 0
+  objects:
+  - objectId: 0
+    objectData: {fileID: 11400000, guid: d546527188dda144ca27cc7c010df535, type: 2}
+    amount: 1
+    isUsingItem: 0
+    objectInstance: {fileID: 0}
+  - objectId: 0
+    objectData: {fileID: 11400000, guid: 98703881d33348944bb44751e8883784, type: 2}
+    amount: 1
+    isUsingItem: 0
+    objectInstance: {fileID: 0}
+  - objectId: 0
+    objectData: {fileID: 11400000, guid: 95967879a05ec8146bc4782b8372551c, type: 2}
+    amount: 3
+    isUsingItem: 0
+    objectInstance: {fileID: 0}
+  - objectId: 0
+    objectData: {fileID: 11400000, guid: 5a9e6ded5bbba364bb9bb2d6cab4e598, type: 2}
+    amount: 2
+    isUsingItem: 0
+    objectInstance: {fileID: 0}
+  characterAnimations: {fileID: 11400000, guid: 447b01224c05c1c4dada88137ac67bff,
+    type: 2}

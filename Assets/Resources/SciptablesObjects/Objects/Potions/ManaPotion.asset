@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91ef4e234a16f9e4788bff02d4c3247d, type: 3}
+  m_Name: ManaPotion
+  m_EditorClassIdentifier: 
+  objectId: 3
+  typeObject: 1
+  statistics:
+  - typeStatistics: 2
+    baseValue: 20
+    buffValue: 0
+    objectValue: 0
+    currentValue: 0
+    maxValue: 0
+  isPorcent: 1
+  canStack: 1
+  maxStack: 5
+  objectSprite: {fileID: 21300000, guid: 40d54940819bd3946afe94ee1016458f, type: 3}
+  objectInstance: {fileID: 3346203799668768278, guid: 9151fa0a28d2dec459e9c51abade12af,
+    type: 3}
+  objectInstanceForUse: {fileID: 0}
+  colorEffect: {r: 0, g: 0.19188643, b: 1, a: 1}
+  effectAudio: {fileID: 8300000, guid: 3227ae164cdfb4346a0a64a75cbab6b0, type: 3}
+  isOnlyForMonsters: 0

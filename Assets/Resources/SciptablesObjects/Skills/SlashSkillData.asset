@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22d391e6a736c774594e857d496c4c96, type: 3}
+  m_Name: SlashSkillData
+  m_EditorClassIdentifier: 
+  skillId: 1
+  skillObject: {fileID: 1004922723046654044, guid: 448d45c69c45007469f7321b265fa3c6,
+    type: 3}
+  skillSprite: {fileID: 21300000, guid: 470ae978409ae7943a53d35d6e865333, type: 3}
+  cost:
+    typeStatistics: 2
+    baseValue: 3
+    buffValue: 0
+    objectValue: 0
+    currentValue: 0
+    maxValue: 0
+  isPorcent: 0
+  isFromBaseValue: 0
+  needAnimation: 1
+  skillAnimation:
+    typeAnimation: 1
+    animationName: SlashSkill
+    linkAnimation: 
+    spritesInfoDown: []
+    spritesInfoUp: []
+    animationsEffects: 
+    needAnimationEnd: 0
+    loop: 0
+    needInstance: 0
+    frameToInstance: 0
+    speedSpritesPerTimeMultplier: 1
+    instanceObj: {fileID: 0}
+    instance: {fileID: 0}
+  cdInfo:
+    cd: 15
+    currentCD: 0
+  textId: 8

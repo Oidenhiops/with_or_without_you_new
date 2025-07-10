@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91ef4e234a16f9e4788bff02d4c3247d, type: 3}
+  m_Name: GeneralKey
+  m_EditorClassIdentifier: 
+  objectId: 1
+  typeObject: 1
+  statistics: []
+  isPorcent: 0
+  canStack: 0
+  maxStack: 6
+  objectSprite: {fileID: 21300000, guid: 882d3a0f8693d7748b0267b5ee72c92d, type: 3}
+  objectInstance: {fileID: 7336792254166587166, guid: 2076123a02f2b3c46b7e8e954cca537b,
+    type: 3}
+  objectInstanceForUse: {fileID: 0}
+  colorEffect: {r: 1, g: 1, b: 1, a: 1}
+  effectAudio: {fileID: 8300000, guid: 08b73ebaea0ebd84291b777479661b17, type: 3}
+  isOnlyForMonsters: 0

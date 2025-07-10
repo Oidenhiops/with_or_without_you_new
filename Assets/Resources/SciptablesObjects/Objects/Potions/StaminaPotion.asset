@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91ef4e234a16f9e4788bff02d4c3247d, type: 3}
+  m_Name: StaminaPotion
+  m_EditorClassIdentifier: 
+  objectId: 4
+  typeObject: 1
+  statistics:
+  - typeStatistics: 3
+    baseValue: 100
+    buffValue: 0
+    objectValue: 0
+    currentValue: 0
+    maxValue: 0
+  isPorcent: 1
+  canStack: 1
+  maxStack: 5
+  objectSprite: {fileID: 21300000, guid: f16b0a9f9eeed8d4b85b03cbba455671, type: 3}
+  objectInstance: {fileID: 1994631135401092037, guid: ae442b9fd9ab3734bbeb674e5f0ed642,
+    type: 3}
+  objectInstanceForUse: {fileID: 0}
+  colorEffect: {r: 0.23910141, g: 1, b: 0, a: 1}
+  effectAudio: {fileID: 8300000, guid: 3227ae164cdfb4346a0a64a75cbab6b0, type: 3}
+  isOnlyForMonsters: 0

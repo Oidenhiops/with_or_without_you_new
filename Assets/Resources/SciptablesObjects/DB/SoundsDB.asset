@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8135f2d128742424eabd3f74f7347fbe, type: 3}
+  m_Name: SoundsDB
+  m_EditorClassIdentifier: 
+  sounds:
+    _serializedList:
+    - Key: Die
+      Value:
+      - {fileID: 8300000, guid: 264b0252b25142742b2cc346096c4f9b, type: 3}
+    - Key: NotPickUp
+      Value:
+      - {fileID: 8300000, guid: a30c5ad86ff145c40bb6e8aed66e9838, type: 3}
+    - Key: NoUnlock
+      Value:
+      - {fileID: 8300000, guid: cf46efcaf92572247b979b7aa3d4f92d, type: 3}
+    - Key: PickUp
+      Value:
+      - {fileID: 8300000, guid: 71345f79365d60d47a9712f2de90914a, type: 3}
+    - Key: PotionEffect
+      Value:
+      - {fileID: 8300000, guid: 3227ae164cdfb4346a0a64a75cbab6b0, type: 3}
+    - Key: Slash
+      Value:
+      - {fileID: 8300000, guid: 09687775eb145664aa80a4ed46fda443, type: 3}
+    - Key: TakeDamage
+      Value:
+      - {fileID: 8300000, guid: 4e1fbce469b46224798ba1e025322d62, type: 3}
+    - Key: Unlock
+      Value:
+      - {fileID: 8300000, guid: 6d59c9fa98d426d4b9816607c4ee035d, type: 3}
+    - Key: TouchButtonBack
+      Value:
+      - {fileID: 8300000, guid: 01810f75a1b736d4985b35d9221924ab, type: 3}
+    - Key: TouchButtonAdvance
+      Value:
+      - {fileID: 8300000, guid: 3038c2382d604514e94c9ef8b63990c1, type: 3}

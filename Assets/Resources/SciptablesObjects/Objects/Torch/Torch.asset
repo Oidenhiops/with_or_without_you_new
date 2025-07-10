@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91ef4e234a16f9e4788bff02d4c3247d, type: 3}
+  m_Name: Torch
+  m_EditorClassIdentifier: 
+  objectId: 7
+  typeObject: 4
+  statistics: []
+  isPorcent: 0
+  canStack: 0
+  maxStack: 0
+  objectSprite: {fileID: 21300000, guid: cb2ea6f2696dd964bbf9c4b78400a954, type: 3}
+  objectInstance: {fileID: 1248651391770043220, guid: 8d1d4d9dd471c2841bba54f99927b1d6,
+    type: 3}
+  objectInstanceForUse: {fileID: 3394377799971186863, guid: 29733599f59950945beae94b83d6f2fa,
+    type: 3}
+  colorEffect: {r: 1, g: 1, b: 1, a: 1}
+  effectAudio: {fileID: 8300000, guid: 71345f79365d60d47a9712f2de90914a, type: 3}
+  isOnlyForMonsters: 0
