@@ -130,12 +130,6 @@ public class ChunksGenerator : MonoBehaviour
         {
             character.transform.position = new Vector3(spawnPosition.x, 1, spawnPosition.z);
         }
-        yield return new WaitForSeconds(0.5f);
-        foreach (var character in characters)
-        {
-            _= character.GetComponent<Character>().InitializeCharacter();
-        }
-        yield return new WaitForSeconds(1);
         GameManager.Instance.openCloseScene.AdjustLoading(100);
     }
     public Vector3 FindSpawnPosition(Vector3 initalRoomPos)

@@ -12,6 +12,7 @@ public class ManagementOpenCloseScene : MonoBehaviour
     public bool _finishLoad;
     public Action<bool>OnFinishLoadChange;
     public float speedFill;
+    public GameObject[] characters;
     public bool finishLoad
     {
         get => _finishLoad;
@@ -39,7 +40,6 @@ public class ManagementOpenCloseScene : MonoBehaviour
             if (loaderImage.fillAmount == 1)
             {
                 finishLoad = true;
-                openCloseSceneAnimator.SetBool("Out", false);
                 _= FinishLoad();
             }
         }
@@ -69,8 +69,6 @@ public class ManagementOpenCloseScene : MonoBehaviour
             {
                 await Task.Delay(TimeSpan.FromSeconds(0.05));
             }
-            GameManager.Instance.startGame = true;
-            loaderImage.fillAmount = 0;
             Scene scene = SceneManager.GetSceneByName("HomeScene");
             if (scene.IsValid() && scene.isLoaded)
             {
@@ -80,7 +78,19 @@ public class ManagementOpenCloseScene : MonoBehaviour
                     menuHelper.SelectButton();
                 }
             }
+            else
+            {
+                characters = GameObject.FindGameObjectsWithTag("Player");
+                foreach (var character in characters)
+                {
+                    _ = character.GetComponent<Character>().InitializeCharacter();
+                }
+                await Task.Delay(TimeSpan.FromSeconds(1));
+            }
+            openCloseSceneAnimator.SetBool("Out", false);
             await Task.Delay(TimeSpan.FromSeconds(0.05));
+            loaderImage.fillAmount = 0;
+            GameManager.Instance.startGame = true;
         }
         catch (Exception e)
         {

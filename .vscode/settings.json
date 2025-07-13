@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "echoes_of_the_abyss.sln"
+    "dotnet.defaultSolution": "with_or_without_you_new.sln"
 }

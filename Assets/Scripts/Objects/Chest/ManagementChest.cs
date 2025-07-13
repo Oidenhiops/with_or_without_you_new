@@ -127,7 +127,7 @@ public class ManagementChest : MonoBehaviour, ManagementInteract.IObjectInteract
                 }
             }
         }
-        character.characterInfo.characterScripts.managementCharacterHud.SendInformationMessage(41, Color.red);
+        character.characterInfo.characterScripts.managementCharacterHud.SendInformationMessage(1, Color.red, GameData.TypeLOCS.Dialogs);
         return false;
     }
     [System.Serializable] public class ProbabilityItems

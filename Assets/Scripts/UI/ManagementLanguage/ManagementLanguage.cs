@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class ManagementLanguage : MonoBehaviour
 {
+    public GameData.TypeLOCS typeLOCS;
     public TMP_Text dialogText;
     public int id = 0;
     [NonSerialized] public string[] dialogIds = {};
@@ -12,7 +13,6 @@ public class ManagementLanguage : MonoBehaviour
     {
         if (dialogText == null) dialogText = GetComponent<TMP_Text>();
     }
-    public GameData.TypeLanguage currentLanguage = GameData.TypeLanguage.English;
     void OnDestroy()
     {
         GameData.Instance.saveData.configurationsInfo.OnLanguageChange -= RefreshText;
@@ -27,7 +27,7 @@ public class ManagementLanguage : MonoBehaviour
         dialogText.text = "";
         if (id != 0)
         {
-            dialogText.text += GameData.Instance.GetDialog(id);
+            dialogText.text += GameData.Instance.GetDialog(id, typeLOCS);
         }
         else
         {
@@ -37,7 +37,7 @@ public class ManagementLanguage : MonoBehaviour
                 string text = "";
                 if (int.TryParse(dialog, out int dialogId))
                 {
-                    text = firstDialog ? GameData.Instance.GetDialog(dialogId) : $" {GameData.Instance.GetDialog(dialogId)}";
+                    text = firstDialog ? GameData.Instance.GetDialog(dialogId, typeLOCS) : $" {GameData.Instance.GetDialog(dialogId, typeLOCS)}";
                 }
                 else
                 {

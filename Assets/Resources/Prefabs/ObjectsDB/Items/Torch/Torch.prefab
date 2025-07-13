@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8024ac2d8ed8d574082e09100bed48bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IDText: 46
+  IDText: 5
   typeInteract: 0
   canInteract: 0
 --- !u!114 &3711314188832792021

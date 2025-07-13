@@ -109,7 +109,7 @@ public class ManagementCharacterObjects : MonoBehaviour
             }
             if (isFullInventory)
             {
-                character.characterInfo.characterScripts.managementCharacterHud.SendInformationMessage(40, Color.red);
+                character.characterInfo.characterScripts.managementCharacterHud.SendInformationMessage(40, Color.red, GameData.TypeLOCS.System);
             }
         }
         else

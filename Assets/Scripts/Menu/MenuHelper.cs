@@ -4,11 +4,11 @@ using UnityEngine.UI;
 
 public class MenuHelper : MonoBehaviour
 {
-    public Button playButton;
+    public Button lastButtonSelected;
     public CinemachineCamera cinemachineCamera;
     public void SelectButton()
     {
-        playButton.Select();
+        lastButtonSelected.Select();
     }
     public void PrioritiseCharacterCamera()
     {
@@ -17,5 +17,9 @@ public class MenuHelper : MonoBehaviour
     public void UnprioritizedCharacterCamera()
     {
         cinemachineCamera.Priority = 0;
+    }
+    public void ChangeLastButtonSelected(Button button)
+    {
+        lastButtonSelected = button;
     }
 }

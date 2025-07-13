@@ -13,7 +13,6 @@ public class DropdownSelected : MonoBehaviour, ISubmitHandler, IPointerDownHandl
     }
     public void OnPointerDown(PointerEventData eventData)
     {
-        print($"Selected: {gameObject.name} whit {dropdown.value} value");
         if (isInit)
         {
             isInit = false;

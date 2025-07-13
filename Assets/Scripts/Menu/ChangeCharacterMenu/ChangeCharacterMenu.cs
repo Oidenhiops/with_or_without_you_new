@@ -16,7 +16,7 @@ public class ChangeCharacterMenu : MonoBehaviour
     public Character character;
     public GameObject containerSkills;
     public GameObject containerObjects;
-    public Button backButton;
+    public Button startButton;
     public Button playButton;
 
     public void OnEnable()
@@ -33,7 +33,7 @@ public class ChangeCharacterMenu : MonoBehaviour
             }
         }
         SetCharacterData();
-        backButton.Select();
+        startButton.Select();
     }
     void OnDisable()
     {

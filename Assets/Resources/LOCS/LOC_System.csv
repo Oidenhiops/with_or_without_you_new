@@ -39,13 +39,3 @@
 38;SelectCharacterButton: TeamText;Start;Comenzar;
 39;InformationMessage: ObtainItemMessage;You obtain;Obtuviste;
 40;InformationMessage: FullInventoryMessage;Full inventory;Inventario lleno;
-41;InformationMessage: NeedKeyMessage;Need a key;Necesitas una llave;
-42;InformationMessage: ItemNameMessage;Life potion;Posión de vida;
-43;InformationMessage: ItemNameMessage;Mana potion;Posión de mana;
-44;InformationMessage: ItemNameMessage;Stamina potion;Posión de estamina;
-45;InformationMessage: ItemNameMessage;Wood shield;Escudo de madera;
-46;InformationMessage: ItemNameMessage;Torch;Antorcha;
-47;InformationMessage: ItemNameMessage;Old sword;Espada vieja;
-48;InformationMessage: ItemNameMessage;Fangs;Colmillos;
-49;InformationMessage: ItemNameMessage;Key;Llave;
-50;InformationMessage: ItemNameMessage;Chest;Cofre;

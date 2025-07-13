@@ -97,11 +97,12 @@ public class ManagementCharacterHud : MonoBehaviour
             }
         }
     }
-    public void SendInformationMessage(int id, Color color)
+    public void SendInformationMessage(int id, Color color, GameData.TypeLOCS typeLOCS)
     {
         InformationMessages message = Instantiate(Resources.Load<GameObject>("Prefabs/UI/InformationMessage/InformationMessage"), characterUi.informationMessageUi.containerInformationMessage.transform).GetComponent<InformationMessages>();
         message.textMessage.color = color;
         message.managementLanguage.id = id;
+        message.managementLanguage.typeLOCS = typeLOCS;
         message.managementLanguage.RefreshText(GameData.Instance.saveData.configurationsInfo.currentLanguage);
         Destroy(message, 3);
     }
@@ -187,7 +188,7 @@ public class ManagementCharacterHud : MonoBehaviour
                 bannerInteract.onObjectSelect.viewport = characterUi.interactUi.viewportInteract;
                 bannerInteract.onObjectSelect.scrollRect = characterUi.interactUi.interactScrollRect;
                 bannerInteract.objectForTake = objectsForTake[i];
-                bannerInteract.managementLanguage.currentLanguage = GameData.Instance.saveData.configurationsInfo.currentLanguage;
+                bannerInteract.managementLanguage.typeLOCS = objectForTake.interact.GetComponent<ManagementInteract>().typeInteract == ManagementInteract.TypeInteract.Item ? GameData.TypeLOCS.Items : GameData.TypeLOCS.Dialogs;
                 bannerInteract.textObject.gameObject.SetActive(true);
                 if (objectsForTake[i].TryGetComponent<ObjectBase>(out ObjectBase managementObject))
                 {

@@ -10,7 +10,7 @@ public class GameData : MonoBehaviour
     public ItemsDBSO itemsDB;
     public SkillsDBSO skillsDB;
     public SaveData saveData = new SaveData();
-    public List<string[]> csvData = new List<string[]>();
+    public Dictionary<TypeLOCS, List<string[]>> locs = new Dictionary<TypeLOCS, List<string[]>>();
     void Awake()
     {
         if (Instance == null)
@@ -22,7 +22,7 @@ public class GameData : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        _= LoadData();
+        _ = LoadData();
     }
     public async Awaitable LoadData()
     {
@@ -31,7 +31,7 @@ public class GameData : MonoBehaviour
             CheckFileExistance(DataPath());
             saveData = ReadDataFromJson();
             saveData.gameInfo.characterInfo.characterSelected = Resources.Load<InitialDataSO>($"SciptablesObjects/Character/InitialData/{saveData.gameInfo.characterInfo.characterSelectedName}");
-            LoadCSV();
+            LoadLOCS();
             InitializeResolutionData();
             InitializeItems();
             InitializeSkills();
@@ -45,31 +45,66 @@ public class GameData : MonoBehaviour
             await Awaitable.NextFrameAsync();
         }
     }
-    void LoadCSV()
+    void LoadLOCS()
     {
-        TextAsset csvFile = Resources.Load<TextAsset>("Language/Language");
-        string[] lines = csvFile.text.Split('\n');
+        try
+        {
+            TextAsset locsSystem = Resources.Load<TextAsset>("LOCS/LOC_System");
+            locs.Add(TypeLOCS.System, TransformCSV(locsSystem));
+        }
+        catch
+        {
+            Debug.LogError("No se encontro el archivo LOC_System");
+        }
+        try
+        {
+            TextAsset locsDialogs = Resources.Load<TextAsset>("LOCS/LOC_Dialogs");
+            locs.Add(TypeLOCS.Dialogs, TransformCSV(locsDialogs));
+        }
+        catch
+        {
+            Debug.LogError("No se encontro el archivo LOC_Dialogs");
+        }
+        try
+        {
+            TextAsset locsItems = Resources.Load<TextAsset>("LOCS/LOC_Items");
+            locs.Add(TypeLOCS.Items, TransformCSV(locsItems));
+        }
+        catch
+        {
+            Debug.LogError("No se encontro el archivo LOC_Items");
+        }
+    }
+    List<String[]> TransformCSV(TextAsset textAsset)
+    {
+        string[] lines = textAsset.text.Split('\n');
         List<String[]> textData = new List<string[]>();
         foreach (string line in lines)
         {
             string[] columns = line.Split(';');
             textData.Add(columns);
         }
-        csvData = textData;
+        return textData;
     }
-    public string GetDialog(int id)
+    public string GetDialog(int id, TypeLOCS typeLOCS)
     {
-        int languageIndex = 0;
-        for (int i = 0; i < csvData[0].Length; i++)
+        if (locs.TryGetValue(typeLOCS, out List<string[]> dialogs))
         {
-            if (csvData[0][i] == saveData.configurationsInfo.currentLanguage.ToString())
+            int languageIndex = 0;
+            for (int i = 0; i < dialogs[0].Length; i++)
             {
-                languageIndex = i;
-                break;
+                if (dialogs[0][i] == saveData.configurationsInfo.currentLanguage.ToString())
+                {
+                    languageIndex = i;
+                    break;
+                }
             }
+            return dialogs[id][languageIndex];
         }
-        if (languageIndex != 0) return csvData[id][languageIndex];
-        return null;
+        else
+        {
+            return $"NTF {typeLOCS}: {id}";
+        }
     }
     public void ChangeLanguage(TypeLanguage language)
     {
@@ -78,14 +113,14 @@ public class GameData : MonoBehaviour
     }
     void InitializeItems()
     {
-        foreach(ManagementCharacterObjects.ObjectsInfo objectsDataSO in saveData.gameInfo.characterInfo.currentObjects)
+        foreach (ManagementCharacterObjects.ObjectsInfo objectsDataSO in saveData.gameInfo.characterInfo.currentObjects)
         {
             objectsDataSO.objectData = itemsDB.GetItem(objectsDataSO.objectId);
         }
     }
     void InitializeSkills()
     {
-        foreach(ManagementCharacterSkills.SkillInfo skillDataSO in saveData.gameInfo.characterInfo.currentSkills)
+        foreach (ManagementCharacterSkills.SkillInfo skillDataSO in saveData.gameInfo.characterInfo.currentSkills)
         {
             skillDataSO.skillData = skillsDB.GetSkill(skillDataSO.skillId);
         }
@@ -137,12 +172,12 @@ public class GameData : MonoBehaviour
         }
     }
     public void SetStartingData()
-    {        
+    {
         SaveData dataInfo = new SaveData();
         dataInfo.configurationsInfo.currentLanguage = TypeLanguage.English;
         SetStartingDataSound(dataInfo);
         SetStartingPlayerData(dataInfo);
-        if (GameManager.Instance.currentDevice == GameManager.TypeDevice.PC) SetStartingResolution(ref dataInfo);        
+        if (GameManager.Instance.currentDevice == GameManager.TypeDevice.PC) SetStartingResolution(ref dataInfo);
         saveData.gameInfo = new GameInfo();
         saveData = dataInfo;
         SaveGameData();
@@ -216,16 +251,19 @@ public class GameData : MonoBehaviour
         }
         return Path.Combine(Application.streamingAssetsPath, nameSaveData);
     }
-    [Serializable]  public class SaveData
+    [Serializable]
+    public class SaveData
     {
         public GameInfo gameInfo = new GameInfo();
         public ConfigurationsInfo configurationsInfo = new ConfigurationsInfo();
     }
-    [Serializable]  public class GameInfo
+    [Serializable]
+    public class GameInfo
     {
         public CharacterInfo characterInfo = new CharacterInfo();
     }
-    [Serializable]  public class CharacterInfo
+    [Serializable]
+    public class CharacterInfo
     {
         public bool isInitialize = false;
         public string characterSelectedName;
@@ -233,7 +271,8 @@ public class GameData : MonoBehaviour
         public ManagementCharacterSkills.SkillInfo[] currentSkills = new ManagementCharacterSkills.SkillInfo[4];
         public ManagementCharacterObjects.ObjectsInfo[] currentObjects = new ManagementCharacterObjects.ObjectsInfo[6];
     }
-    [Serializable] public class ConfigurationsInfo
+    [Serializable]
+    public class ConfigurationsInfo
     {
         public TypeLanguage _currentLanguage;
         public Action<TypeLanguage> OnLanguageChange;
@@ -267,20 +306,23 @@ public class GameData : MonoBehaviour
         public ResolutionConfiguration resolutionConfiguration = new ResolutionConfiguration();
         public SoundConfiguration soundConfiguration = new SoundConfiguration();
     }
-    [Serializable]  public class SoundConfiguration
+    [Serializable]
+    public class SoundConfiguration
     {
         public bool isMute = false;
         public float MASTERValue;
         public float BGMalue;
         public float SFXalue;
     }
-    [Serializable]  public class ResolutionConfiguration
+    [Serializable]
+    public class ResolutionConfiguration
     {
         public bool isFullScreen = false;
         public List<ResolutionsInfo> allResolutions = new List<ResolutionsInfo>();
         public ResolutionsInfo currentResolution;
     }
-    [Serializable]  public class ResolutionsInfo
+    [Serializable]
+    public class ResolutionsInfo
     {
         public int width = 0;
         public int height = 0;
@@ -294,5 +336,12 @@ public class GameData : MonoBehaviour
     {
         English = 0,
         Español = 1,
+    }
+    public enum TypeLOCS
+    {
+        None = 0,
+        System = 1,
+        Dialogs = 2,
+        Items = 3
     }
 }
