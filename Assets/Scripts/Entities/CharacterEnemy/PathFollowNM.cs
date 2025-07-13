@@ -43,4 +43,9 @@ public class PathFollowNM : MonoBehaviour, Character.ICharacterMove
     {
         throw new System.NotImplementedException();
     }
+
+    public void AddOtherForce(string id, Vector3 direction, bool canDiscount, float time)
+    {
+        throw new System.NotImplementedException();
+    }
 }

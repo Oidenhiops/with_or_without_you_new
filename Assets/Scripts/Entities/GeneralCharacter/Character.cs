@@ -439,6 +439,7 @@ public class Character : MonoBehaviour
         public void SetPositionTarget(Transform position);
         public void SetCanMoveState(bool state);
         public void SetTarget(Transform targetPos);
+        public void AddOtherForce(string id, Vector3 direction, bool canDiscount, float time);
         public Vector3 GetDirectionMove();
     }
 }
