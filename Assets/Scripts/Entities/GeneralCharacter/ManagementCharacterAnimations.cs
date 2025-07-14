@@ -14,28 +14,31 @@ public class ManagementCharacterAnimations : MonoBehaviour
     public GameObject rightHand;
     [SerializeField] CharacterAnimationsEffectsInfo characterAnimationsEffectsInfo;
     public bool isUp = false;
-    public void Animate()
+    public void Update()
     {
-        if (!currentAnimation.needAnimationEnd)
+        if (character.isActive && GameManager.Instance.startGame)
         {
-            if (character.characterInfo.characterScripts.managementCharacterModelDirection.GetDirectionMovementCharacter() != Vector2.zero)
+            if (!currentAnimation.needAnimationEnd)
             {
-                if (!GetCurrentAnimation("Walk"))
+                if (character.characterModelDirection.movementCharacter != Vector2.zero)
                 {
-                    MakeAnimation(CharacterAnimationsSO.TypeAnimation.None, "Walk");
+                    if (!GetCurrentAnimation("Walk"))
+                    {
+                        MakeAnimation(CharacterAnimationsSO.TypeAnimation.None, "Walk");
+                    }
+                }
+                else
+                {
+                    if (!GetCurrentAnimation("Idle"))
+                    {
+                        MakeAnimation(CharacterAnimationsSO.TypeAnimation.None, "Idle");
+                    }
                 }
             }
-            else
+            if (meshRendererHand && meshRendererHand.gameObject.activeSelf)
             {
-                if (!GetCurrentAnimation("Idle"))
-                {
-                    MakeAnimation(CharacterAnimationsSO.TypeAnimation.None, "Idle");
-                }
+                SetHandsPos();
             }
-        }
-        if (meshRendererHand && meshRendererHand.gameObject.activeSelf)
-        {
-            SetHandsPos();
         }
     }
     public void SetInitialData(InitialDataSO initialData)
@@ -59,7 +62,7 @@ public class ManagementCharacterAnimations : MonoBehaviour
             currentSpritePerTime = initialData.characterAnimations.animationsInfo.currentSpritePerTime,
             currentSpriteIndex = 0
         };
-        GetAnimation(CharacterAnimationsSO.TypeAnimation.None, "GeneralAttack").speedSpritesPerTimeMultplier = character.characterInfo.GetStatisticByType(Character.TypeStatistics.AtkSpd).currentValue;
+        GetAnimation(CharacterAnimationsSO.TypeAnimation.None, "GeneralAttack").speedSpritesPerTimeMultplier = character.GetStatisticByType(Character.TypeStatistics.AtkSpd).currentValue;
         currentAnimation = GetAnimation(CharacterAnimationsSO.TypeAnimation.None, "Idle");
         StartCoroutine(AnimateSprite());
     }
@@ -120,7 +123,7 @@ public class ManagementCharacterAnimations : MonoBehaviour
         currentAnimation = GetAnimation(typeAnimation, animationName);
         if (typeAnimation == CharacterAnimationsSO.TypeAnimation.Attack)
         {
-            currentAnimation.speedSpritesPerTimeMultplier = character.characterInfo.GetStatisticByType(Character.TypeStatistics.AtkSpd).currentValue;
+            currentAnimation.speedSpritesPerTimeMultplier = character.GetStatisticByType(Character.TypeStatistics.AtkSpd).currentValue;
         }
         characterAnimationsInfo.currentSpritePerTime = characterAnimationsInfo.baseSpritePerTime / currentAnimation.speedSpritesPerTimeMultplier;
         characterAnimationsInfo.currentSpriteIndex = 0;
@@ -229,7 +232,7 @@ public class ManagementCharacterAnimations : MonoBehaviour
         }
         while (true)
         {
-            isUp = character.characterInfo.characterScripts.managementCharacterModelDirection.GetDirectionAnimation().y > 0;
+            isUp = character.characterModelDirection.movementDirectionAnimation.y > 0;
             SetTextureFromAtlas(
                 isUp ? 
                     currentAnimation.spritesInfoUp[characterAnimationsInfo.currentSpriteIndex].generalSprite :
@@ -275,10 +278,10 @@ public class ManagementCharacterAnimations : MonoBehaviour
                 switch (isUp)
                 {
                     case true:
-                        Vector3 spriteLeftUpPos = character.characterInfo.characterScripts.managementCharacterModelDirection.GetDirectionAnimation().x > 0 ?
+                        Vector3 spriteLeftUpPos = character.characterModelDirection.movementDirectionAnimation.x > 0 ?
                                                     currentAnimation.spritesInfoUp[characterAnimationsInfo.currentSpriteIndex].leftHandPosDR :
                                                     currentAnimation.spritesInfoUp[characterAnimationsInfo.currentSpriteIndex].leftHandPosDL;
-                        Vector3 spriteRightUpPos = character.characterInfo.characterScripts.managementCharacterModelDirection.GetDirectionAnimation().x > 0 ?
+                        Vector3 spriteRightUpPos = character.characterModelDirection.movementDirectionAnimation.x > 0 ?
                                                     currentAnimation.spritesInfoUp[characterAnimationsInfo.currentSpriteIndex].rightHandPosDR :
                                                     currentAnimation.spritesInfoUp[characterAnimationsInfo.currentSpriteIndex].rightHandPosDL;
                         leftHand.transform.localPosition = spriteLeftUpPos;
@@ -287,10 +290,10 @@ public class ManagementCharacterAnimations : MonoBehaviour
                         rightHand.transform.localRotation = currentAnimation.spritesInfoUp[characterAnimationsInfo.currentSpriteIndex].rightHandRotation;
                         break;
                     case false:
-                        Vector3 spriteLeftDownPos = character.characterInfo.characterScripts.managementCharacterModelDirection.GetDirectionAnimation().x > 0 ?
+                        Vector3 spriteLeftDownPos = character.characterModelDirection.movementDirectionAnimation.x > 0 ?
                                                     currentAnimation.spritesInfoDown[characterAnimationsInfo.currentSpriteIndex].leftHandPosDR :
                                                     currentAnimation.spritesInfoDown[characterAnimationsInfo.currentSpriteIndex].leftHandPosDL;
-                        Vector3 spriteRightDownPos = character.characterInfo.characterScripts.managementCharacterModelDirection.GetDirectionAnimation().x > 0 ?
+                        Vector3 spriteRightDownPos = character.characterModelDirection.movementDirectionAnimation.x > 0 ?
                                                     currentAnimation.spritesInfoDown[characterAnimationsInfo.currentSpriteIndex].rightHandPosDR :
                                                     currentAnimation.spritesInfoDown[characterAnimationsInfo.currentSpriteIndex].rightHandPosDL;
                         leftHand.transform.localPosition = spriteLeftDownPos;
@@ -314,7 +317,7 @@ public class ManagementCharacterAnimations : MonoBehaviour
         currentAnimation.instance.transform.SetParent(transform);
         currentAnimation.instance.transform.localRotation = Quaternion.Euler(0, 0, 0);
         currentAnimation.instance.transform.GetChild(0).transform.localRotation = characterSprite.transform.localRotation;
-        currentAnimation.instance.GetComponent<IAnimationInstance>().SetInfoForAnimation(character.characterInfo.characterScripts.managementCharacterModelDirection.GetDirectionAnimation(), characterAnimationsInfo);
+        currentAnimation.instance.GetComponent<IAnimationInstance>().SetInfoForAnimation(character.characterModelDirection.movementDirectionAnimation, characterAnimationsInfo);
     }
     [System.Serializable] public class CharacterAnimationsEffectsInfo
     {

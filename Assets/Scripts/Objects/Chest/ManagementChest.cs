@@ -110,24 +110,24 @@ public class ManagementChest : MonoBehaviour, ManagementInteract.IObjectInteract
     {
         if (!isUnlock)
         {
-            for (int i = 0; i < character.characterInfo.characterScripts.managementCharacterObjects.objects.Length; i++)
+            for (int i = 0; i < character.characterObjects.objects.Length; i++)
             {
-                if (character.characterInfo.characterScripts.managementCharacterObjects.objects[i].objectData)
+                if (character.characterObjects.objects[i].objectData)
                 {
-                    if (character.characterInfo.characterScripts.managementCharacterObjects.objects[i].objectData.objectInstance.TryGetComponent<ManagementKey>(out ManagementKey key))
+                    if (character.characterObjects.objects[i].objectData.objectInstance.TryGetComponent<ManagementKey>(out ManagementKey key))
                     {
                         if (typeKeyChest == key.typeKey)
                         {
                             isUnlock = true;
-                            character.characterInfo.characterScripts.managementCharacterObjects.objects[i].amount--;
-                            character.characterInfo.characterScripts.managementCharacterObjects.RefreshObjects();
+                            character.characterObjects.objects[i].amount--;
+                            character.characterObjects.RefreshObjects();
                             return true;
                         }
                     }
                 }
             }
         }
-        character.characterInfo.characterScripts.managementCharacterHud.SendInformationMessage(1, Color.red, GameData.TypeLOCS.Dialogs);
+        character.characterHud.SendInformationMessage(1, Color.red, GameData.TypeLOCS.Dialogs);
         return false;
     }
     [System.Serializable] public class ProbabilityItems

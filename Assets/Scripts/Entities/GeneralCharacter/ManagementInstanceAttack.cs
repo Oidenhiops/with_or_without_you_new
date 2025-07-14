@@ -45,11 +45,11 @@ public class ManagementInstanceAttack : MonoBehaviour, ManagementInstanceAttack.
             if (!instanceAttackInfo.charactersHited.Contains(character))
             {
                 instanceAttackInfo.charactersHited.Add(character);
-                int damage = !instanceAttackInfo.isPorcent ? (int)instanceAttackInfo.damage : (int)MathF.Round(character.characterInfo.GetStatisticByType(Character.TypeStatistics.Hp).maxValue * instanceAttackInfo.damage / 100);
-                character.characterInfo.TakeDamage(damage, instanceAttackInfo.colorDamage, instanceAttackInfo.timeHitStop, instanceAttackInfo.typeDamage, instanceAttackInfo.characterMakeDamage);
+                int damage = !instanceAttackInfo.isPorcent ? (int)instanceAttackInfo.damage : (int)MathF.Round(character.GetStatisticByType(Character.TypeStatistics.Hp).maxValue * instanceAttackInfo.damage / 100);
+                character.TakeDamage(damage, instanceAttackInfo.colorDamage, instanceAttackInfo.timeHitStop, instanceAttackInfo.typeDamage, instanceAttackInfo.characterMakeDamage);
                 foreach (StatusEffectSO statusEffect in instanceAttackInfo.statusEffects)
                 {
-                    character.characterInfo.characterScripts.managementStatusEffect.AddStatus
+                    character.statusEffect.AddStatus
                     (
                         statusEffect,
                         instanceAttackInfo.characterMakeDamage.gameObject,

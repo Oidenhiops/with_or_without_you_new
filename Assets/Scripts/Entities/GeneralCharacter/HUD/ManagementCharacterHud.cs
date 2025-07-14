@@ -8,11 +8,12 @@ using UnityEngine.EventSystems;
 
 public class ManagementCharacterHud : MonoBehaviour
 {
+    public PlayerInputs playerInputs;
     public Character character;
     public CharacterUi characterUi;
     public void InitializeHud()
     {
-        if (character.characterInfo.isPlayer)
+        if (character.isPlayer)
         {
             GameManager.Instance.OnDeviceChanged += EnabledMobileHUD;
             EnabledMobileHUD(GameManager.Instance.currentDevice);
@@ -20,7 +21,7 @@ public class ManagementCharacterHud : MonoBehaviour
     }
     void OnDestroy()
     {
-        if (character.characterInfo.isPlayer)
+        if (character.isPlayer)
         {
             GameManager.Instance.OnDeviceChanged -= EnabledMobileHUD;
         }
@@ -37,63 +38,79 @@ public class ManagementCharacterHud : MonoBehaviour
     {
         characterUi.objectsUi.containerObjects.color = !value ? Color.white : characterUi.objectsUi.containerObjectsSecondaryActionColor;
     }
-    public void HandleHud()
+    public void Update()
     {
-        if (characterUi.hudUi.healthBarFront != null)
+        if (character.isActive)
         {
-            characterUi.hudUi.healthBarFront.fillAmount = Mathf.Lerp(characterUi.hudUi.healthBarFront.fillAmount, character.characterInfo.GetStatisticByType(Character.TypeStatistics.Hp).currentValue / character.characterInfo.GetStatisticByType(Character.TypeStatistics.Hp).maxValue, 1.5f * Time.deltaTime);
-            if (characterUi.hudUi.healthBarBack.fillAmount >= characterUi.hudUi.healthBarFront.fillAmount)
+            if (characterUi.hudUi.healthBarFront != null)
             {
-                characterUi.hudUi.healthBarBack.fillAmount = Mathf.Lerp(characterUi.hudUi.healthBarBack.fillAmount, character.characterInfo.GetStatisticByType(Character.TypeStatistics.Hp).currentValue / character.characterInfo.GetStatisticByType(Character.TypeStatistics.Hp).maxValue, 1 * Time.deltaTime);
+                characterUi.hudUi.healthBarFront.fillAmount = Mathf.Lerp(characterUi.hudUi.healthBarFront.fillAmount, character.GetStatisticByType(Character.TypeStatistics.Hp).currentValue / character.GetStatisticByType(Character.TypeStatistics.Hp).maxValue, 1.5f * Time.deltaTime);
+                if (characterUi.hudUi.healthBarBack.fillAmount >= characterUi.hudUi.healthBarFront.fillAmount)
+                {
+                    characterUi.hudUi.healthBarBack.fillAmount = Mathf.Lerp(characterUi.hudUi.healthBarBack.fillAmount, character.GetStatisticByType(Character.TypeStatistics.Hp).currentValue / character.GetStatisticByType(Character.TypeStatistics.Hp).maxValue, 1 * Time.deltaTime);
+                }
+                else
+                {
+                    characterUi.hudUi.healthBarBack.fillAmount = characterUi.hudUi.healthBarFront.fillAmount;
+                }
+                if (characterUi.hudUi.healthText != null)
+                {
+                    characterUi.hudUi.healthText.text = $"{character.GetStatisticByType(Character.TypeStatistics.Hp).currentValue}/{character.GetStatisticByType(Character.TypeStatistics.Hp).maxValue}";
+                }
             }
-            else
+            if (characterUi.hudUi.manaBarFront != null)
             {
-                characterUi.hudUi.healthBarBack.fillAmount = characterUi.hudUi.healthBarFront.fillAmount;
+                characterUi.hudUi.manaBarFront.fillAmount = Mathf.Lerp(characterUi.hudUi.manaBarFront.fillAmount, character.GetStatisticByType(Character.TypeStatistics.Mp).currentValue / character.GetStatisticByType(Character.TypeStatistics.Mp).maxValue, 1.5f * Time.deltaTime);
+                if (characterUi.hudUi.manaBarBack.fillAmount >= characterUi.hudUi.manaBarFront.fillAmount)
+                {
+                    characterUi.hudUi.manaBarBack.fillAmount = Mathf.Lerp(characterUi.hudUi.manaBarBack.fillAmount, character.GetStatisticByType(Character.TypeStatistics.Mp).currentValue / character.GetStatisticByType(Character.TypeStatistics.Mp).maxValue, 1 * Time.deltaTime);
+                }
+                else
+                {
+                    characterUi.hudUi.manaBarBack.fillAmount = characterUi.hudUi.manaBarFront.fillAmount;
+                }
+                if (characterUi.hudUi.manaText != null)
+                {
+                    characterUi.hudUi.manaText.text = $"{character.GetStatisticByType(Character.TypeStatistics.Mp).currentValue}/{character.GetStatisticByType(Character.TypeStatistics.Mp).maxValue}";
+                }
             }
-            if (characterUi.hudUi.healthText != null)
+            if (characterUi.hudUi.staminaBarFront != null)
             {
-                characterUi.hudUi.healthText.text = $"{character.characterInfo.GetStatisticByType(Character.TypeStatistics.Hp).currentValue}/{character.characterInfo.GetStatisticByType(Character.TypeStatistics.Hp).maxValue}";
+                characterUi.hudUi.staminaBarFront.fillAmount = Mathf.Lerp(characterUi.hudUi.staminaBarFront.fillAmount, character.GetStatisticByType(Character.TypeStatistics.Sp).currentValue / character.GetStatisticByType(Character.TypeStatistics.Sp).maxValue, 1.5f * Time.deltaTime);
+                if (characterUi.hudUi.staminaBarBack.fillAmount >= characterUi.hudUi.staminaBarFront.fillAmount)
+                {
+                    characterUi.hudUi.staminaBarBack.fillAmount = Mathf.Lerp(characterUi.hudUi.staminaBarBack.fillAmount, character.GetStatisticByType(Character.TypeStatistics.Sp).currentValue / character.GetStatisticByType(Character.TypeStatistics.Sp).maxValue, 1 * Time.deltaTime);
+                }
+                else
+                {
+                    characterUi.hudUi.staminaBarBack.fillAmount = characterUi.hudUi.staminaBarFront.fillAmount;
+                }
+                if (characterUi.hudUi.staminaText != null)
+                {
+                    characterUi.hudUi.staminaText.text = $"{character.GetStatisticByType(Character.TypeStatistics.Sp).currentValue}/{character.GetStatisticByType(Character.TypeStatistics.Sp).maxValue}";
+                }
             }
-        }
-        if (characterUi.hudUi.manaBarFront != null)
-        {
-            characterUi.hudUi.manaBarFront.fillAmount = Mathf.Lerp(characterUi.hudUi.manaBarFront.fillAmount, character.characterInfo.GetStatisticByType(Character.TypeStatistics.Mp).currentValue / character.characterInfo.GetStatisticByType(Character.TypeStatistics.Mp).maxValue, 1.5f * Time.deltaTime);
-            if (characterUi.hudUi.manaBarBack.fillAmount >= characterUi.hudUi.manaBarFront.fillAmount)
+            if (characterUi.statusEffectsUi.statusEffectsData.Count > 0)
             {
-                characterUi.hudUi.manaBarBack.fillAmount = Mathf.Lerp(characterUi.hudUi.manaBarBack.fillAmount, character.characterInfo.GetStatisticByType(Character.TypeStatistics.Mp).currentValue / character.characterInfo.GetStatisticByType(Character.TypeStatistics.Mp).maxValue, 1 * Time.deltaTime);
+                foreach (var status in characterUi.statusEffectsUi.statusEffectsData)
+                {
+                    status.Value.statusEffectUi.statusEffectAccumulations.text = status.Value.statusEffectsData.currentAccumulations > 1 ? status.Value.statusEffectsData.currentAccumulations.ToString() : "";
+                    float realValueValue = status.Value.statusEffectsData.currentTime - status.Value.statusEffectsData.statusEffectSO.timePerAcumulation * (status.Value.statusEffectsData.currentAccumulations - 1);
+                    status.Value.statusEffectUi.statusEffectFill.fillAmount = realValueValue / status.Value.statusEffectsData.statusEffectSO.timePerAcumulation;
+                }
             }
-            else
+            if (characterUi.windUpFillAmount != null)
             {
-                characterUi.hudUi.manaBarBack.fillAmount = characterUi.hudUi.manaBarFront.fillAmount;
+                characterUi.windUpFillAmount.fillAmount = 1 - character.characterAttack.cooldownAttack;
             }
-            if (characterUi.hudUi.manaText != null)
+            if (characterUi.inventoryUi.inventoryAnimator != null && characterUi.inventoryUi.elapsedTime > 0)
             {
-                characterUi.hudUi.manaText.text = $"{character.characterInfo.GetStatisticByType(Character.TypeStatistics.Mp).currentValue}/{character.characterInfo.GetStatisticByType(Character.TypeStatistics.Mp).maxValue}";
-            }
-        }
-        if (characterUi.hudUi.staminaBarFront != null)
-        {
-            characterUi.hudUi.staminaBarFront.fillAmount = Mathf.Lerp(characterUi.hudUi.staminaBarFront.fillAmount, character.characterInfo.GetStatisticByType(Character.TypeStatistics.Sp).currentValue / character.characterInfo.GetStatisticByType(Character.TypeStatistics.Sp).maxValue, 1.5f * Time.deltaTime);
-            if (characterUi.hudUi.staminaBarBack.fillAmount >= characterUi.hudUi.staminaBarFront.fillAmount)
-            {
-                characterUi.hudUi.staminaBarBack.fillAmount = Mathf.Lerp(characterUi.hudUi.staminaBarBack.fillAmount, character.characterInfo.GetStatisticByType(Character.TypeStatistics.Sp).currentValue / character.characterInfo.GetStatisticByType(Character.TypeStatistics.Sp).maxValue, 1 * Time.deltaTime);
-            }
-            else
-            {
-                characterUi.hudUi.staminaBarBack.fillAmount = characterUi.hudUi.staminaBarFront.fillAmount;
-            }
-            if (characterUi.hudUi.staminaText != null)
-            {
-                characterUi.hudUi.staminaText.text = $"{character.characterInfo.GetStatisticByType(Character.TypeStatistics.Sp).currentValue}/{character.characterInfo.GetStatisticByType(Character.TypeStatistics.Sp).maxValue}";
-            }
-        }
-        if (characterUi.statusEffectsUi.statusEffectsData.Count > 0)
-        {
-            foreach (var status in characterUi.statusEffectsUi.statusEffectsData)
-            {
-                status.Value.statusEffectUi.statusEffectAccumulations.text = status.Value.statusEffectsData.currentAccumulations > 1 ? status.Value.statusEffectsData.currentAccumulations.ToString() : "";
-                float realValueValue = status.Value.statusEffectsData.currentTime - status.Value.statusEffectsData.statusEffectSO.timePerAcumulation * (status.Value.statusEffectsData.currentAccumulations - 1);
-                status.Value.statusEffectUi.statusEffectFill.fillAmount = realValueValue / status.Value.statusEffectsData.statusEffectSO.timePerAcumulation;
+                characterUi.inventoryUi.elapsedTime -= Time.deltaTime;
+                if (characterUi.inventoryUi.elapsedTime <= 0)
+                {
+                    ToggleShowInventory(false);
+                    playerInputs.characterActionsInfo.isShowInventory = false;
+                }
             }
         }
     }
@@ -160,6 +177,13 @@ public class ManagementCharacterHud : MonoBehaviour
             }
         }
     }
+    public void HighlightSkills(bool state)
+    {
+        foreach (SkillsData skill in characterUi.skillsUi.skills)
+        {
+            skill.skillBackground.color = state ? characterUi.skillsUi.highlightColor : Color.white;
+        }
+    }
     public void ToggleActiveObject(int pos, bool state)
     {
         characterUi.objectsUi.objects[pos].usingObjectSprite.gameObject.SetActive(state);
@@ -182,8 +206,8 @@ public class ManagementCharacterHud : MonoBehaviour
                     interact = objectsForTake[i],
                     bannerInteract = bannerInteract
                 };
-                bannerInteract.managementCharacterObjects = character.characterInfo.characterScripts.managementCharacterObjects;
-                bannerInteract.managementCharacterInteract = character.characterInfo.characterScripts.managementCharacterInteract;
+                bannerInteract.managementCharacterObjects = character.characterObjects;
+                bannerInteract.managementCharacterInteract = character.characterInteract;
                 bannerInteract.onObjectSelect.container = characterUi.interactUi.containerInteract;
                 bannerInteract.onObjectSelect.viewport = characterUi.interactUi.viewportInteract;
                 bannerInteract.onObjectSelect.scrollRect = characterUi.interactUi.interactScrollRect;
@@ -213,16 +237,16 @@ public class ManagementCharacterHud : MonoBehaviour
     }
     public void UpdateScrollInteract()
     {
-        if (character.characterInfo.characterScripts.managementCharacterInteract.currentInteracts.Length > 0)
+        if (character.characterInteract.currentInteracts.Length > 0)
         {
-            if (character.characterInfo.characterScripts.managementCharacterInteract.currentInteractIndex > character.characterInfo.characterScripts.managementCharacterInteract.currentInteracts.Length - 1)
+            if (character.characterInteract.currentInteractIndex > character.characterInteract.currentInteracts.Length - 1)
             {
-                character.characterInfo.characterScripts.managementCharacterInteract.currentInteractIndex = character.characterInfo.characterScripts.managementCharacterInteract.currentInteracts.Length - 1;
+                character.characterInteract.currentInteractIndex = character.characterInteract.currentInteracts.Length - 1;
             }
-            characterUi.interactUi.interacts[character.characterInfo.characterScripts.managementCharacterInteract.currentInteractIndex].bannerInteract.GetComponent<OnObjectSelect>().ScrollTo(character.characterInfo.characterScripts.managementCharacterInteract.currentInteractIndex);
+            characterUi.interactUi.interacts[character.characterInteract.currentInteractIndex].bannerInteract.GetComponent<OnObjectSelect>().ScrollTo(character.characterInteract.currentInteractIndex);
             for (int i = 0; i < characterUi.interactUi.interacts.Count; i++)
             {
-                if (i == character.characterInfo.characterScripts.managementCharacterInteract.currentInteractIndex)
+                if (i == character.characterInteract.currentInteractIndex)
                 {
                     characterUi.interactUi.interacts[i].bannerInteract.EnableButton();
                 }
@@ -234,7 +258,7 @@ public class ManagementCharacterHud : MonoBehaviour
         }
         else
         {
-            character.characterInfo.characterScripts.managementCharacterInteract.currentInteractIndex = 0;
+            character.characterInteract.currentInteractIndex = 0;
             EventSystem.current.SetSelectedGameObject(null);
         }
     }
@@ -242,7 +266,7 @@ public class ManagementCharacterHud : MonoBehaviour
     {
         foreach (StatisticsData statisticsData in characterUi.statisticsUi.statistics)
         {
-            statisticsData.amount.text = character.characterInfo.GetStatisticByType(statisticsData.typeStatistic).currentValue.ToString();
+            statisticsData.amount.text = character.GetStatisticByType(statisticsData.typeStatistic).currentValue.ToString();
         }
     }
     public void RefreshSkillsSprites(ManagementCharacterSkills.SkillInfo[] skills)
@@ -281,7 +305,7 @@ public class ManagementCharacterHud : MonoBehaviour
         if (!characterUi.statusEffectsUi.statusEffectsData.ContainsKey(statusEffectsData.statusEffectSO.typeStatusEffect))
         {
             StatusEffectUiHelper statusEffectsUi = Instantiate(Resources.Load<GameObject>("Prefabs/UI/StatusEffect/StatusEffectUi"), characterUi.statusEffectsUi.statusEffectContainer).GetComponent<StatusEffectUiHelper>();
-            characterUi.statusEffectsUi.statusEffectsData.Add(   
+            characterUi.statusEffectsUi.statusEffectsData.Add(
                 statusEffectsData.statusEffectSO.typeStatusEffect,
                 new StatusEffectsData(
                     statusEffectsUi,
@@ -290,8 +314,10 @@ public class ManagementCharacterHud : MonoBehaviour
             );
         }
     }
-    public void DestroyStatusEffect(StatusEffectSO.TypeStatusEffect typeStatusEffect){
-        if (characterUi.statusEffectsUi.statusEffectsData.TryGetValue(typeStatusEffect, out StatusEffectsData statusEffectsData)){
+    public void DestroyStatusEffect(StatusEffectSO.TypeStatusEffect typeStatusEffect)
+    {
+        if (characterUi.statusEffectsUi.statusEffectsData.TryGetValue(typeStatusEffect, out StatusEffectsData statusEffectsData))
+        {
             Destroy(statusEffectsData.statusEffectUi.gameObject);
             characterUi.statusEffectsUi.statusEffectsData.Remove(typeStatusEffect);
         }
@@ -299,8 +325,18 @@ public class ManagementCharacterHud : MonoBehaviour
     public void ToggleShowStatistics(bool isOpen)
     {
         characterUi.statisticsUi.mStatistics.SetBool("IsOpen", isOpen);
+        IncreaseInventoryElapsedTime();
     }
-    [Serializable] public class CharacterUi
+    public void ToggleShowInventory(bool isOpen)
+    {
+        characterUi.inventoryUi.inventoryAnimator.SetBool("IsOpen", isOpen);
+    }
+    public void IncreaseInventoryElapsedTime()
+    {
+        characterUi.inventoryUi.elapsedTime = 5;
+    }
+    [Serializable]
+    public class CharacterUi
     {
         public GameObject generalHud;
         public HudUi hudUi;
@@ -311,7 +347,7 @@ public class ManagementCharacterHud : MonoBehaviour
         public StatusEffectsUi statusEffectsUi;
         public InformationMessageUi informationMessageUi;
         public GameObject[] mobileHud;
-        public CharacterUi (HudUi hudUi, ObjectsUi objectsUi, SkillsUi skillsUi, StatisticsUi statisticsUi, StatusEffectsUi statusEffectsUi, InformationMessageUi informationMessageUi)
+        public CharacterUi(HudUi hudUi, ObjectsUi objectsUi, SkillsUi skillsUi, StatisticsUi statisticsUi, StatusEffectsUi statusEffectsUi, InformationMessageUi informationMessageUi)
         {
             this.hudUi = hudUi;
             this.objectsUi = objectsUi;
@@ -320,8 +356,11 @@ public class ManagementCharacterHud : MonoBehaviour
             this.statusEffectsUi = statusEffectsUi;
             this.informationMessageUi = informationMessageUi;
         }
+        public Image windUpFillAmount;
+        public InventoryUi inventoryUi;
     }
-    [Serializable] public class HudUi
+    [Serializable]
+    public class HudUi
     {
         public Image healthBarBack;
         public Image healthBarFront;
@@ -333,7 +372,8 @@ public class ManagementCharacterHud : MonoBehaviour
         public Image staminaBarFront;
         public TMP_Text staminaText;
     }
-    [Serializable] public class InteractUi
+    [Serializable]
+    public class InteractUi
     {
         public GameObject bannerInteract;
         public RectTransform containerInteract;
@@ -341,37 +381,45 @@ public class ManagementCharacterHud : MonoBehaviour
         public ScrollRect interactScrollRect;
         public List<ObjectsForTake> interacts = new List<ObjectsForTake>();
     }
-    [Serializable] public class ObjectsUi
+    [Serializable]
+    public class ObjectsUi
     {
         public ObjectsData[] objects = new ObjectsData[6];
         public Image containerObjects;
         public Color containerObjectsSecondaryActionColor;
     }
-    [Serializable] public class ObjectsForTake
+    [Serializable]
+    public class ObjectsForTake
     {
         public GameObject interact;
         public BannerInteract bannerInteract;
     }
-    [Serializable] public class ObjectsData
+    [Serializable]
+    public class ObjectsData
     {
         public Image objectBackground;
         public Image spriteObject;
         public Image usingObjectSprite;
         public TMP_Text amount;
     }
-    [Serializable] public class SkillsUi
+    [Serializable]
+    public class SkillsUi
     {
         public SkillsData[] skills = new SkillsData[4];
+        public Color highlightColor;
     }
-    [Serializable] public class SkillsData
+    [Serializable]
+    public class SkillsData
     {
         public Image skillBackground;
         public Image skillSprite;
         public Image skillFillamount;
         public TMP_Text skillTimer;
         public bool canActiveSkillSecondarySprite;
+
     }
-    [Serializable] public class StatisticsUi
+    [Serializable]
+    public class StatisticsUi
     {
         public Animator mStatistics;
         public StatisticsData[] statistics = new StatisticsData[]{
@@ -390,7 +438,8 @@ public class ManagementCharacterHud : MonoBehaviour
             this.statistics = statistics;
         }
     }
-    [Serializable] public class StatisticsData
+    [Serializable]
+    public class StatisticsData
     {
         public Image sprite;
         public TMP_Text amount;
@@ -403,16 +452,19 @@ public class ManagementCharacterHud : MonoBehaviour
             this.typeStatistic = typeStatistic;
         }
     }
-    [Serializable] public class InformationMessageUi
+    [Serializable]
+    public class InformationMessageUi
     {
         public GameObject containerInformationMessage;
     }
-    [Serializable] public class StatusEffectsUi
+    [Serializable]
+    public class StatusEffectsUi
     {
         public Transform statusEffectContainer;
         public SerializedDictionary<StatusEffectSO.TypeStatusEffect, StatusEffectsData> statusEffectsData = new SerializedDictionary<StatusEffectSO.TypeStatusEffect, StatusEffectsData>();
     }
-    [Serializable] public class StatusEffectsData
+    [Serializable]
+    public class StatusEffectsData
     {
         public StatusEffectUiHelper statusEffectUi;
         public ManagementStatusEffect.StatusEffectsData statusEffectsData;
@@ -422,5 +474,11 @@ public class ManagementCharacterHud : MonoBehaviour
             this.statusEffectUi = statusEffectUi;
             this.statusEffectsData = statusEffectsData;
         }
+    }
+    [Serializable]
+    public class InventoryUi
+    {
+        public Animator inventoryAnimator;
+        public float elapsedTime = 0;
     }
 }

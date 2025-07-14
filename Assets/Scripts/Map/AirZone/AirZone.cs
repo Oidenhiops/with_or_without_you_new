@@ -8,14 +8,14 @@ public class AirZone : MonoBehaviour
     {
         if (other.TryGetComponent<Character>(out Character character))
         {
-            character.characterInfo.characterScripts.characterMove.AddOtherForce(idForce, -transform.right.normalized * force, false, 0.1f);
+            character.characterMove.AddOtherForce(idForce, -transform.right.normalized * force, false, 0.1f);
         }
     }
     void OnTriggerExit(Collider other)
     {
         if (other.TryGetComponent<Character>(out Character character))
         {
-            character.characterInfo.characterScripts.characterMove.AddOtherForce(idForce, -transform.right.normalized * 0, false, 0);
+            character.characterMove.AddOtherForce(idForce, -transform.right.normalized * 0, false, 0);
         }
     }
 }

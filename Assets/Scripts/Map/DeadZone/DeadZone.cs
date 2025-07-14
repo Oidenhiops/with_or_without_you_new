@@ -6,9 +6,9 @@ public class DeadZone : MonoBehaviour
     {
         if (other.TryGetComponent<Character>(out Character character))
         {
-            character.characterInfo.TakeDamage
+            character.TakeDamage
             (
-                character.characterInfo.GetStatisticByType(Character.TypeStatistics.Hp).maxValue,
+                character.GetStatisticByType(Character.TypeStatistics.Hp).maxValue,
                 Color.white,
                 0,
                 Character.TypeDamage.TrueDamage,

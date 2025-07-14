@@ -1,21 +1,24 @@
 public class PlayerAttack : ManagementCharacterAttack
 {
+    public PlayerInputs playerInputs;
     public override void ValidateAttack()
     {
-        if (character.characterInputs.characterActions.CharacterInputs.BasicAttack.triggered)
+        if (playerInputs.characterActions.CharacterInputs.BasicAttack.triggered)
         {
             ValidateAttackMobile();
         }
     }
     public override void ValidateAttackMobile()
     {
-        if (character.characterInfo.characterScripts.characterAnimations != null &&
-            character.characterInfo.characterScripts.characterAnimations.ValidateAnimationEnd("TakeDamage") &&
+        if (!character.isActive || !GameManager.Instance.startGame) return;
+        
+        if (character.characterAnimations != null &&
+            character.characterAnimations.ValidateAnimationEnd("TakeDamage") &&
             ValidateAllAnimationsAttackEnd() &&
             cooldownAttack <= 0 &&
-            character.characterInfo.GetStatisticByType(costsAttack.typeStatistics).currentValue - costsAttack.baseValue >= 0)
+            character.GetStatisticByType(costsAttack.typeStatistics).currentValue - costsAttack.baseValue >= 0)
         {
-            character.characterInfo.GetStatisticByType(costsAttack.typeStatistics).currentValue -= costsAttack.baseValue;
+            character.GetStatisticByType(costsAttack.typeStatistics).currentValue -= costsAttack.baseValue;
             StartAttack();
         }
     }

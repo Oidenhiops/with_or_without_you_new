@@ -26,11 +26,11 @@ public class Barbs : MonoBehaviour
             if (!charactersHited.Contains(character))
             {
                 charactersHited.Add(character);
-                int damageToMake = (int)MathF.Round(character.characterInfo.GetStatisticByType(Character.TypeStatistics.Hp).maxValue * damage / 100);
-                character.characterInfo.TakeDamage(damageToMake, Color.white, timeHitStop, Character.TypeDamage.TrueDamage, null);
+                int damageToMake = (int)MathF.Round(character.GetStatisticByType(Character.TypeStatistics.Hp).maxValue * damage / 100);
+                character.TakeDamage(damageToMake, Color.white, timeHitStop, Character.TypeDamage.TrueDamage, null);
                 foreach (StatusEffectSO statusEffect in statusEffects)
                 {
-                    character.characterInfo.characterScripts.managementStatusEffect.AddStatus
+                    character.statusEffect.AddStatus
                     (
                         statusEffect,
                         gameObject,

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class ManagementCharacterObjects : MonoBehaviour
 {
+    public PlayerInputs playerInputs;
     public Character character;
     public GameObject rightHandPos;
     public ObjectsInfo[] objects = new ObjectsInfo[6];
@@ -11,53 +12,56 @@ public class ManagementCharacterObjects : MonoBehaviour
     public int itemIndex = 0;
     public void InitializeObjectsEvents()
     {
-        if (character.characterInfo.isPlayer)
+        if (character.isPlayer)
         {
-            character.characterInputs.characterActions.CharacterInputs.ChangeItem.performed += OnChangeItemGamepad;
-            character.characterInputs.characterActions.CharacterInputs.ChangeItemPos.performed += OnChangeItemPc;
-            character.characterInputs.characterActions.CharacterInputs.UseItem.performed += OnUseObject;
+            playerInputs.characterActions.CharacterInputs.ChangeItem.performed += OnChangeItemGamepad;
+            playerInputs.characterActions.CharacterInputs.ChangeItemPos.performed += OnChangeItemPc;
+            playerInputs.characterActions.CharacterInputs.UseItem.performed += OnUseObject;
             GameManager.Instance.OnDeviceChanged += ValidateShowItemPos;
         }
-    }
-    public void HandleObjects()
-    {
-
     }
     public void ValidateShowItemPos(GameManager.TypeDevice typeDevice)
     {
         if (typeDevice != GameManager.TypeDevice.GAMEPAD)
         {
-            character.characterInfo.characterScripts.managementCharacterHud.DisableItemPos();
+            character.characterHud.DisableItemPos();
         }
         else
         {
-            character.characterInfo.characterScripts.managementCharacterHud.ActiveItemsPos(itemIndex);
+            character.characterHud.ActiveItemsPos(itemIndex);
         }
     }
     public void OnChangeItemGamepad(InputAction.CallbackContext context)
     {
-        if (character.characterInfo.isActive)
+        if (character.isActive && playerInputs.characterActionsInfo.isShowInventory)
         {
             ChangeCurrentObject(context.ReadValue<float>() > 0);
+            character.characterHud.IncreaseInventoryElapsedTime();
         }
     }
     public void OnChangeItemPc(InputAction.CallbackContext context)
     {
-        if (character.characterInfo.isActive && !character.characterInputs.characterActionsInfo.isSkillsActive)
+        if (character.isActive && !playerInputs.characterActionsInfo.isSkillsActive && playerInputs.characterActionsInfo.isShowInventory)
         {
+            character.characterHud.IncreaseInventoryElapsedTime();
             itemIndex = (int)context.ReadValue<float>();
             ValidateUseItem();
         }
     }
     public void OnUseItemMobile(int position)
     {
-        itemIndex = position;
-        ValidateUseItem();
+        if (character.isActive && playerInputs.characterActionsInfo.isShowInventory)
+        {
+            itemIndex = position;
+            ValidateUseItem();
+            character.characterHud.IncreaseInventoryElapsedTime();
+        }
     }
     public void OnUseObject(InputAction.CallbackContext context)
     {
-        if (character.characterInfo.isActive)
+        if (character.isActive && playerInputs.characterActionsInfo.isShowInventory)
         {
+            character.characterHud.IncreaseInventoryElapsedTime();
             ValidateUseItem();
         }
     }
@@ -77,7 +81,7 @@ public class ManagementCharacterObjects : MonoBehaviour
                 int amountToAdd = ValidateAmountObjectToAdd(objectForValidate, objectTaked);
                 objectForValidate.amount += amountToAdd;
                 string[] dialogs = {"39",$"${amountToAdd}", $"{objectTaked.managementInteract.IDText}"};
-                character.characterInfo.characterScripts.managementCharacterHud.SendInformationMessage(dialogs, Color.green);
+                character.characterHud.SendInformationMessage(dialogs, Color.green);
                 pickUpItem = true;
             }
         }
@@ -91,7 +95,7 @@ public class ManagementCharacterObjects : MonoBehaviour
                     int amountToAdd = ValidateAmountObjectToAdd(objectForAdd, objectTaked);
                     objectForAdd.amount = amountToAdd;
                     string[] dialogs = {"39",$"${amountToAdd}", $"{objectTaked.managementInteract.IDText}"};
-                    character.characterInfo.characterScripts.managementCharacterHud.SendInformationMessage( dialogs, Color.green);
+                    character.characterHud.SendInformationMessage( dialogs, Color.green);
                     pickUpItem = true;
                 }
             }
@@ -109,7 +113,7 @@ public class ManagementCharacterObjects : MonoBehaviour
             }
             if (isFullInventory)
             {
-                character.characterInfo.characterScripts.managementCharacterHud.SendInformationMessage(40, Color.red, GameData.TypeLOCS.System);
+                character.characterHud.SendInformationMessage(40, Color.red, GameData.TypeLOCS.System);
             }
         }
         else
@@ -128,7 +132,7 @@ public class ManagementCharacterObjects : MonoBehaviour
     }
     public void ValidateUseItem()
     {
-        if (character.characterInputs.characterActionsInfo.isSecondaryAction)
+        if (playerInputs.characterActionsInfo.isSecondaryAction)
         {
             DropObject();
         }
@@ -139,7 +143,7 @@ public class ManagementCharacterObjects : MonoBehaviour
     }
     public void InitializeObjects()
     {
-        if (character.characterInfo.isPlayer) objects = (ObjectsInfo[])GameData.Instance.saveData.gameInfo.characterInfo.currentObjects.Clone();
+        if (character.isPlayer) objects = (ObjectsInfo[])GameData.Instance.saveData.gameInfo.characterInfo.currentObjects.Clone();
         for (int i = 0; i < 6; i++){
             if (objects[i].objectData != null)
             {
@@ -150,7 +154,7 @@ public class ManagementCharacterObjects : MonoBehaviour
             }
         }
 
-        if (character.characterInfo.isPlayer) character.characterInfo.characterScripts.managementCharacterHud.RefreshObjects(objects);
+        if (character.isPlayer) character.characterHud.RefreshObjects(objects);
         for (int i = 0; i < objects.Length; i++)
         {
             objects[i].objectPos = i;
@@ -185,7 +189,7 @@ public class ManagementCharacterObjects : MonoBehaviour
             GameObject instance = Instantiate
             (
                 objectInHand,
-                character.characterInfo.characterScripts.characterAnimations.rightHand.transform.position,
+                character.characterAnimations.rightHand.transform.position,
                 Quaternion.identity,
                 rightHandPos.transform
             );
@@ -219,7 +223,7 @@ public class ManagementCharacterObjects : MonoBehaviour
             itemIndex = objects.Length - 1;
         }
 
-        character.characterInfo.characterScripts.managementCharacterHud.ActiveItemsPos(itemIndex);
+        character.characterHud.ActiveItemsPos(itemIndex);
     }
     int ValidateAmountObjectToAdd(ObjectsInfo objectForIncreaseAmount, ObjectBase objectForDiscountAmount)
     {
@@ -265,7 +269,7 @@ public class ManagementCharacterObjects : MonoBehaviour
                 }
             }
         }
-        character.characterInfo.characterScripts.managementCharacterHud.RefreshObjects(objects);
+        character.characterHud.RefreshObjects(objects);
     }
     public ObjectsPositionsInfo GetObjectsPositionsInfo(TypeObjectPosition typeObjectPosition)
     {

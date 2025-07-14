@@ -11,27 +11,27 @@ public class ManagementWeaponsObject : ObjectBase
         {
             foreach (Character.Statistics armorStats in objectInfo.objectData.statistics)
             {
-                Character.Statistics statistic = character.characterInfo.GetStatisticByType(armorStats.typeStatistics);
+                Character.Statistics statistic = character.GetStatisticByType(armorStats.typeStatistics);
                 statistic.objectValue += armorStats.baseValue;
             }
             AudioManager.Instance.PlayASound(AudioManager.Instance.GetAudioClip("PickUp"), 1.1f, true);
-            if (needInstance && character.characterInfo.initialData.isHuman) character.characterInfo.characterScripts.managementCharacterObjects.InstanceObjectInHand(objectInfo.objectData.objectInstance, false);
+            if (needInstance && character.initialData.isHuman) character.characterObjects.InstanceObjectInHand(objectInfo.objectData.objectInstance, false);
         }
         else
         {
             foreach (Character.Statistics armorStats in objectInfo.objectData.statistics)
             {
-                Character.Statistics statistic = character.characterInfo.GetStatisticByType(armorStats.typeStatistics);
+                Character.Statistics statistic = character.GetStatisticByType(armorStats.typeStatistics);
                 statistic.objectValue -= armorStats.baseValue;
             }
             AudioManager.Instance.PlayASound(AudioManager.Instance.GetAudioClip("PickUp"), 0.9f, true);
-            character.characterInfo.characterScripts.managementCharacterObjects.DestroyObjectInHand(false);
+            character.characterObjects.DestroyObjectInHand(false);
         }
-        character.characterInfo.RefreshCurrentStatistics();
-        if (character.characterInfo.isPlayer)
+        character.RefreshCurrentStatistics();
+        if (character.isPlayer)
         {
-            character.characterInfo.characterScripts.managementCharacterHud.RefreshCurrentStatistics();
-            character.characterInfo.characterScripts.managementCharacterHud.ToggleActiveObject(objectInfo.objectPos, objectInfo.isUsingItem);
+            character.characterHud.RefreshCurrentStatistics();
+            character.characterHud.ToggleActiveObject(objectInfo.objectPos, objectInfo.isUsingItem);
         }
     }
     public override void DropObject(Character character, ManagementCharacterObjects.ObjectsInfo objectInfo, ManagementCharacterObjects managementCharacterObjects)
@@ -40,21 +40,21 @@ public class ManagementWeaponsObject : ObjectBase
         {
             foreach (Character.Statistics armorStats in objectInfo.objectData.statistics)
             {
-                Character.Statistics statistic = character.characterInfo.GetStatisticByType(armorStats.typeStatistics);
+                Character.Statistics statistic = character.GetStatisticByType(armorStats.typeStatistics);
                 statistic.objectValue -= armorStats.baseValue;
             }
-            if (character.characterInfo.isPlayer) character.characterInfo.characterScripts.managementCharacterHud.ToggleActiveObject(objectInfo.objectPos, false);
+            if (character.isPlayer) character.characterHud.ToggleActiveObject(objectInfo.objectPos, false);
             objectInfo.isUsingItem = false;
-            character.characterInfo.RefreshCurrentStatistics();
-            if (character.characterInfo.isPlayer)
+            character.RefreshCurrentStatistics();
+            if (character.isPlayer)
             {
-                character.characterInfo.characterScripts.managementCharacterHud.RefreshCurrentStatistics();
+                character.characterHud.RefreshCurrentStatistics();
             }
-            character.characterInfo.characterScripts.managementCharacterHud.RefreshCurrentStatistics();
-            character.characterInfo.characterScripts.managementCharacterObjects.DestroyObjectInHand(false);
+            character.characterHud.RefreshCurrentStatistics();
+            character.characterObjects.DestroyObjectInHand(false);
         }
 
-        Vector3 positionsSpawn = character.characterInfo.characterScripts.managementCharacterModelDirection.directionPlayer.transform.GetChild(0).transform.position;
+        Vector3 positionsSpawn = character.characterModelDirection.directionPlayer.transform.GetChild(0).transform.position;
         GameObject armor = Instantiate(objectInfo.objectData.objectInstance, positionsSpawn, Quaternion.identity);
         Vector3 directionForce = (character.transform.position - armor.transform.position).normalized;
         armor.GetComponent<Rigidbody>().isKinematic = false;
@@ -62,7 +62,7 @@ public class ManagementWeaponsObject : ObjectBase
         armor.GetComponent<ManagementInteract>().canInteract = true;
         this.objectInfo.amount = 1;
         objectInfo.amount--;
-        character.characterInfo.characterScripts.managementCharacterObjects.RefreshObjects();
+        character.characterObjects.RefreshObjects();
         AudioManager.Instance.PlayASound(AudioManager.Instance.GetAudioClip("PickUp"), 1, true);
     }
 
@@ -70,16 +70,16 @@ public class ManagementWeaponsObject : ObjectBase
     {
         foreach (Character.Statistics armorStats in objectInfo.objectData.statistics)
         {
-            Character.Statistics statistic = character.characterInfo.GetStatisticByType(armorStats.typeStatistics);
+            Character.Statistics statistic = character.GetStatisticByType(armorStats.typeStatistics);
             statistic.objectValue += armorStats.baseValue;
         }
-        character.characterInfo.RefreshCurrentStatistics();
-        if (character.characterInfo.isPlayer)
+        character.RefreshCurrentStatistics();
+        if (character.isPlayer)
         {
-            character.characterInfo.characterScripts.managementCharacterHud.RefreshCurrentStatistics();
-            character.characterInfo.characterScripts.managementCharacterHud.ToggleActiveObject(objectInfo.objectPos, true);
+            character.characterHud.RefreshCurrentStatistics();
+            character.characterHud.ToggleActiveObject(objectInfo.objectPos, true);
         }
-        if (needInstance && character.characterInfo.initialData.isHuman) character.characterInfo.characterScripts.managementCharacterObjects.InstanceObjectInHand(objectInfo.objectData.objectInstance, false);
+        if (needInstance && character.initialData.isHuman) character.characterObjects.InstanceObjectInHand(objectInfo.objectData.objectInstance, false);
     }
     public override string GetTypeObjAnimation()
     {

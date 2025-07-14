@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 public class ManagementCharacterInteract : MonoBehaviour
 {
+    public PlayerInputs playerInputs;
     RaycastHit[] hitBuffer = new RaycastHit[20];
     List<GameObject> interactables = new List<GameObject>(20);
     public Character character;
@@ -47,18 +48,18 @@ public class ManagementCharacterInteract : MonoBehaviour
     public void InitializeInteractsEvents()
     {
         OnInteractsChanged += HandleInteracts;
-        character.characterInputs.characterActions.CharacterInputs.Interact.performed += OnInteract;
+        playerInputs.characterActions.CharacterInputs.Interact.performed += OnInteract;
     }
-    public void Interact()
+    public void Update()
     {
-        if (character.characterInfo.isPlayer)
+        if (character.isPlayer && GameManager.Instance.startGame)
         {
             CheckInteracts();
         }
     }
     void OnInteract(InputAction.CallbackContext context)
     {
-        if (character.characterInfo.isActive && !character.characterInputs.characterActionsInfo.isSkillsActive && currentInteract && context.action.triggered)
+        if (character.isActive && !playerInputs.characterActionsInfo.isSkillsActive && currentInteract && context.action.triggered)
         {
             HanldeInteracObject();
         }
@@ -74,23 +75,23 @@ public class ManagementCharacterInteract : MonoBehaviour
     async Task RefreshIteracts (GameObject[] objects)
     {
         isRefreshInteracts = true;
-        await character.characterInfo.characterScripts.managementCharacterHud.RefreshInteracts(objects);
+        await character.characterHud.RefreshInteracts(objects);
         if (objects.Length > 0)
         {
-            character.characterInfo.characterScripts.managementCharacterHud.characterUi.interactUi.bannerInteract.SetActive(true);
+            character.characterHud.characterUi.interactUi.bannerInteract.SetActive(true);
         }
         else
         {
             currentInteract = null;
-            character.characterInfo.characterScripts.managementCharacterHud.characterUi.interactUi.bannerInteract.SetActive(false);
+            character.characterHud.characterUi.interactUi.bannerInteract.SetActive(false);
         }
         UpdateScrollInteract();
-        EventSystem.current.SetSelectedGameObject(character.characterInfo.characterScripts.managementCharacterHud.characterUi.interactUi.interacts[currentInteractIndex].bannerInteract.gameObject);
+        EventSystem.current.SetSelectedGameObject(character.characterHud.characterUi.interactUi.interacts[currentInteractIndex].bannerInteract.gameObject);
         isRefreshInteracts = false;
     }
     public void UpdateScrollInteract()
     {
-        character.characterInfo.characterScripts.managementCharacterHud.UpdateScrollInteract();
+        character.characterHud.UpdateScrollInteract();
     }
     public void CheckInteracts()
     {

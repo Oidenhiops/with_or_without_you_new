@@ -15,121 +15,103 @@ MonoBehaviour:
   isHuman: 0
   atlas: {fileID: 2800000, guid: 2c04e885bc397ea449f8d22e995a55a5, type: 3}
   atlasHand: {fileID: 0}
-  characterInfo:
-    characterScripts:
-      managementCharacterHud: {fileID: 0}
-      managementCharacterModelDirection: {fileID: 0}
-      managementCharacterObjects: {fileID: 0}
-      managementCharacterSkills: {fileID: 0}
-      managementPlayerCamera: {fileID: 0}
-      managementCharacterInteract: {fileID: 0}
-      characterAttack: {fileID: 0}
-      characterAnimations: {fileID: 0}
-      managementStatusEffect: {fileID: 0}
-      dissolve: {fileID: 0}
-      owner: {fileID: 0}
-    initialData: {fileID: 11400000}
-    isPlayer: 0
-    isActive: 0
-    rb: {fileID: 0}
-    characterStatistics:
-      _serializedList:
-      - Key: 1
-        Value:
-          typeStatistics: 1
-          baseValue: 350
-          buffValue: 0
-          objectValue: 0
-          currentValue: 0
-          maxValue: 0
-      - Key: 3
-        Value:
-          typeStatistics: 3
-          baseValue: 100
-          buffValue: 0
-          objectValue: 0
-          currentValue: 0
-          maxValue: 0
-      - Key: 2
-        Value:
-          typeStatistics: 2
-          baseValue: 110
-          buffValue: 0
-          objectValue: 0
-          currentValue: 0
-          maxValue: 0
-      - Key: 4
-        Value:
-          typeStatistics: 4
-          baseValue: 180
-          buffValue: 0
-          objectValue: 0
-          currentValue: 0
-          maxValue: 0
-      - Key: 5
-        Value:
-          typeStatistics: 5
-          baseValue: 1
-          buffValue: 0
-          objectValue: 0
-          currentValue: 0
-          maxValue: 0
-      - Key: 6
-        Value:
-          typeStatistics: 6
-          baseValue: 160
-          buffValue: 0
-          objectValue: 0
-          currentValue: 0
-          maxValue: 0
-      - Key: 7
-        Value:
-          typeStatistics: 7
-          baseValue: 120
-          buffValue: 0
-          objectValue: 0
-          currentValue: 0
-          maxValue: 0
-      - Key: 8
-        Value:
-          typeStatistics: 8
-          baseValue: 120
-          buffValue: 0
-          objectValue: 0
-          currentValue: 0
-          maxValue: 0
-      - Key: 9
-        Value:
-          typeStatistics: 9
-          baseValue: 3.2
-          buffValue: 0
-          objectValue: 0
-          currentValue: 0
-          maxValue: 0
-      - Key: 10
-        Value:
-          typeStatistics: 10
-          baseValue: 5
-          buffValue: 0
-          objectValue: 0
-          currentValue: 0
-          maxValue: 0
-      - Key: 11
-        Value:
-          typeStatistics: 11
-          baseValue: 50
-          buffValue: 0
-          objectValue: 0
-          currentValue: 0
-          maxValue: 0
-    colorBlood: {r: 0.36862746, g: 0, b: 0, a: 1}
+  characterStatistics:
+    _serializedList:
+    - Key: 1
+      Value:
+        typeStatistics: 1
+        baseValue: 1
+        buffValue: 0
+        objectValue: 0
+        currentValue: 0
+        maxValue: 0
+    - Key: 3
+      Value:
+        typeStatistics: 3
+        baseValue: 2
+        buffValue: 0
+        objectValue: 0
+        currentValue: 0
+        maxValue: 0
+    - Key: 2
+      Value:
+        typeStatistics: 2
+        baseValue: 3
+        buffValue: 0
+        objectValue: 0
+        currentValue: 0
+        maxValue: 0
+    - Key: 4
+      Value:
+        typeStatistics: 4
+        baseValue: 4
+        buffValue: 0
+        objectValue: 0
+        currentValue: 0
+        maxValue: 0
+    - Key: 5
+      Value:
+        typeStatistics: 5
+        baseValue: 5
+        buffValue: 0
+        objectValue: 0
+        currentValue: 0
+        maxValue: 0
+    - Key: 6
+      Value:
+        typeStatistics: 6
+        baseValue: 6
+        buffValue: 0
+        objectValue: 0
+        currentValue: 0
+        maxValue: 0
+    - Key: 7
+      Value:
+        typeStatistics: 7
+        baseValue: 7
+        buffValue: 0
+        objectValue: 0
+        currentValue: 0
+        maxValue: 0
+    - Key: 8
+      Value:
+        typeStatistics: 8
+        baseValue: 8
+        buffValue: 0
+        objectValue: 0
+        currentValue: 0
+        maxValue: 0
+    - Key: 9
+      Value:
+        typeStatistics: 9
+        baseValue: 9
+        buffValue: 0
+        objectValue: 0
+        currentValue: 0
+        maxValue: 0
+    - Key: 10
+      Value:
+        typeStatistics: 10
+        baseValue: 10
+        buffValue: 0
+        objectValue: 0
+        currentValue: 0
+        maxValue: 0
+    - Key: 11
+      Value:
+        typeStatistics: 11
+        baseValue: 11
+        buffValue: 0
+        objectValue: 0
+        currentValue: 0
+        maxValue: 0
   skills:
-  - idSkill: 0
+  - skillId: 0
     skillData: {fileID: 11400000, guid: 79155538a9ecbf24bb0076ced960536d, type: 2}
     cdInfo:
       cd: 0
       currentCD: 0
-  - idSkill: 0
+  - skillId: 0
     skillData: {fileID: 11400000, guid: b5b6ccb435b9db14aa8e7d20cc84bdc8, type: 2}
     cdInfo:
       cd: 0

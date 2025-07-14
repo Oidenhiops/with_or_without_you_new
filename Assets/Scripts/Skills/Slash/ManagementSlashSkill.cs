@@ -12,7 +12,7 @@ public class ManagementSlashSkill : MonoBehaviour, ManagementCharacterSkills.ISk
     public float speed;
     public void SendInformation(Dictionary<Character.TypeStatistics, Character.Statistics> statistics, Character character)
     {
-        gameObject.layer = LayerMask.NameToLayer(character.characterInfo.isPlayer ? "PlayerAttack" : "EnemyAttack");
+        gameObject.layer = LayerMask.NameToLayer(character.isPlayer ? "PlayerAttack" : "EnemyAttack");
         characterMakeDamage = character;
         foreach(Character.Statistics statistic in baseStatistics)
         {
@@ -27,7 +27,7 @@ public class ManagementSlashSkill : MonoBehaviour, ManagementCharacterSkills.ISk
     }
     public Character.Statistics GetStatistics(Character.TypeStatistics typeStatistics, Character character)
     {
-        return character.characterInfo.GetStatisticByType(typeStatistics);
+        return character.GetStatisticByType(typeStatistics);
     }
     public Character.Statistics GetStatistics(Character.TypeStatistics typeStatistics, List<Character.Statistics> statistics)
     {
@@ -42,10 +42,10 @@ public class ManagementSlashSkill : MonoBehaviour, ManagementCharacterSkills.ISk
     }
     public void MakeSkill(Character character)
     {
-        transform.position += characterMakeDamage.characterInfo.characterScripts.characterAttack.GetDirectionAttack().transform.forward;
-        transform.rotation = characterMakeDamage.characterInfo.characterScripts.characterAttack.GetDirectionAttack().transform.rotation;
+        transform.position += characterMakeDamage.characterAttack.GetDirectionAttack().transform.forward;
+        transform.rotation = characterMakeDamage.characterAttack.GetDirectionAttack().transform.rotation;
         transform.SetParent(null);
-        rb.AddForce(characterMakeDamage.characterInfo.characterScripts.characterAttack.GetDirectionAttack().transform.forward * speed);
+        rb.AddForce(characterMakeDamage.characterAttack.GetDirectionAttack().transform.forward * speed);
         AudioManager.Instance.PlayASound(AudioManager.Instance.GetAudioClip("Slash"), 1, true);
         if (TryGetComponent<ManagementInstanceAttack>(out ManagementInstanceAttack managementInstanceAttack))
         {

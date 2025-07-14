@@ -209,6 +209,15 @@ public partial class @CharacterActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""ShowInventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""2451cb1f-b63a-4294-b2c3-c54209f44feb"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Pause"",
                     ""type"": ""Button"",
                     ""id"": ""6f448dc1-bccd-4995-8317-78b4f89313a9"",
@@ -526,11 +535,33 @@ public partial class @CharacterActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""245e40c2-fca5-4232-a05e-f0f3f8f1e326"",
-                    ""path"": ""<Keyboard>/z"",
+                    ""path"": ""<Keyboard>/tab"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ShowStats"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""45d4d5d8-bf69-42e7-8233-476aac81a458"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShowInventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3454f70b-3ab5-485f-b229-d5701f15ad43"",
+                    ""path"": ""<Keyboard>/z"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShowInventory"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -763,6 +794,7 @@ public partial class @CharacterActions: IInputActionCollection2, IDisposable
         m_CharacterInputs_UseItem = m_CharacterInputs.FindAction("UseItem", throwIfNotFound: true);
         m_CharacterInputs_Target = m_CharacterInputs.FindAction("Target", throwIfNotFound: true);
         m_CharacterInputs_ShowStats = m_CharacterInputs.FindAction("ShowStats", throwIfNotFound: true);
+        m_CharacterInputs_ShowInventory = m_CharacterInputs.FindAction("ShowInventory", throwIfNotFound: true);
         m_CharacterInputs_Pause = m_CharacterInputs.FindAction("Pause", throwIfNotFound: true);
         m_CharacterInputs_UnlockCamera = m_CharacterInputs.FindAction("UnlockCamera", throwIfNotFound: true);
         m_CharacterInputs_BasicAttack = m_CharacterInputs.FindAction("BasicAttack", throwIfNotFound: true);
@@ -859,6 +891,7 @@ public partial class @CharacterActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_CharacterInputs_UseItem;
     private readonly InputAction m_CharacterInputs_Target;
     private readonly InputAction m_CharacterInputs_ShowStats;
+    private readonly InputAction m_CharacterInputs_ShowInventory;
     private readonly InputAction m_CharacterInputs_Pause;
     private readonly InputAction m_CharacterInputs_UnlockCamera;
     private readonly InputAction m_CharacterInputs_BasicAttack;
@@ -925,6 +958,10 @@ public partial class @CharacterActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "CharacterInputs/ShowStats".
         /// </summary>
         public InputAction @ShowStats => m_Wrapper.m_CharacterInputs_ShowStats;
+        /// <summary>
+        /// Provides access to the underlying input action "CharacterInputs/ShowInventory".
+        /// </summary>
+        public InputAction @ShowInventory => m_Wrapper.m_CharacterInputs_ShowInventory;
         /// <summary>
         /// Provides access to the underlying input action "CharacterInputs/Pause".
         /// </summary>
@@ -1002,6 +1039,9 @@ public partial class @CharacterActions: IInputActionCollection2, IDisposable
             @ShowStats.started += instance.OnShowStats;
             @ShowStats.performed += instance.OnShowStats;
             @ShowStats.canceled += instance.OnShowStats;
+            @ShowInventory.started += instance.OnShowInventory;
+            @ShowInventory.performed += instance.OnShowInventory;
+            @ShowInventory.canceled += instance.OnShowInventory;
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
@@ -1061,6 +1101,9 @@ public partial class @CharacterActions: IInputActionCollection2, IDisposable
             @ShowStats.started -= instance.OnShowStats;
             @ShowStats.performed -= instance.OnShowStats;
             @ShowStats.canceled -= instance.OnShowStats;
+            @ShowInventory.started -= instance.OnShowInventory;
+            @ShowInventory.performed -= instance.OnShowInventory;
+            @ShowInventory.canceled -= instance.OnShowInventory;
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
@@ -1201,6 +1244,13 @@ public partial class @CharacterActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnShowStats(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ShowInventory" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnShowInventory(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "Pause" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

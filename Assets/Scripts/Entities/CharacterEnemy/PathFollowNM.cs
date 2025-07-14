@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class PathFollowNM : MonoBehaviour, Character.ICharacterMove
+public class PathFollowNM : MonoBehaviour
 {
     public Character character;
     [SerializeField] NavMeshAgent na;

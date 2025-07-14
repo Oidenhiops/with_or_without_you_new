@@ -17,7 +17,7 @@ public class ManagementInteract : MonoBehaviour
     }
     public void PickUp(Character character)
     {
-        character.characterInfo.characterScripts.managementCharacterObjects.TakeObject(gameObject);
+        character.characterObjects.TakeObject(gameObject);
     }
     public enum TypeInteract
     {

@@ -123,6 +123,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "ShowInventory",
+                    "type": "Button",
+                    "id": "2451cb1f-b63a-4294-b2c3-c54209f44feb",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Pause",
                     "type": "Button",
                     "id": "6f448dc1-bccd-4995-8317-78b4f89313a9",
@@ -440,11 +449,33 @@
                 {
                     "name": "",
                     "id": "245e40c2-fca5-4232-a05e-f0f3f8f1e326",
-                    "path": "<Keyboard>/z",
+                    "path": "<Keyboard>/tab",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "ShowStats",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "45d4d5d8-bf69-42e7-8233-476aac81a458",
+                    "path": "<Gamepad>/dpad/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShowInventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3454f70b-3ab5-485f-b229-d5701f15ad43",
+                    "path": "<Keyboard>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShowInventory",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

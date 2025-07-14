@@ -1,9 +1,8 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 
-public class CharacterInputs : MonoBehaviour
+public class PlayerInputs : MonoBehaviour
 {
     public Character character;
     public CharacterActions characterActions;
@@ -39,17 +38,20 @@ public class CharacterInputs : MonoBehaviour
         characterActions.CharacterInputs.ActiveSkill.canceled += OnActiveSkill;
         characterActions.CharacterInputs.Pause.performed += OnPauseInput;
         characterActions.CharacterInputs.SecondaryAction.started += OnEnableSecondaryAction;        
-        character.characterInputs.characterActions.CharacterInputs.ShowStats.started += OnShowStats;
+        characterActions.CharacterInputs.ShowStats.started += OnShowStats;
+        characterActions.CharacterInputs.ShowInventory.started += OnShowInventory;
     }
     void OnActiveSkill(InputAction.CallbackContext context)
     {
         if (context.action.IsPressed())
         {
             characterActionsInfo.isSkillsActive = true;
+            character.characterHud.HighlightSkills(true);
         }
         else
         {
             characterActionsInfo.isSkillsActive = false;
+            character.characterHud.HighlightSkills(false);
         }
     }
     void OnMovementInput(InputAction.CallbackContext context)
@@ -92,13 +94,23 @@ public class CharacterInputs : MonoBehaviour
         if (!characterActionsInfo.isSkillsActive)
         {
             characterActionsInfo.isSecondaryAction = !characterActionsInfo.isSecondaryAction;
-            character.characterInfo.characterScripts.managementCharacterHud.ToggleSecondaryAction(characterActionsInfo.isSecondaryAction);
+            character.characterHud.ToggleSecondaryAction(characterActionsInfo.isSecondaryAction);
         }
     }
     void OnShowStats(InputAction.CallbackContext context)
     {
-        characterActionsInfo.isShowStats = !characterActionsInfo.isShowStats;
-        character.characterInfo.characterScripts.managementCharacterHud.ToggleShowStatistics(characterActionsInfo.isShowStats);
+        if (characterActionsInfo.isShowInventory)
+        {
+            characterActionsInfo.isShowStats = !characterActionsInfo.isShowStats;
+            character.characterHud.ToggleShowStatistics(characterActionsInfo.isShowStats);
+            character.characterHud.IncreaseInventoryElapsedTime();
+        }
+    }
+    void OnShowInventory(InputAction.CallbackContext context)
+    {
+        characterActionsInfo.isShowInventory = !characterActionsInfo.isShowInventory;
+        character.characterHud.ToggleShowInventory(characterActionsInfo.isShowInventory);
+        character.characterHud.IncreaseInventoryElapsedTime();
     }
     void ValidateShowDirection()
     {
@@ -168,5 +180,6 @@ public class CharacterInputs : MonoBehaviour
         }
         public bool isSkillsActive = false;
         public bool isShowStats = false;
+        public bool isShowInventory = false;
     }
 }

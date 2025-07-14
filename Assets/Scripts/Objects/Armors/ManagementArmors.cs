@@ -8,19 +8,19 @@ public class ManagementArmors : ObjectBase
         {
             foreach (Character.Statistics armorStats in objectInfo.objectData.statistics)
             {
-                Character.Statistics statistic = character.characterInfo.GetStatisticByType(armorStats.typeStatistics);
+                Character.Statistics statistic = character.GetStatisticByType(armorStats.typeStatistics);
                 statistic.objectValue -= armorStats.baseValue;
             }
             objectInfo.isUsingItem = false;
-            character.characterInfo.RefreshCurrentStatistics();
-            if (character.characterInfo.isPlayer)
+            character.RefreshCurrentStatistics();
+            if (character.isPlayer)
             {
-                character.characterInfo.RefreshCurrentStatistics();
-                character.characterInfo.characterScripts.managementCharacterHud.ToggleActiveObject(objectInfo.objectPos, false);
+                character.RefreshCurrentStatistics();
+                character.characterHud.ToggleActiveObject(objectInfo.objectPos, false);
             }
         }
 
-        Vector3 positionsSpawn = character.characterInfo.characterScripts.managementCharacterModelDirection.directionPlayer.transform.GetChild(0).transform.position;
+        Vector3 positionsSpawn = character.characterModelDirection.directionPlayer.transform.GetChild(0).transform.position;
         GameObject armor = Instantiate(objectInfo.objectData.objectInstance, positionsSpawn, Quaternion.identity);
         Vector3 directionForce = (character.transform.position - armor.transform.position).normalized;
         armor.GetComponent<Rigidbody>().isKinematic = false;
@@ -28,7 +28,7 @@ public class ManagementArmors : ObjectBase
         armor.GetComponent<ManagementInteract>().canInteract = true;
         this.objectInfo.amount = 1;
         objectInfo.amount--;
-        character.characterInfo.characterScripts.managementCharacterObjects.RefreshObjects();
+        character.characterObjects.RefreshObjects();
         AudioManager.Instance.PlayASound(AudioManager.Instance.GetAudioClip("PickUp"), 1, true);
     }
 
@@ -36,14 +36,14 @@ public class ManagementArmors : ObjectBase
     {
         foreach (Character.Statistics armorStats in objectInfo.objectData.statistics)
         {
-            Character.Statistics statistic = character.characterInfo.GetStatisticByType(armorStats.typeStatistics);
+            Character.Statistics statistic = character.GetStatisticByType(armorStats.typeStatistics);
             statistic.objectValue += armorStats.baseValue;
         }
-            character.characterInfo.RefreshCurrentStatistics();
-            if (character.characterInfo.isPlayer)
+            character.RefreshCurrentStatistics();
+            if (character.isPlayer)
             {
-                character.characterInfo.RefreshCurrentStatistics();
-                character.characterInfo.characterScripts.managementCharacterHud.ToggleActiveObject(objectInfo.objectPos, true);
+                character.RefreshCurrentStatistics();
+                character.characterHud.ToggleActiveObject(objectInfo.objectPos, true);
             }
     }
 
@@ -54,7 +54,7 @@ public class ManagementArmors : ObjectBase
         {
             foreach (Character.Statistics armorStats in objectInfo.objectData.statistics)
             {
-                Character.Statistics statistic = character.characterInfo.GetStatisticByType(armorStats.typeStatistics);
+                Character.Statistics statistic = character.GetStatisticByType(armorStats.typeStatistics);
                 statistic.objectValue += armorStats.baseValue;
             }
         AudioManager.Instance.PlayASound(AudioManager.Instance.GetAudioClip("PickUp"), 1.1f, true);
@@ -63,16 +63,16 @@ public class ManagementArmors : ObjectBase
         {
             foreach (Character.Statistics armorStats in objectInfo.objectData.statistics)
             {
-                Character.Statistics statistic = character.characterInfo.GetStatisticByType(armorStats.typeStatistics);
+                Character.Statistics statistic = character.GetStatisticByType(armorStats.typeStatistics);
                 statistic.objectValue -= armorStats.baseValue;
             }
             AudioManager.Instance.PlayASound(AudioManager.Instance.GetAudioClip("PickUp"), 0.9f, true);
         }
-        character.characterInfo.RefreshCurrentStatistics();
-        if (character.characterInfo.isPlayer)
+        character.RefreshCurrentStatistics();
+        if (character.isPlayer)
         {
-            character.characterInfo.characterScripts.managementCharacterHud.RefreshCurrentStatistics();
-            character.characterInfo.characterScripts.managementCharacterHud.ToggleActiveObject(objectInfo.objectPos, objectInfo.isUsingItem);
+            character.characterHud.RefreshCurrentStatistics();
+            character.characterHud.ToggleActiveObject(objectInfo.objectPos, objectInfo.isUsingItem);
         }
     }
 }

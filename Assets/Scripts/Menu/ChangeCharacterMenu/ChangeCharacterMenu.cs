@@ -43,11 +43,11 @@ public class ChangeCharacterMenu : MonoBehaviour
     {
         for (int u = 0; u < staticticsUi.Length; u++)
         {
-            for (int s = 0; s < characterSelected.characterInfo.characterStatistics.Count; s++)
+            for (int s = 0; s < characterSelected.characterStatistics.Count; s++)
             {
-                if (staticticsUi[u].typeStatistics == characterSelected.characterInfo.characterStatistics.ElementAt(s).Value.typeStatistics)
+                if (staticticsUi[u].typeStatistics == characterSelected.characterStatistics.ElementAt(s).Value.typeStatistics)
                 {
-                    staticticsUi[u].statisticsText.text = characterSelected.characterInfo.characterStatistics.ElementAt(s).Value.baseValue.ToString();
+                    staticticsUi[u].statisticsText.text = characterSelected.characterStatistics.ElementAt(s).Value.baseValue.ToString();
                 }
             }
         }
@@ -138,7 +138,7 @@ public class ChangeCharacterMenu : MonoBehaviour
     }
     public void SetCharacterSprite()
     {
-        character.characterInfo.characterScripts.characterAnimations.SetInitialData(characterSelected);
+        character.characterAnimations.SetInitialData(characterSelected);
     }
 
     [System.Serializable]

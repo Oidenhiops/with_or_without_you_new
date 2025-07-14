@@ -24,7 +24,7 @@ public class ManagementTripleSlashSkill : MonoBehaviour, ManagementCharacterSkil
     }
     public Character.Statistics GetStatistics(Character.TypeStatistics typeStatistics, Character character)
     {
-        return character.characterInfo.GetStatisticByType(typeStatistics);
+        return character.GetStatisticByType(typeStatistics);
     }
     public Character.Statistics GetStatistics(Character.TypeStatistics typeStatistics, List<Character.Statistics> statistics)
     {
@@ -39,13 +39,13 @@ public class ManagementTripleSlashSkill : MonoBehaviour, ManagementCharacterSkil
     }
     public void MakeSkill(Character character)
     {
-        transform.position += characterMakeDamage.characterInfo.characterScripts.characterAttack.GetDirectionAttack().transform.forward;
-        transform.rotation = characterMakeDamage.characterInfo.characterScripts.characterAttack.GetDirectionAttack().transform.rotation;
+        transform.position += characterMakeDamage.characterAttack.GetDirectionAttack().transform.forward;
+        transform.rotation = characterMakeDamage.characterAttack.GetDirectionAttack().transform.rotation;
         transform.SetParent(null);
         AudioManager.Instance.PlayASound(AudioManager.Instance.GetAudioClip("Slash"), 1, true);
         for (int i = 0; i < slashes.Count; i++)
         {
-            slashes[i].layer = LayerMask.NameToLayer(character.characterInfo.isPlayer ? "PlayerAttack" : "EnemyAttack");
+            slashes[i].layer = LayerMask.NameToLayer(character.isPlayer ? "PlayerAttack" : "EnemyAttack");
             Rigidbody rb = slashes[i].GetComponent<Rigidbody>();
             slashes[i].transform.SetParent(null);
             rb.AddForce(slashes[i].transform.forward * speed);

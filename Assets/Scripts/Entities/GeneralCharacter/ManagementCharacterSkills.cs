@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class ManagementCharacterSkills : MonoBehaviour
 {
+    public PlayerInputs playerInputs;
     [SerializeField] Character character;
     [SerializeField] ManagementCharacterHud managementCharacterHud;
     [SerializeField] ManagementCharacterAnimations managementCharacterAnimations;
@@ -13,11 +14,11 @@ public class ManagementCharacterSkills : MonoBehaviour
     bool usingSkill;
     public void InitializeSkillsEvents()
     {
-        if (character.characterInputs) character.characterInputs.characterActions.CharacterInputs.UseSkill.performed += OnUseSkill;
+        if (playerInputs) playerInputs.characterActions.CharacterInputs.UseSkill.performed += OnUseSkill;
     }
-    public void HandleSkills()
+    public void Update()
     {
-        if (character.characterInfo.isActive)
+        if (character.isActive && GameManager.Instance.startGame)
         {
             if (currentSkills[0].skillData != null)
             {
@@ -37,7 +38,7 @@ public class ManagementCharacterSkills : MonoBehaviour
         }
     }
     void OnUseSkill(InputAction.CallbackContext context){
-        if (character.characterInfo.isActive && character.characterInputs.characterActionsInfo.isSkillsActive && context.action.triggered)
+        if (character.isActive && playerInputs.characterActionsInfo.isSkillsActive && context.action.triggered)
         {
             currentSkillIndex = (int)context.ReadValue<float>();
             ValidateUseSkill();
@@ -45,7 +46,7 @@ public class ManagementCharacterSkills : MonoBehaviour
     }
     public void OnUseSkillMobile(int posSkill)
     {
-        if (character.characterInfo.isActive)
+        if (character.isActive)
         {
             currentSkillIndex = posSkill;
             ValidateUseSkill();
@@ -58,25 +59,25 @@ public class ManagementCharacterSkills : MonoBehaviour
             if (currentSkills[currentSkillIndex].skillData.isPorcent)
             {
                 int value = currentSkills[currentSkillIndex].skillData.isFromBaseValue ?
-                    (int)Mathf.Ceil(character.characterInfo.GetStatisticByType(currentSkills[currentSkillIndex].skillData.cost.typeStatistics).baseValue) :
-                    (int)Mathf.Ceil(character.characterInfo.GetStatisticByType(currentSkills[currentSkillIndex].skillData.cost.typeStatistics).currentValue);
+                    (int)Mathf.Ceil(character.GetStatisticByType(currentSkills[currentSkillIndex].skillData.cost.typeStatistics).baseValue) :
+                    (int)Mathf.Ceil(character.GetStatisticByType(currentSkills[currentSkillIndex].skillData.cost.typeStatistics).currentValue);
                 int amount = (int)(value * currentSkills[currentSkillIndex].skillData.cost.baseValue / 100);
 
                 if (currentSkills[currentSkillIndex].skillData.cost.typeStatistics == Character.TypeStatistics.Hp &&
-                    character.characterInfo.GetStatisticByType(currentSkills[currentSkillIndex].skillData.cost.typeStatistics).currentValue - amount > 1 ||
-                    character.characterInfo.GetStatisticByType(currentSkills[currentSkillIndex].skillData.cost.typeStatistics).currentValue - amount >= 0)
+                    character.GetStatisticByType(currentSkills[currentSkillIndex].skillData.cost.typeStatistics).currentValue - amount > 1 ||
+                    character.GetStatisticByType(currentSkills[currentSkillIndex].skillData.cost.typeStatistics).currentValue - amount >= 0)
                 {
-                    character.characterInfo.GetStatisticByType(currentSkills[currentSkillIndex].skillData.cost.typeStatistics).currentValue -= amount;
+                    character.GetStatisticByType(currentSkills[currentSkillIndex].skillData.cost.typeStatistics).currentValue -= amount;
                     currentSkills[currentSkillIndex].cdInfo.currentCD = currentSkills[currentSkillIndex].cdInfo.cd;
                     InitializeUsingSkill();
                 }
             }
             else if (currentSkills[currentSkillIndex].skillData.cost.typeStatistics == Character.TypeStatistics.Hp &&
-                     character.characterInfo.GetStatisticByType(currentSkills[currentSkillIndex].skillData.cost.typeStatistics).currentValue - currentSkills[currentSkillIndex].skillData.cost.baseValue >= 1 ||
-                     character.characterInfo.GetStatisticByType(currentSkills[currentSkillIndex].skillData.cost.typeStatistics).currentValue - currentSkills[currentSkillIndex].skillData.cost.baseValue >= 0)
+                     character.GetStatisticByType(currentSkills[currentSkillIndex].skillData.cost.typeStatistics).currentValue - currentSkills[currentSkillIndex].skillData.cost.baseValue >= 1 ||
+                     character.GetStatisticByType(currentSkills[currentSkillIndex].skillData.cost.typeStatistics).currentValue - currentSkills[currentSkillIndex].skillData.cost.baseValue >= 0)
             {
                 int amount = (int)Mathf.Ceil(currentSkills[currentSkillIndex].skillData.cost.baseValue);
-                character.characterInfo.GetStatisticByType(currentSkills[currentSkillIndex].skillData.cost.typeStatistics).currentValue -= amount;
+                character.GetStatisticByType(currentSkills[currentSkillIndex].skillData.cost.typeStatistics).currentValue -= amount;
                 currentSkills[currentSkillIndex].cdInfo.currentCD = currentSkills[currentSkillIndex].cdInfo.cd;
                 InitializeUsingSkill();
             }
@@ -105,7 +106,7 @@ public class ManagementCharacterSkills : MonoBehaviour
                 {
                     usingSkill = false;
                     GameObject skill = Instantiate(currentSkills[currentSkillIndex].skillData.skillObject, transform.position, Quaternion.identity, transform);
-                    skill.GetComponent<ISkill>().SendInformation(character.characterInfo.characterStatistics, character);
+                    skill.GetComponent<ISkill>().SendInformation(character.characterStatistics, character);
                 }
             }
             else

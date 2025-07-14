@@ -1,7 +1,7 @@
 using Unity.Cinemachine;
 using UnityEngine;
 
-public class ManagementPlayerCamera : MonoBehaviour
+public class PlayerCamera : MonoBehaviour
 {
     [SerializeField] Character character;
     [SerializeField] CinemachineOrbitalFollow vcam;

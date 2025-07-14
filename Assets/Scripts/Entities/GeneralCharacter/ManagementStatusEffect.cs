@@ -11,7 +11,7 @@ public class ManagementStatusEffect : MonoBehaviour
 public SerializedDictionary<StatusEffectSO.TypeStatusEffect, StatusEffectsData> statusEffects = new SerializedDictionary<StatusEffectSO.TypeStatusEffect, StatusEffectsData>();
     void Update()
     {
-        if (character.characterInfo.isActive)
+        if (character.isActive && GameManager.Instance.startGame)
         {
             if (statusEffects.Count > 0)
             {
@@ -21,7 +21,7 @@ public SerializedDictionary<StatusEffectSO.TypeStatusEffect, StatusEffectsData> 
                     status.currentTime -= Time.deltaTime;
                     if (status.currentTime <= 0)
                     {
-                        character.characterInfo.characterScripts.managementCharacterHud.DestroyStatusEffect(status.statusEffectSO.typeStatusEffect);
+                        character.characterHud.DestroyStatusEffect(status.statusEffectSO.typeStatusEffect);
                         statusEffects.Remove(status.statusEffectSO.typeStatusEffect);
                     }
                     else
@@ -49,7 +49,7 @@ public SerializedDictionary<StatusEffectSO.TypeStatusEffect, StatusEffectsData> 
         {
             Coroutine effectCoroutine = StartCoroutine(statusEffectSO.statusEffectInstance.GetComponent<IStatusEffect>().ApplyStatusEffect(objectMakeEffect, objectToMakeEffect));
             statusEffects.Add(statusEffectSO.typeStatusEffect, new StatusEffectsData (statusEffectSO, statusEffectSO.timePerAcumulation, 1, effectCoroutine));
-            character.characterInfo.characterScripts.managementCharacterHud.UpdateStatusEffect(statusEffects[statusEffectSO.typeStatusEffect]);
+            character.characterHud.UpdateStatusEffect(statusEffects[statusEffectSO.typeStatusEffect]);
         }
     }
     [Serializable] public class StatusEffectsData
