@@ -9,7 +9,7 @@ public class ManagementCharacterObjects : MonoBehaviour
     public GameObject rightHandPos;
     public ObjectsInfo[] objects = new ObjectsInfo[6];
     [SerializeField] ObjectsPositionsInfo[] objectsPositionsInfo;
-    public int itemIndex = 0;
+    int itemIndex = 0;
     public void InitializeObjectsEvents()
     {
         if (character.isPlayer)
@@ -33,7 +33,7 @@ public class ManagementCharacterObjects : MonoBehaviour
     }
     public void OnChangeItemGamepad(InputAction.CallbackContext context)
     {
-        if (character.isActive && playerInputs.characterActionsInfo.isShowInventory)
+        if (character.isActive && !playerInputs.characterActionsInfo.isSkillsActive && playerInputs.characterActionsInfo.isShowInventory)
         {
             ChangeCurrentObject(context.ReadValue<float>() > 0);
             character.characterHud.IncreaseInventoryElapsedTime();
@@ -59,7 +59,7 @@ public class ManagementCharacterObjects : MonoBehaviour
     }
     public void OnUseObject(InputAction.CallbackContext context)
     {
-        if (character.isActive && playerInputs.characterActionsInfo.isShowInventory)
+        if (character.isActive && !playerInputs.characterActionsInfo.isSkillsActive && playerInputs.characterActionsInfo.isShowInventory)
         {
             character.characterHud.IncreaseInventoryElapsedTime();
             ValidateUseItem();
@@ -168,7 +168,22 @@ public class ManagementCharacterObjects : MonoBehaviour
     {
         if (objects[itemIndex].objectData != null)
         {
+            for (int i = 0; i < objects.Length; i++)
+            {
+                if (i != itemIndex && objects[i].isUsingItem && objects[i].objectData.typeObject == objects[itemIndex].objectData.typeObject)
+                {
+                    objects[i].objectData.objectInstance.GetComponent<ObjectBase>().UseObject(character, objects[i], this);
+                }
+            }
             objects[itemIndex].objectData.objectInstance.GetComponent<ObjectBase>().UseObject(character, objects[itemIndex], this);
+        }
+    }
+
+    public void DesactiveObjectByIndex(int pos)
+    {
+        if (objects[pos].objectData != null)
+        {
+            objects[pos].objectData.objectInstance.GetComponent<ObjectBase>().UseObject(character, objects[pos], this);
         }
     }
     public void DropObject()
@@ -176,6 +191,13 @@ public class ManagementCharacterObjects : MonoBehaviour
         if (objects[itemIndex].objectData != null)
         {
             objects[itemIndex].objectData.objectInstance.GetComponent<ObjectBase>().DropObject(character, objects[itemIndex], this);
+        }
+    }
+    public void DropObjectByPos(int pos)
+    {
+        if (objects[pos].objectData != null)
+        {
+            objects[pos].objectData.objectInstance.GetComponent<ObjectBase>().DropObject(character, objects[pos], this);
         }
     }
     public void InstanceObjectInHand(GameObject objectInHand, bool isLeftHand)
@@ -243,6 +265,18 @@ public class ManagementCharacterObjects : MonoBehaviour
         foreach (ObjectsInfo objectInfo in objects)
         {
             if (objectInfo.objectData == objectToFind.GetComponent<ObjectBase>().objectInfo.objectData)
+            {
+                objectsFinded.Add(objectInfo);
+            }
+        }
+        return objectsFinded.ToArray();
+    }
+    public ObjectsInfo[] FindObjectsByType(ItemsDataSO.TypeObject typeObjects)
+    {
+        List<ObjectsInfo> objectsFinded = new List<ObjectsInfo>();
+        foreach (ObjectsInfo objectInfo in objects)
+        {
+            if (objectInfo.objectData && objectInfo.objectData.typeObject == typeObjects)
             {
                 objectsFinded.Add(objectInfo);
             }

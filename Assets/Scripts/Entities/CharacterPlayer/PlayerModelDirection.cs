@@ -44,8 +44,7 @@ public class PlayerModelDirection : CharacterModelDirection
             Quaternion.Euler(0, movementDirectionAnimation.x > 0 ? -180 : 0, 0);
         directionPlayer.transform.LookAt(new Vector3(characterTarget.transform.position.x, directionPlayer.transform.position.y, characterTarget.transform.position.z));
         if (!characterTarget.isActive || 
-        Vector3.Distance(characterTarget.transform.position, transform.position) > rayDistanceTarget || 
-        character.isPlayer && playerInputs.characterActions.CharacterInputs.Target.triggered)
+        Vector3.Distance(characterTarget.transform.position, transform.position) > rayDistanceTarget || playerInputs.characterActions.CharacterInputs.Target.triggered)
         {
             characterTarget = null;
         }

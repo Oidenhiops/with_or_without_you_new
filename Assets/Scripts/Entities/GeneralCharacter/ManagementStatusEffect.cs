@@ -1,17 +1,23 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using AYellowpaper.SerializedCollections;
 using UnityEngine;
 
 public class ManagementStatusEffect : MonoBehaviour
 {
     public Character character;
-public SerializedDictionary<StatusEffectSO.TypeStatusEffect, StatusEffectsData> statusEffects = new SerializedDictionary<StatusEffectSO.TypeStatusEffect, StatusEffectsData>();
+    public SerializedDictionary<StatusEffectSO.TypeStatusEffect, StatusEffectsData> statusEffects = new SerializedDictionary<StatusEffectSO.TypeStatusEffect, StatusEffectsData>();
+    public TestEffects testEffects;
+
+    [NaughtyAttributes.Button]
+    public void Test()
+    {
+        testEffects.TestEffect();
+    }
     void Update()
     {
-        if (character.isActive && GameManager.Instance.startGame)
+        if (character.isInitialize && GameManager.Instance.startGame)
         {
             if (statusEffects.Count > 0)
             {
@@ -21,53 +27,100 @@ public SerializedDictionary<StatusEffectSO.TypeStatusEffect, StatusEffectsData> 
                     status.currentTime -= Time.deltaTime;
                     if (status.currentTime <= 0)
                     {
+                        status.currentAccumulations--;
+                        status.currentTime = status.statusEffectSO.timePerAccumulation;
+                        if(status.currentAccumulations > 0) status.statusEffectSO.statusEffectInstance.GetComponent<StatusEffectBase>().DecreaseAccumulation(status.objectMakeEffect, status.objectTakeEffect);
+                    }
+                    else if (status.currentAccumulations <= 0)
+                    {
                         character.characterHud.DestroyStatusEffect(status.statusEffectSO.typeStatusEffect);
                         statusEffects.Remove(status.statusEffectSO.typeStatusEffect);
-                    }
-                    else
-                    {
-                        status.currentAccumulations = (int)Math.Ceiling(status.currentTime / status.statusEffectSO.timePerAcumulation);
+                        status.statusEffectSO.statusEffectInstance.GetComponent<StatusEffectBase>().Finish(status.objectMakeEffect, status.objectTakeEffect);
                     }
                 }
             }
         }
     }
-    public void AddStatus(StatusEffectSO statusEffectSO, GameObject objectMakeEffect = null, GameObject objectToMakeEffect = null){
-        if (statusEffects.TryGetValue(statusEffectSO.typeStatusEffect, out StatusEffectsData statusEffectsData)){
-            if (statusEffectsData.currentTime + statusEffectSO.timePerAcumulation > statusEffectSO.timePerAcumulation * statusEffectSO.maxAccumulations)
+    public void AddStatus(StatusEffectSO statusEffectSO, GameObject objectMakeEffect, GameObject objectTakeEffect)
+    {
+        if (statusEffects.TryGetValue(statusEffectSO.typeStatusEffect, out StatusEffectsData statusEffectsData))
+        {
+            statusEffectsData.currentAccumulations++;
+            
+            if (statusEffectsData.currentAccumulations > statusEffectSO.maxAccumulations)
             {
                 statusEffectsData.currentAccumulations = statusEffectSO.maxAccumulations;
-                statusEffectsData.currentTime = statusEffectSO.timePerAcumulation * statusEffectSO.maxAccumulations;                
+                statusEffectsData.currentTime = statusEffectSO.timePerAccumulation;
+                statusEffectsData.statusEffectSO.statusEffectInstance.GetComponent<StatusEffectBase>().AllAccumulationsReached(objectMakeEffect, objectTakeEffect);
             }
             else
             {
-                statusEffectsData.currentAccumulations++;
-                statusEffectsData.currentTime += statusEffectSO.timePerAcumulation;
+                statusEffectsData.statusEffectSO.statusEffectInstance.GetComponent<StatusEffectBase>().ReApply(objectMakeEffect, objectTakeEffect);
             }
         }
         else
         {
-            Coroutine effectCoroutine = StartCoroutine(statusEffectSO.statusEffectInstance.GetComponent<IStatusEffect>().ApplyStatusEffect(objectMakeEffect, objectToMakeEffect));
-            statusEffects.Add(statusEffectSO.typeStatusEffect, new StatusEffectsData (statusEffectSO, statusEffectSO.timePerAcumulation, 1, effectCoroutine));
-            character.characterHud.UpdateStatusEffect(statusEffects[statusEffectSO.typeStatusEffect]);
+            statusEffects.Add(statusEffectSO.typeStatusEffect, new StatusEffectsData(statusEffectSO, statusEffectSO.timePerAccumulation, 1, objectMakeEffect, objectTakeEffect));
+            statusEffectSO.statusEffectInstance.GetComponent<StatusEffectBase>().Apply(objectMakeEffect, objectTakeEffect);
         }
+        character.characterHud.UpdateStatusEffect(statusEffects[statusEffectSO.typeStatusEffect]);
     }
-    [Serializable] public class StatusEffectsData
+    public bool StatusEffectExist(StatusEffectSO.TypeStatusEffect typeStatusEffect)
+    {
+        return statusEffects.ContainsKey(typeStatusEffect);
+    }
+    public bool GetStatusEffect(StatusEffectSO.TypeStatusEffect typeStatusEffect, out StatusEffectsData statusEffectsData)
+    {
+        if (statusEffects.TryGetValue(typeStatusEffect, out StatusEffectsData statusEffect))
+        {
+            statusEffectsData = statusEffect;
+            return true;
+        }
+        statusEffectsData = null;
+        return false;
+    }
+    [Serializable]
+    public class StatusEffectsData
     {
         public StatusEffectSO statusEffectSO;
         public float currentTime = 0;
         public int currentAccumulations = 0;
-        public Coroutine effectCoroutine = null;
-        public StatusEffectsData( StatusEffectSO statusEffectSO, float currentTime, int currentAccumulations, Coroutine effectCoroutine)
+        public bool statisticsApply;
+        public GameObject objectMakeEffect;
+        public GameObject objectTakeEffect;
+        public StatusEffectsData(StatusEffectSO statusEffectSO, float currentTime, int currentTimeAccumulations, GameObject objectMakeEffect, GameObject objectTakeEffect)
         {
             this.statusEffectSO = statusEffectSO;
             this.currentTime = currentTime;
-            this.currentAccumulations = currentAccumulations;
-            this.effectCoroutine = effectCoroutine;
+            this.currentAccumulations = currentTimeAccumulations;
+            this.objectMakeEffect = objectMakeEffect;
+            this.objectTakeEffect = objectTakeEffect;
         }
     }
-    public interface IStatusEffect
+    [Serializable]
+    public class TestEffects
     {
-        public IEnumerator ApplyStatusEffect(GameObject objectMakeEffect, GameObject objectToMakeEffect);
+        public ManagementStatusEffect managementStatusEffect;
+        public StatusEffectSO statusEffectSO;
+        public GameObject objectMakeEffect;
+        public GameObject objectTakeEffect;
+        public void TestEffect()
+        {
+
+            if (!statusEffectSO)
+            {
+                Debug.LogError("Es necesario un efecto de estado");
+                return;
+            }
+
+            if (objectMakeEffect && objectTakeEffect)
+            {
+                managementStatusEffect.AddStatus(statusEffectSO, objectMakeEffect, objectTakeEffect);
+            }
+            else
+            {
+                Debug.LogError("No se tienen los campos necesarios para testear el efecto");
+            }
+        }
     }
 }

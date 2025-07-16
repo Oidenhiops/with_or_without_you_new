@@ -9,6 +9,7 @@ public class GameData : MonoBehaviour
     string nameSaveData = "SaveData.json";
     public ItemsDBSO itemsDB;
     public SkillsDBSO skillsDB;
+    public CharactersDBSO charactersDBSO;
     public SaveData saveData = new SaveData();
     public Dictionary<TypeLOCS, List<string[]>> locs = new Dictionary<TypeLOCS, List<string[]>>();
     void Awake()
@@ -30,7 +31,8 @@ public class GameData : MonoBehaviour
         {
             CheckFileExistance(DataPath());
             saveData = ReadDataFromJson();
-            saveData.gameInfo.characterInfo.characterSelected = Resources.Load<InitialDataSO>($"SciptablesObjects/Character/InitialData/{saveData.gameInfo.characterInfo.characterSelectedName}");
+            charactersDBSO.characters.TryGetValue(saveData.gameInfo.characterInfo.characterSelectedId, out CharactersDBSO.CharactersData characterSelected);
+            saveData.gameInfo.characterInfo.characterSelected = characterSelected;
             LoadLOCS();
             InitializeResolutionData();
             InitializeItems();
@@ -175,6 +177,10 @@ public class GameData : MonoBehaviour
     {
         SaveData dataInfo = new SaveData();
         dataInfo.configurationsInfo.currentLanguage = TypeLanguage.English;
+        for (int i = 0; i < charactersDBSO.characters.Count; i++)
+        {
+            charactersDBSO.characters[i].isUnlock = true;
+        }
         SetStartingDataSound(dataInfo);
         SetStartingPlayerData(dataInfo);
         if (GameManager.Instance.currentDevice == GameManager.TypeDevice.PC) SetStartingResolution(ref dataInfo);
@@ -185,7 +191,8 @@ public class GameData : MonoBehaviour
     void SetStartingPlayerData(SaveData dataInfo)
     {
         CharacterInfo newCharacterInfo = new CharacterInfo();
-        newCharacterInfo.characterSelectedName = "Warrior";
+        newCharacterInfo.level = 1;
+        newCharacterInfo.characterSelectedId = 0;
         dataInfo.gameInfo.characterInfo = newCharacterInfo;
     }
     void SetStartingDataSound(SaveData dataInfo)
@@ -266,8 +273,10 @@ public class GameData : MonoBehaviour
     public class CharacterInfo
     {
         public bool isInitialize = false;
-        public string characterSelectedName;
-        public InitialDataSO characterSelected;
+        public string characterName;
+        public int level;
+        public int characterSelectedId;
+        public CharactersDBSO.CharactersData characterSelected;
         public ManagementCharacterSkills.SkillInfo[] currentSkills = new ManagementCharacterSkills.SkillInfo[4];
         public ManagementCharacterObjects.ObjectsInfo[] currentObjects = new ManagementCharacterObjects.ObjectsInfo[6];
     }

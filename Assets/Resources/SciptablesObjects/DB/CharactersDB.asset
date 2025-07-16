@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9284ff0206fab5247bcf4c0d6d4ab535, type: 3}
+  m_Name: CharactersDB
+  m_EditorClassIdentifier: 
+  characters:
+    _serializedList:
+    - Key: 0
+      Value:
+        initialDataSO: {fileID: 11400000, guid: d87415dd8c1f1734fbe0069bc8a52cc8,
+          type: 2}
+        isUnlock: 1
+    - Key: 1
+      Value:
+        initialDataSO: {fileID: 11400000, guid: 34c2ad1c338389e40a9ca8d4b9c15af9,
+          type: 2}
+        isUnlock: 0
+    - Key: 2
+      Value:
+        initialDataSO: {fileID: 11400000, guid: 69b787e98e827bf4cb8749046079af01,
+          type: 2}
+        isUnlock: 0
+    - Key: 3
+      Value:
+        initialDataSO: {fileID: 11400000, guid: fbcd7d4f710bf254a81b8d8d0fe93deb,
+          type: 2}
+        isUnlock: 0
+    - Key: 4
+      Value:
+        initialDataSO: {fileID: 11400000, guid: 5bf8a6aa8a1a7fa4ea1fb4496c143f63,
+          type: 2}
+        isUnlock: 0
+    - Key: 5
+      Value:
+        initialDataSO: {fileID: 11400000, guid: a81b68bccdb2c0f48a76a3302331d7f3,
+          type: 2}
+        isUnlock: 1

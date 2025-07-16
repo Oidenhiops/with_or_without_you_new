@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 using UnityEngine.InputSystem;
-using System.Collections;
 using UnityEngine.EventSystems;
 using System.Threading.Tasks;
 
@@ -107,13 +105,16 @@ public class ManagementCharacterInteract : MonoBehaviour
 
         interactables.Clear();
 
-        for (int i = 0; i < count; i++)
+        if (!character.statusEffect.StatusEffectExist(StatusEffectSO.TypeStatusEffect.Disarm))
         {
-            var hit = hitBuffer[i];
-            var interact = hit.collider.GetComponent<ManagementInteract>();
-            if (interact != null && interact.canInteract)
+            for (int i = 0; i < count; i++)
             {
-                interactables.Add(hit.collider.gameObject);
+                var hit = hitBuffer[i];
+                var interact = hit.collider.GetComponent<ManagementInteract>();
+                if (interact != null && interact.canInteract)
+                {
+                    interactables.Add(hit.collider.gameObject);
+                }
             }
         }
 

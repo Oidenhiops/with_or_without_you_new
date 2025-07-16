@@ -17,7 +17,12 @@ public class ManagementCharacterHud : MonoBehaviour
         {
             GameManager.Instance.OnDeviceChanged += EnabledMobileHUD;
             EnabledMobileHUD(GameManager.Instance.currentDevice);
+            InitializeHUD();
         }
+    }
+    void InitializeHUD()
+    {
+        characterUi.levelText.text = character.level.ToString();
     }
     void OnDestroy()
     {
@@ -40,7 +45,7 @@ public class ManagementCharacterHud : MonoBehaviour
     }
     public void Update()
     {
-        if (character.isActive)
+        if (character.isInitialize)
         {
             if (characterUi.hudUi.healthBarFront != null)
             {
@@ -95,8 +100,7 @@ public class ManagementCharacterHud : MonoBehaviour
                 foreach (var status in characterUi.statusEffectsUi.statusEffectsData)
                 {
                     status.Value.statusEffectUi.statusEffectAccumulations.text = status.Value.statusEffectsData.currentAccumulations > 1 ? status.Value.statusEffectsData.currentAccumulations.ToString() : "";
-                    float realValueValue = status.Value.statusEffectsData.currentTime - status.Value.statusEffectsData.statusEffectSO.timePerAcumulation * (status.Value.statusEffectsData.currentAccumulations - 1);
-                    status.Value.statusEffectUi.statusEffectFill.fillAmount = realValueValue / status.Value.statusEffectsData.statusEffectSO.timePerAcumulation;
+                    status.Value.statusEffectUi.statusEffectFill.fillAmount = status.Value.statusEffectsData.currentTime / status.Value.statusEffectsData.statusEffectSO.timePerAccumulation;
                 }
             }
             if (characterUi.windUpFillAmount != null)
@@ -302,7 +306,11 @@ public class ManagementCharacterHud : MonoBehaviour
     }
     public void UpdateStatusEffect(ManagementStatusEffect.StatusEffectsData statusEffectsData)
     {
-        if (!characterUi.statusEffectsUi.statusEffectsData.ContainsKey(statusEffectsData.statusEffectSO.typeStatusEffect))
+        if (characterUi.statusEffectsUi.statusEffectsData.TryGetValue(statusEffectsData.statusEffectSO.typeStatusEffect, out StatusEffectsData effectData))
+        {
+            effectData.statusEffectUi.UpdateInfo(statusEffectsData);
+        }
+        else
         {
             StatusEffectUiHelper statusEffectsUi = Instantiate(Resources.Load<GameObject>("Prefabs/UI/StatusEffect/StatusEffectUi"), characterUi.statusEffectsUi.statusEffectContainer).GetComponent<StatusEffectUiHelper>();
             characterUi.statusEffectsUi.statusEffectsData.Add(
@@ -312,6 +320,7 @@ public class ManagementCharacterHud : MonoBehaviour
                     statusEffectsData
                 )
             );
+            statusEffectsUi.SetInfo(statusEffectsData);
         }
     }
     public void DestroyStatusEffect(StatusEffectSO.TypeStatusEffect typeStatusEffect)
@@ -358,6 +367,7 @@ public class ManagementCharacterHud : MonoBehaviour
         }
         public Image windUpFillAmount;
         public InventoryUi inventoryUi;
+        public TMP_Text levelText;
     }
     [Serializable]
     public class HudUi

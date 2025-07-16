@@ -14,6 +14,7 @@ public class FloatingText : MonoBehaviour
     public TextAnimator_TMP textAnimator_TMP;
     public async Task SendText(string value, Color color)
     {
+        transform.position += new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(0, 0.5f), Random.Range(-0.5f, 0.5f));
         textSelected = value;
         colorSelected = color;
         await Awaitable.WaitForSecondsAsync(0.1f);

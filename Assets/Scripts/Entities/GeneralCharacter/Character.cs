@@ -8,7 +8,7 @@ public class Character : MonoBehaviour
 {
     #region References
     public ManagementCharacterHud characterHud;
-    public PlayerModelDirection characterModelDirection;
+    public CharacterModelDirection characterModelDirection;
     public ManagementCharacterObjects characterObjects;
     public ManagementCharacterSkills characterSkills;
     public ManagementCharacterInteract characterInteract;
@@ -22,13 +22,16 @@ public class Character : MonoBehaviour
     public Coroutine hitStop;
     public Rigidbody rb;
     Collider[] hitColliders = new Collider[10];
+    public event Action<bool> OnTakeDamage;
     #endregion
     public bool autoInit = false;
     public InitialDataSO initialData;
     public bool isPlayer = false;
     public bool isActive = false;
+    public bool isInitialize = false;
     public bool isGrounded => SetGrounded();
     public Color colorBlood = Color.white;
+    public int level;
     public SerializedDictionary<TypeStatistics, Statistics> characterStatistics = new SerializedDictionary<TypeStatistics, Statistics>{
         {TypeStatistics.Hp, new Statistics (TypeStatistics.Hp, 0, 0, 0, 0, 0)},
         {TypeStatistics.Sp, new Statistics (TypeStatistics.Sp, 0, 0, 0, 0, 0)},
@@ -50,16 +53,14 @@ public class Character : MonoBehaviour
     {
         try
         {
-            if (isPlayer)
+            if (isPlayer && GameData.Instance.saveData.gameInfo.characterInfo.characterSelected != null)
             {
-                if (GameData.Instance.saveData.gameInfo.characterInfo.characterSelected != null)
-                {
-                    initialData = GameData.Instance.saveData.gameInfo.characterInfo.characterSelected.Clone();
-                }
-                else
-                {
-                    initialData = initialData.Clone();
-                }
+                initialData = GameData.Instance.saveData.gameInfo.characterInfo.characterSelected.initialDataSO.Clone();
+                SetLevel(GameData.Instance.saveData.gameInfo.characterInfo.level);
+            }
+            else
+            {
+                initialData = initialData.Clone();
             }
 
             await InitializeStatistics();
@@ -75,6 +76,7 @@ public class Character : MonoBehaviour
             }
             rb.isKinematic = false;
             isActive = true;
+            isInitialize = true;
         }
         catch (Exception e)
         {
@@ -174,6 +176,11 @@ public class Character : MonoBehaviour
             {
                 GetStatisticByType(TypeStatistics.Hp).currentValue = 0;
                 Die();
+                OnTakeDamage?.Invoke(false);
+            }
+            else
+            {
+                OnTakeDamage?.Invoke(true);
             }
             characterAnimations.MakeAnimation(CharacterAnimationsSO.TypeAnimation.None, "TakeDamage");
             AudioManager.Instance.PlayASound(AudioManager.Instance.GetAudioClip("TakeDamage"), 1, true);
@@ -239,6 +246,10 @@ public class Character : MonoBehaviour
         {
             Invoke("ReloadScene", AudioManager.Instance.GetAudioClip("Die").length + 1);
         }
+        else
+        {
+            Destroy(gameObject, 3);
+        }
         characterAnimations.GetAnimation(CharacterAnimationsSO.TypeAnimation.None, "TakeDamage").loop = true;
         dissolve.DissolveObject();
         GameObject bloodInstance = Instantiate(Resources.Load<GameObject>("Prefabs/Effects/BloodDieEffect/BloodDieEffect"), transform.position, Quaternion.identity);
@@ -246,6 +257,7 @@ public class Character : MonoBehaviour
         var particleSystem = bloodInstance.GetComponent<ParticleSystem>();
         var mainModule = particleSystem.main;
         mainModule.startColor = colorBlood;
+        StopCoroutine(regenerateResources);
     }
     public async Awaitable InitializeStatistics()
     {
@@ -275,6 +287,10 @@ public class Character : MonoBehaviour
             Debug.LogError(e);
             await Awaitable.NextFrameAsync();
         }
+    }
+    public void SetLevel(int levelForSet)
+    {
+        level = levelForSet;
     }
     public Statistics GetStatisticByType(TypeStatistics typeStatistics)
     {

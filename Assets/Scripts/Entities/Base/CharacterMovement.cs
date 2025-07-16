@@ -7,10 +7,10 @@ public class CharacterMovement : MonoBehaviour
 {
     public Character character;
     public Vector3 movementDirection;
-    protected SerializedDictionary<string, OtherForceMovements> otherForceMovements = new SerializedDictionary<string, OtherForceMovements>();
+    public SerializedDictionary<string, OtherForceMovements> otherForceMovements = new SerializedDictionary<string, OtherForceMovements>();
     protected Vector3 otherForceMovement;
+    protected Vector3 direction;
     protected float jumpForce = 3;
-    protected float speed = 0;
     void Update()
     {
         if (character.isActive && GameManager.Instance.startGame) Move();

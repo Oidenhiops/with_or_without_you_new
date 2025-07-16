@@ -46,12 +46,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemsDB: {fileID: 11400000, guid: fcfffaa77147a9940894d710ef06fdb3, type: 2}
   skillsDB: {fileID: 11400000, guid: 3cdbef6d97e299b4993574b5b6a8d4ea, type: 2}
+  charactersDBSO: {fileID: 11400000, guid: ef86327c819f67f4a842076c8329b89b, type: 2}
   saveData:
     gameInfo:
       characterInfo:
         isInitialize: 0
-        characterSelectedName: 
-        characterSelected: {fileID: 0}
+        characterName: 
+        level: 0
+        characterSelectedId: 0
+        characterSelected:
+          initialDataSO: {fileID: 0}
+          isUnlock: 0
         currentSkills:
         - skillId: 0
           skillData: {fileID: 0}
@@ -106,6 +111,7 @@ MonoBehaviour:
           objectInstance: {fileID: 0}
     configurationsInfo:
       _currentLanguage: 0
+      _canShowFps: 0
       FpsLimit: 0
       resolutionConfiguration:
         isFullScreen: 0
