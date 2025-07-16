@@ -6,14 +6,14 @@ public class PlayerMovement : CharacterMovement
     public PlayerCamera playerCamera;
     public override void Move()
     {
-        Vector3 inputs = new Vector3
+        direction = new Vector3
         (
             playerInputs.characterActionsInfo.movement.x,
             0,
             playerInputs.characterActionsInfo.movement.y
         ).normalized;
         playerCamera.CamDirection(out Vector3 camForward, out Vector3 camRight);
-        Vector3 camDirection = (inputs.x * camRight + inputs.z * camForward).normalized;
+        Vector3 camDirection = (direction.x * camRight + direction.z * camForward).normalized;
         movementDirection = new Vector3
         (
             camDirection.x,
@@ -27,10 +27,9 @@ public class PlayerMovement : CharacterMovement
     }
     void CalculateDirectionForce()
     {
-        speed = character.GetStatisticByType(Character.TypeStatistics.Spd).currentValue;
-        movementDirection.x *= speed;
+        movementDirection.x *= character.GetStatisticByType(Character.TypeStatistics.Spd).currentValue;
         movementDirection.y = character.rb.linearVelocity.y;
-        movementDirection.z *= speed;
+        movementDirection.z *= character.GetStatisticByType(Character.TypeStatistics.Spd).currentValue;
         movementDirection += otherForceMovement;
     }
     void Jump()

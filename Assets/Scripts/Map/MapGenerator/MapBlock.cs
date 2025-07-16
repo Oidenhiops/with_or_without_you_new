@@ -19,18 +19,6 @@ public class MapBlock : MonoBehaviour
     public bool detectRight = false;
     public bool detectForward = false;
     public bool detectBack = false;
-    public bool detectUpLeft = false;
-    public bool detectUpRight = false;
-    public bool detectDownLeft = false;
-    public bool detectDownRight = false;
-    public bool detectUpForward = false;
-    public bool detectUpBack = false;
-    public bool detectDownForward = false;
-    public bool detectDownBack = false;
-    public bool detectForwardLeft = false;
-    public bool detectForwardRigth = false;
-    public bool detectBackLeft = false;
-    public bool detectBackRigth = false;
     private Vector3 up = new Vector3(0, 1, 0);
     private Vector3 down = new Vector3(0, -1, 0);
     private Vector3 left = new Vector3( -1, 0, 0);
@@ -78,18 +66,6 @@ public class MapBlock : MonoBehaviour
             if (detectRight) CheckDirection(right, TypeDirections.Rigth);
             if (detectForward) CheckDirection(forward, TypeDirections.Forward);
             if (detectBack) CheckDirection(back, TypeDirections.Back);
-            if (detectUpLeft) CheckDirection(up + left, TypeDirections.UpLeft);
-            if (detectUpRight) CheckDirection(up + Vector3.right, TypeDirections.UpRigth);
-            if (detectDownLeft) CheckDirection(down + left, TypeDirections.DownLeft);
-            if (detectDownRight) CheckDirection(down + right, TypeDirections.DownRigth);
-            if (detectUpForward) CheckDirection(up + forward, TypeDirections.UpForward);
-            if (detectUpBack) CheckDirection(up + back, TypeDirections.UpBack);
-            if (detectDownForward) CheckDirection(down + forward, TypeDirections.DownForward);
-            if (detectDownBack) CheckDirection(down + back, TypeDirections.DownBack);
-            if (detectForwardLeft) CheckDirection(forward + left, TypeDirections.ForwardLeft);
-            if (detectForwardRigth) CheckDirection(forward + right, TypeDirections.ForwardRight);
-            if (detectBackLeft) CheckDirection(back + left, TypeDirections.BackLeft);
-            if (detectBackRigth) CheckDirection(back + right, TypeDirections.BackRight);
         }
     }
     [NaughtyAttributes.Button]

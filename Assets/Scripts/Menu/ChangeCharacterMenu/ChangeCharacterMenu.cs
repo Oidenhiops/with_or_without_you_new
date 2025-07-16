@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Text.RegularExpressions;
+using AYellowpaper.SerializedCollections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,7 +9,7 @@ public class ChangeCharacterMenu : MonoBehaviour
 {
     public StaticticsUi[] staticticsUi;
     public InitialDataSO characterSelected;
-    public InitialDataSO[] allCharacters;
+    public SerializedDictionary<int, CharactersDBSO.CharactersData> allCharacters = new SerializedDictionary<int, CharactersDBSO.CharactersData>();
     public bool isSkillWindow = false;
     public bool isObjectsWindow = false;
     public TMP_Text nameCharacter;
@@ -20,13 +21,19 @@ public class ChangeCharacterMenu : MonoBehaviour
     public Button playButton;
 
     public void OnEnable()
-    {        
-        allCharacters = Resources.LoadAll<InitialDataSO>("SciptablesObjects/Character/InitialData");
-        characterSelected = GameData.Instance.saveData.gameInfo.characterInfo.characterSelected;
-        GameData.Instance.saveData.gameInfo.characterInfo.currentSkills = characterSelected.skills;
-        for (int i = 0; i < allCharacters.Length; i++)
+    {
+        foreach (var kv in GameData.Instance.charactersDBSO.characters)
         {
-            if (characterSelected == allCharacters[i])
+            if (kv.Value.isUnlock)
+            {
+                allCharacters.Add(kv.Key, kv.Value);
+            }
+        }
+        characterSelected = GameData.Instance.saveData.gameInfo.characterInfo.characterSelected.initialDataSO;
+        GameData.Instance.saveData.gameInfo.characterInfo.currentSkills = characterSelected.skills;
+        for (int i = 0; i < allCharacters.Count; i++)
+        {
+            if (characterSelected == allCharacters[i].initialDataSO)
             {
                 currentIndex = i;
                 break;
@@ -106,18 +113,19 @@ public class ChangeCharacterMenu : MonoBehaviour
         {
             currentIndex--;
         }
-        if (currentIndex > allCharacters.Length - 1)
+        if (currentIndex > allCharacters.Count - 1)
         {
             currentIndex = 0;
         }
         else if (currentIndex < 0)
         {
-            currentIndex = allCharacters.Length - 1;
+            currentIndex = allCharacters.Count - 1;
         }
-        characterSelected = allCharacters[currentIndex];
-        GameData.Instance.saveData.gameInfo.characterInfo.characterSelected = characterSelected;
+        int key = allCharacters.ToList()[currentIndex].Key;
+        characterSelected = allCharacters[key].initialDataSO;
+        GameData.Instance.saveData.gameInfo.characterInfo.characterSelected = allCharacters[key];
         GameData.Instance.saveData.gameInfo.characterInfo.currentSkills = characterSelected.skills;
-        GameData.Instance.saveData.gameInfo.characterInfo.characterSelectedName = characterSelected.name;
+        GameData.Instance.saveData.gameInfo.characterInfo.characterSelectedId = key;
         SetCharacterSprite();
         SetCharacterData();
     }

@@ -137,10 +137,5 @@ MonoBehaviour:
     amount: 3
     isUsingItem: 0
     objectInstance: {fileID: 0}
-  - objectId: 0
-    objectData: {fileID: 11400000, guid: d9835861ae8bd2045994383e986603f1, type: 2}
-    amount: 2
-    isUsingItem: 0
-    objectInstance: {fileID: 0}
   characterAnimations: {fileID: 11400000, guid: e1c26a1abde824a46979ba4502d9d78c,
     type: 2}

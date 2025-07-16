@@ -91,10 +91,11 @@ public class PlayerInputs : MonoBehaviour
     }
     void OnEnableSecondaryAction(InputAction.CallbackContext context)
     {
-        if (!characterActionsInfo.isSkillsActive)
+        if (!characterActionsInfo.isSkillsActive && characterActionsInfo.isShowInventory)
         {
             characterActionsInfo.isSecondaryAction = !characterActionsInfo.isSecondaryAction;
             character.characterHud.ToggleSecondaryAction(characterActionsInfo.isSecondaryAction);
+            character.characterHud.IncreaseInventoryElapsedTime();
         }
     }
     void OnShowStats(InputAction.CallbackContext context)

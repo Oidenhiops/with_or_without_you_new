@@ -17,7 +17,23 @@ public class CharacterModelDirection : MonoBehaviour
     {
         if (character.isActive && GameManager.Instance.startGame) ChangeModelDirection();
     }
-    public virtual void ChangeModelDirection() { Debug.LogError("Not Implemented Model Direction"); }
+    public virtual void ChangeModelDirection()
+    {
+        if (characterTarget) LookToTarget();
+    }
+    private void LookToTarget()
+    {
+        movementDirectionAnimation = Camera.main.WorldToViewportPoint(characterTarget.transform.position) - Camera.main.WorldToViewportPoint(transform.position);
+        movementCharacter.x = character.rb.linearVelocity.x;
+        movementCharacter.y = character.rb.linearVelocity.z;
+        character.characterAnimations.GetCharacterSprite().transform.localRotation =
+            Quaternion.Euler(0, movementDirectionAnimation.x > 0 ? -180 : 0, 0);
+        directionPlayer.transform.LookAt(new Vector3(characterTarget.transform.position.x, directionPlayer.transform.position.y, characterTarget.transform.position.z));
+        if (!characterTarget.isActive)
+        {
+            characterTarget = null;
+        }
+    }
     void OnDrawGizmos()
     {
         if (directionPlayer != null)
@@ -35,8 +51,15 @@ public class CharacterModelDirection : MonoBehaviour
             Gizmos.DrawWireCube(Vector3.zero + Vector3.forward * (rayDistanceTarget / 2), new Vector3(Vector3.one.x * 2, Vector3.one.y * 2, rayDistanceTarget));
         }
     }
-    public void SetTarget(GameObject target)
+    public void SetTarget(Transform target)
     {
-        characterTarget = target.GetComponent<Character>();
+        if (target)
+        {
+            characterTarget = target.GetComponent<Character>();
+        }
+        else
+        {
+            characterTarget = null;
+        }
     }
 }

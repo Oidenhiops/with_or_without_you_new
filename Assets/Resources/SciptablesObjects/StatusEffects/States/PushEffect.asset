@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92648e2aae4d8174fb0e4c189dc5b093, type: 3}
   m_Name: PushEffect
   m_EditorClassIdentifier: 
+  spriteStatusEffect: {fileID: 2138513024, guid: 91db74d8f8fc68a4fbce8adb870dd336,
+    type: 3}
   typeStatusEffect: 1
+  typeEffect: 0
   statusEffectInstance: {fileID: 5782676205259397931, guid: 46d808f68fd210e4b84b6a62363a20fd,
     type: 3}
   maxAccumulations: 1
-  timePerAcumulation: 0.6
+  timePerAccumulation: 0.5

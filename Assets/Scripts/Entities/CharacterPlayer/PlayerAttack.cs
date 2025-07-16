@@ -10,7 +10,7 @@ public class PlayerAttack : ManagementCharacterAttack
     }
     public override void ValidateAttackMobile()
     {
-        if (!character.isActive || !GameManager.Instance.startGame) return;
+        if (!character.isActive || !GameManager.Instance.startGame && character.statusEffect.StatusEffectExist(StatusEffectSO.TypeStatusEffect.Disarm)) return;
         
         if (character.characterAnimations != null &&
             character.characterAnimations.ValidateAnimationEnd("TakeDamage") &&

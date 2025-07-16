@@ -36,7 +36,6 @@ public class ManagementCharacterAttack : MonoBehaviour
                 character.characterAnimations.ValidateAnimationEnd("TakeDamage") &&
                 ValidateAllAnimationsAttackEnd() && cooldownAttack <= 0)
             {
-                characterDirection.SetTarget(hitColliders[0].gameObject);
                 StartAttack();
             }
         }
