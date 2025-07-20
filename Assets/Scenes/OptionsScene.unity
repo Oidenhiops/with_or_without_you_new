@@ -172,7 +172,6 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 11348059}
   id: 33
-  currentLanguage: 0
 --- !u!114 &11348059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -362,7 +361,6 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 28715292}
   id: 29
-  currentLanguage: 0
 --- !u!114 &28715292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -680,7 +678,6 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 51145210}
   id: 16
-  currentLanguage: 0
 --- !u!1 &55306219
 GameObject:
   m_ObjectHideFlags: 0
@@ -917,7 +914,6 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 66757818}
   id: 25
-  currentLanguage: 0
 --- !u!114 &66757818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1071,7 +1067,6 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 67977020}
   id: 26
-  currentLanguage: 0
 --- !u!114 &67977020
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1184,6 +1179,7 @@ GameObject:
   - component: {fileID: 78808198}
   - component: {fileID: 78808197}
   - component: {fileID: 78808196}
+  - component: {fileID: 78808199}
   m_Layer: 5
   m_Name: WindowModeWindowButton
   m_TagString: Untagged
@@ -1305,6 +1301,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 78808194}
   m_CullTransparentMesh: 1
+--- !u!114 &78808199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 78808194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6912e14b245d6d04286da236a12c492d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &87807740
 GameObject:
   m_ObjectHideFlags: 0
@@ -1358,7 +1366,6 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 87807743}
   id: 31
-  currentLanguage: 0
 --- !u!114 &87807743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1512,7 +1519,6 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 99575004}
   id: 19
-  currentLanguage: 0
 --- !u!114 &99575004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2041,6 +2047,7 @@ GameObject:
   - component: {fileID: 167393536}
   - component: {fileID: 167393535}
   - component: {fileID: 167393534}
+  - component: {fileID: 167393537}
   m_Layer: 5
   m_Name: MasterSliderPlusButton
   m_TagString: Untagged
@@ -2174,6 +2181,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 167393532}
   m_CullTransparentMesh: 1
+--- !u!114 &167393537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 167393532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6912e14b245d6d04286da236a12c492d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &185435190
 GameObject:
   m_ObjectHideFlags: 0
@@ -2323,6 +2342,7 @@ GameObject:
   - component: {fileID: 185479517}
   - component: {fileID: 185479516}
   - component: {fileID: 185479515}
+  - component: {fileID: 185479518}
   m_Layer: 5
   m_Name: FpsLimit120Button
   m_TagString: Untagged
@@ -2457,6 +2477,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 185479513}
   m_CullTransparentMesh: 1
+--- !u!114 &185479518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 185479513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6912e14b245d6d04286da236a12c492d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &197827112
 GameObject:
   m_ObjectHideFlags: 0
@@ -3018,7 +3050,6 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 337416328}
   id: 25
-  currentLanguage: 0
 --- !u!114 &337416328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3448,7 +3479,6 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 413525491}
   id: 32
-  currentLanguage: 0
 --- !u!114 &413525491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3825,7 +3855,6 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 444232647}
   id: 33
-  currentLanguage: 0
 --- !u!114 &444232647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4484,7 +4513,6 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 476152455}
   id: 19
-  currentLanguage: 0
 --- !u!114 &476152455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4789,7 +4817,6 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 500001727}
   id: 24
-  currentLanguage: 0
 --- !u!114 &500001727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4943,7 +4970,6 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 500171698}
   id: 22
-  currentLanguage: 0
 --- !u!114 &500171698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5234,7 +5260,6 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 549113409}
   id: 28
-  currentLanguage: 0
 --- !u!114 &549113409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5388,7 +5413,6 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 572423122}
   id: 30
-  currentLanguage: 0
 --- !u!114 &572423122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5679,7 +5703,6 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 609393658}
   id: 26
-  currentLanguage: 0
 --- !u!114 &609393658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5929,6 +5952,7 @@ GameObject:
   - component: {fileID: 633860996}
   - component: {fileID: 633860995}
   - component: {fileID: 633860994}
+  - component: {fileID: 633860997}
   m_Layer: 5
   m_Name: BgmSliderPlusButton
   m_TagString: Untagged
@@ -6062,6 +6086,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 633860992}
   m_CullTransparentMesh: 1
+--- !u!114 &633860997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 633860992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6912e14b245d6d04286da236a12c492d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &641155122
 GameObject:
   m_ObjectHideFlags: 0
@@ -6744,7 +6780,6 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 737374816}
   id: 14
-  currentLanguage: 0
 --- !u!1 &753508223
 GameObject:
   m_ObjectHideFlags: 0
@@ -6757,6 +6792,7 @@ GameObject:
   - component: {fileID: 753508227}
   - component: {fileID: 753508226}
   - component: {fileID: 753508225}
+  - component: {fileID: 753508228}
   m_Layer: 5
   m_Name: MuteButton
   m_TagString: Untagged
@@ -6890,6 +6926,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 753508223}
   m_CullTransparentMesh: 1
+--- !u!114 &753508228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 753508223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6912e14b245d6d04286da236a12c492d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &773126555
 GameObject:
   m_ObjectHideFlags: 0
@@ -6943,7 +6991,6 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 773126558}
   id: 28
-  currentLanguage: 0
 --- !u!114 &773126558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7057,6 +7104,7 @@ GameObject:
   - component: {fileID: 775995369}
   - component: {fileID: 775995368}
   - component: {fileID: 775995371}
+  - component: {fileID: 775995372}
   m_Layer: 5
   m_Name: VolumeButtonText
   m_TagString: Untagged
@@ -7303,7 +7351,18 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 775995369}
   id: 10
-  currentLanguage: 0
+--- !u!114 &775995372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 775995366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6912e14b245d6d04286da236a12c492d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &782582544
 GameObject:
   m_ObjectHideFlags: 0
@@ -7771,7 +7830,6 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 847305129}
   id: 21
-  currentLanguage: 0
 --- !u!114 &847305129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8403,7 +8461,6 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 933599430}
   id: 32
-  currentLanguage: 0
 --- !u!1 &933672602
 GameObject:
   m_ObjectHideFlags: 0
@@ -9160,7 +9217,6 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 1041265452}
   id: 27
-  currentLanguage: 0
 --- !u!114 &1041265452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9314,7 +9370,6 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 1045300957}
   id: 24
-  currentLanguage: 0
 --- !u!114 &1045300957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9427,6 +9482,7 @@ GameObject:
   - component: {fileID: 1075042634}
   - component: {fileID: 1075042633}
   - component: {fileID: 1075042632}
+  - component: {fileID: 1075042635}
   m_Layer: 5
   m_Name: SfxSliderPlusButton
   m_TagString: Untagged
@@ -9560,6 +9616,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1075042630}
   m_CullTransparentMesh: 1
+--- !u!114 &1075042635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1075042630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6912e14b245d6d04286da236a12c492d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1080872426
 GameObject:
   m_ObjectHideFlags: 0
@@ -9989,7 +10057,6 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 1101625750}
   id: 13
-  currentLanguage: 0
 --- !u!1 &1118155021
 GameObject:
   m_ObjectHideFlags: 0
@@ -10118,7 +10185,6 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 1122562505}
   id: 22
-  currentLanguage: 0
 --- !u!114 &1122562505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10422,7 +10488,6 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 1144183824}
   id: 31
-  currentLanguage: 0
 --- !u!114 &1144183824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10576,7 +10641,6 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 1147589828}
   id: 20
-  currentLanguage: 0
 --- !u!114 &1147589828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11075,6 +11139,7 @@ GameObject:
   - component: {fileID: 1218109532}
   - component: {fileID: 1218109531}
   - component: {fileID: 1218109534}
+  - component: {fileID: 1218109535}
   m_Layer: 5
   m_Name: HomeButtonText
   m_TagString: Untagged
@@ -11285,7 +11350,18 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 1218109532}
   id: 1
-  currentLanguage: 0
+--- !u!114 &1218109535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1218109529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6912e14b245d6d04286da236a12c492d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1243701670
 GameObject:
   m_ObjectHideFlags: 0
@@ -11642,7 +11718,6 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 1264178113}
   id: 20
-  currentLanguage: 0
 --- !u!114 &1264178113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11819,6 +11894,7 @@ GameObject:
   - component: {fileID: 1276441245}
   - component: {fileID: 1276441244}
   - component: {fileID: 1276441243}
+  - component: {fileID: 1276441246}
   m_Layer: 5
   m_Name: FpsLimit30Button
   m_TagString: Untagged
@@ -11953,6 +12029,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1276441241}
   m_CullTransparentMesh: 1
+--- !u!114 &1276441246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1276441241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6912e14b245d6d04286da236a12c492d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1288392402
 GameObject:
   m_ObjectHideFlags: 0
@@ -12118,6 +12206,7 @@ GameObject:
   - component: {fileID: 1313746351}
   - component: {fileID: 1313746350}
   - component: {fileID: 1313746349}
+  - component: {fileID: 1313746352}
   m_Layer: 5
   m_Name: WindowModeFullScreenButton
   m_TagString: Untagged
@@ -12239,6 +12328,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1313746347}
   m_CullTransparentMesh: 1
+--- !u!114 &1313746352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1313746347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6912e14b245d6d04286da236a12c492d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1336170462
 GameObject:
   m_ObjectHideFlags: 0
@@ -12453,6 +12554,7 @@ GameObject:
   - component: {fileID: 1348538071}
   - component: {fileID: 1348538070}
   - component: {fileID: 1348538073}
+  - component: {fileID: 1348538074}
   m_Layer: 5
   m_Name: BackButtonText
   m_TagString: Untagged
@@ -12663,7 +12765,18 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 1348538071}
   id: 2
-  currentLanguage: 0
+--- !u!114 &1348538074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348538068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6912e14b245d6d04286da236a12c492d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1351122324
 GameObject:
   m_ObjectHideFlags: 0
@@ -12944,7 +13057,6 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 1386217942}
   id: 23
-  currentLanguage: 0
 --- !u!114 &1386217942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13194,6 +13306,7 @@ GameObject:
   - component: {fileID: 1397439941}
   - component: {fileID: 1397439940}
   - component: {fileID: 1397439939}
+  - component: {fileID: 1397439942}
   m_Layer: 5
   m_Name: FpsLimit90Button
   m_TagString: Untagged
@@ -13328,6 +13441,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1397439937}
   m_CullTransparentMesh: 1
+--- !u!114 &1397439942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1397439937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6912e14b245d6d04286da236a12c492d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1409077358
 GameObject:
   m_ObjectHideFlags: 0
@@ -13477,6 +13602,7 @@ GameObject:
   - component: {fileID: 1411219538}
   - component: {fileID: 1411219537}
   - component: {fileID: 1411219536}
+  - component: {fileID: 1411219539}
   m_Layer: 5
   m_Name: FpsLimitOffButton
   m_TagString: Untagged
@@ -13611,6 +13737,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1411219534}
   m_CullTransparentMesh: 1
+--- !u!114 &1411219539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1411219534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6912e14b245d6d04286da236a12c492d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1413926717
 GameObject:
   m_ObjectHideFlags: 0
@@ -14381,7 +14519,6 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 1490315386}
   id: 12
-  currentLanguage: 0
 --- !u!1 &1517401211
 GameObject:
   m_ObjectHideFlags: 0
@@ -15795,7 +15932,6 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 1658224242}
   id: 30
-  currentLanguage: 0
 --- !u!114 &1658224242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17071,7 +17207,6 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 1847896158}
   id: 17
-  currentLanguage: 0
 --- !u!1 &1854705204
 GameObject:
   m_ObjectHideFlags: 0
@@ -17234,6 +17369,7 @@ GameObject:
   - component: {fileID: 1863550596}
   - component: {fileID: 1863550595}
   - component: {fileID: 1863550594}
+  - component: {fileID: 1863550597}
   m_Layer: 5
   m_Name: BgmSliderMinusButton
   m_TagString: Untagged
@@ -17367,6 +17503,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1863550592}
   m_CullTransparentMesh: 1
+--- !u!114 &1863550597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1863550592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6912e14b245d6d04286da236a12c492d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1868101345
 GameObject:
   m_ObjectHideFlags: 0
@@ -17520,7 +17668,6 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 1868101348}
   id: 8
-  currentLanguage: 0
 --- !u!1 &1884092535
 GameObject:
   m_ObjectHideFlags: 0
@@ -17747,7 +17894,6 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 1918194011}
   id: 23
-  currentLanguage: 0
 --- !u!114 &1918194011
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18244,6 +18390,7 @@ GameObject:
   - component: {fileID: 1955986664}
   - component: {fileID: 1955986663}
   - component: {fileID: 1955986666}
+  - component: {fileID: 1955986667}
   m_Layer: 5
   m_Name: DisplayButtonText
   m_TagString: Untagged
@@ -18490,7 +18637,18 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 1955986664}
   id: 9
-  currentLanguage: 0
+--- !u!114 &1955986667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1955986661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6912e14b245d6d04286da236a12c492d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1959463884
 GameObject:
   m_ObjectHideFlags: 0
@@ -18578,6 +18736,7 @@ GameObject:
   - component: {fileID: 1964871844}
   - component: {fileID: 1964871843}
   - component: {fileID: 1964871842}
+  - component: {fileID: 1964871845}
   m_Layer: 5
   m_Name: FpsLimit60Button
   m_TagString: Untagged
@@ -18712,6 +18871,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1964871840}
   m_CullTransparentMesh: 1
+--- !u!114 &1964871845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1964871840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6912e14b245d6d04286da236a12c492d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1967347347
 GameObject:
   m_ObjectHideFlags: 0
@@ -18765,7 +18936,6 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 1967347350}
   id: 27
-  currentLanguage: 0
 --- !u!114 &1967347350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18919,7 +19089,6 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 1976000274}
   id: 21
-  currentLanguage: 0
 --- !u!114 &1976000274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19097,6 +19266,7 @@ GameObject:
   - component: {fileID: 1978321497}
   - component: {fileID: 1978321496}
   - component: {fileID: 1978321495}
+  - component: {fileID: 1978321498}
   m_Layer: 5
   m_Name: MasterSliderMinusButton
   m_TagString: Untagged
@@ -19230,6 +19400,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1978321493}
   m_CullTransparentMesh: 1
+--- !u!114 &1978321498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1978321493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6912e14b245d6d04286da236a12c492d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1984903517
 GameObject:
   m_ObjectHideFlags: 0
@@ -19448,7 +19630,6 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 2001342658}
   id: 18
-  currentLanguage: 0
 --- !u!1 &2005541127
 GameObject:
   m_ObjectHideFlags: 0
@@ -19461,6 +19642,7 @@ GameObject:
   - component: {fileID: 2005541131}
   - component: {fileID: 2005541130}
   - component: {fileID: 2005541129}
+  - component: {fileID: 2005541132}
   m_Layer: 5
   m_Name: SfxSliderMinusButton
   m_TagString: Untagged
@@ -19594,6 +19776,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2005541127}
   m_CullTransparentMesh: 1
+--- !u!114 &2005541132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2005541127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6912e14b245d6d04286da236a12c492d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2013417496
 GameObject:
   m_ObjectHideFlags: 0
@@ -19993,7 +20187,6 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 2025820601}
   id: 15
-  currentLanguage: 0
 --- !u!1 &2042981514
 GameObject:
   m_ObjectHideFlags: 0
@@ -20389,6 +20582,7 @@ GameObject:
   - component: {fileID: 2096515483}
   - component: {fileID: 2096515482}
   - component: {fileID: 2096515485}
+  - component: {fileID: 2096515486}
   m_Layer: 5
   m_Name: ControlsButtonText
   m_TagString: Untagged
@@ -20635,7 +20829,18 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 2096515483}
   id: 11
-  currentLanguage: 0
+--- !u!114 &2096515486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2096515480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6912e14b245d6d04286da236a12c492d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2107193250
 GameObject:
   m_ObjectHideFlags: 0
@@ -20826,7 +21031,6 @@ MonoBehaviour:
   typeLOCS: 1
   dialogText: {fileID: 2113701444}
   id: 29
-  currentLanguage: 0
 --- !u!114 &2113701444
 MonoBehaviour:
   m_ObjectHideFlags: 0

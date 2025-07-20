@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92648e2aae4d8174fb0e4c189dc5b093, type: 3}
   m_Name: DisarmEffect
   m_EditorClassIdentifier: 
-  spriteStatusEffect: {fileID: 1399681078, guid: 91db74d8f8fc68a4fbce8adb870dd336,
-    type: 3}
+  spriteStatusEffect:
+  - {fileID: 1399681078, guid: 91db74d8f8fc68a4fbce8adb870dd336, type: 3}
   typeStatusEffect: 2
-  typeEffect: 2
+  typeEffect: 02000000
   statusEffectInstance: {fileID: 5782676205259397931, guid: 6c00c372a9c7aad4b96ee48a47ba14ee,
     type: 3}
+  increaseTime: 0
   maxAccumulations: 1
   timePerAccumulation: 0.5
+  amountPerAccumulation: 1

@@ -8697,6 +8697,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: AncientWall
       objectReference: {fileID: 0}
+    - target: {fileID: 5409086896174603477, guid: 5d3c4c4372209fb4986e67e6e3077b73,
+        type: 3}
+      propertyPath: detectForwardRight
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8435834260907238621, guid: 5d3c4c4372209fb4986e67e6e3077b73,
         type: 3}
       propertyPath: m_Mesh
@@ -17895,7 +17900,8 @@ MonoBehaviour:
   - typeStatistics: 11
     statisticsText: {fileID: 1888748462681623912}
   characterSelected: {fileID: 0}
-  allCharacters: []
+  allCharacters:
+    _serializedList: []
   isSkillWindow: 0
   isObjectsWindow: 0
   nameCharacter: {fileID: 3015502228515122860}

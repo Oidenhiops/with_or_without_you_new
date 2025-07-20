@@ -25,7 +25,7 @@ public class ManagementPotions : ObjectBase
             statistic.currentValue += value;
             GameObject floatingText = Instantiate(Resources.Load<GameObject>("Prefabs/UI/FloatingText/FloatingText"), character.gameObject.transform.position, Quaternion.identity);
             FloatingText floatingTextScript = floatingText.GetComponent<FloatingText>();
-            _ = floatingTextScript.SendText(Mathf.Ceil(value).ToString(), objectInfo.objectData.colorEffect);
+            _ = floatingTextScript.SendText(Mathf.Ceil(value).ToString(), objectInfo.objectData.colorEffect, false);
             if (statistic.currentValue > statistic.maxValue)
             {
                 statistic.currentValue = statistic.maxValue;

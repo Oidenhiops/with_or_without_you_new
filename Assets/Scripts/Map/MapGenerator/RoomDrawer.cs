@@ -14,7 +14,9 @@ public class RoomDrawer : MonoBehaviour
     public SerializedDictionary<DirectionBridges, BridgesInfo> bridges;
     public MapBlock[] mapBlocksForSpawn;
     public Vector3[] spawnPos;
-    public bool autoInit;    
+    public bool autoInit;
+    public int size;
+    public Vector2 chunkPos;
     void Start()
     {
         if (autoInit) DrawMap();
@@ -94,6 +96,13 @@ public class RoomDrawer : MonoBehaviour
             newSpawnPos.Add(mapBlock.transform.position + Vector3.up);
         }
         spawnPos = newSpawnPos.ToArray();
+    }
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            other.GetComponent<Character>().characterHud.characterUi.mapUi.currentRoom = chunkPos;
+        }
     }
     [Serializable] public class BridgesInfo
     {

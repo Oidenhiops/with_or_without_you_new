@@ -20,8 +20,9 @@ MonoBehaviour:
     - Key: 1
       Value:
         typeStatistics: 1
-        baseValue: 290
-        buffValue: 0
+        baseValue: 1950
+        buffStatistic:
+          _serializedList: []
         objectValue: 0
         currentValue: 0
         maxValue: 0
@@ -29,7 +30,8 @@ MonoBehaviour:
       Value:
         typeStatistics: 3
         baseValue: 100
-        buffValue: 0
+        buffStatistic:
+          _serializedList: []
         objectValue: 0
         currentValue: 0
         maxValue: 0
@@ -37,7 +39,8 @@ MonoBehaviour:
       Value:
         typeStatistics: 2
         baseValue: 90
-        buffValue: 0
+        buffStatistic:
+          _serializedList: []
         objectValue: 0
         currentValue: 0
         maxValue: 0
@@ -45,7 +48,8 @@ MonoBehaviour:
       Value:
         typeStatistics: 4
         baseValue: 170
-        buffValue: 0
+        buffStatistic:
+          _serializedList: []
         objectValue: 0
         currentValue: 0
         maxValue: 0
@@ -53,7 +57,8 @@ MonoBehaviour:
       Value:
         typeStatistics: 5
         baseValue: 1
-        buffValue: 0
+        buffStatistic:
+          _serializedList: []
         objectValue: 0
         currentValue: 0
         maxValue: 0
@@ -61,7 +66,8 @@ MonoBehaviour:
       Value:
         typeStatistics: 6
         baseValue: 140
-        buffValue: 0
+        buffStatistic:
+          _serializedList: []
         objectValue: 0
         currentValue: 0
         maxValue: 0
@@ -69,7 +75,8 @@ MonoBehaviour:
       Value:
         typeStatistics: 7
         baseValue: 110
-        buffValue: 0
+        buffStatistic:
+          _serializedList: []
         objectValue: 0
         currentValue: 0
         maxValue: 0
@@ -77,7 +84,8 @@ MonoBehaviour:
       Value:
         typeStatistics: 8
         baseValue: 110
-        buffValue: 0
+        buffStatistic:
+          _serializedList: []
         objectValue: 0
         currentValue: 0
         maxValue: 0
@@ -85,7 +93,8 @@ MonoBehaviour:
       Value:
         typeStatistics: 9
         baseValue: 3
-        buffValue: 0
+        buffStatistic:
+          _serializedList: []
         objectValue: 0
         currentValue: 0
         maxValue: 0
@@ -93,7 +102,8 @@ MonoBehaviour:
       Value:
         typeStatistics: 10
         baseValue: 10
-        buffValue: 0
+        buffStatistic:
+          _serializedList: []
         objectValue: 0
         currentValue: 0
         maxValue: 0
@@ -101,7 +111,8 @@ MonoBehaviour:
       Value:
         typeStatistics: 11
         baseValue: 50
-        buffValue: 0
+        buffStatistic:
+          _serializedList: []
         objectValue: 0
         currentValue: 0
         maxValue: 0

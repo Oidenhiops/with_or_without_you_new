@@ -21,16 +21,24 @@ public class PlayerMovement : CharacterMovement
             camDirection.z
         ).normalized;
         DiscountOtherForces();
-        CalculateDirectionForce();
+        CalculateDirectionForce(ref camDirection);
         Jump();
         character.rb.linearVelocity = movementDirection;
     }
-    void CalculateDirectionForce()
+    void CalculateDirectionForce(ref Vector3 camDirection)
     {
-        movementDirection.x *= character.GetStatisticByType(Character.TypeStatistics.Spd).currentValue;
-        movementDirection.y = character.rb.linearVelocity.y;
-        movementDirection.z *= character.GetStatisticByType(Character.TypeStatistics.Spd).currentValue;
-        movementDirection += otherForceMovement;
+        unclampedValue = new Vector3
+        (
+            camDirection.x,
+            0,
+            camDirection.z
+        ).normalized;
+        unclampedValue.x *= character.GetStatisticByType(Character.TypeStatistics.Spd).currentValue;
+        unclampedValue.y = character.rb.linearVelocity.y;
+        unclampedValue.z *= character.GetStatisticByType(Character.TypeStatistics.Spd).currentValue;
+        unclampedValue += otherForceMovement;
+
+        movementDirection = new Vector3(Mathf.Clamp(unclampedValue.x, -maxVelocity, maxVelocity), Mathf.Clamp(unclampedValue.y, -maxVelocity, maxVelocity), Mathf.Clamp(unclampedValue.z, -maxVelocity, maxVelocity));
     }
     void Jump()
     {

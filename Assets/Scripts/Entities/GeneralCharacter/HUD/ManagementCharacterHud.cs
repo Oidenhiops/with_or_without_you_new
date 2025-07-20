@@ -16,7 +16,9 @@ public class ManagementCharacterHud : MonoBehaviour
         if (character.isPlayer)
         {
             GameManager.Instance.OnDeviceChanged += EnabledMobileHUD;
+            characterUi.mapUi.OnCurrentRoomChange += UpdateMap;
             EnabledMobileHUD(GameManager.Instance.currentDevice);
+            UpdateMap(characterUi.mapUi.currentRoom);
             InitializeHUD();
         }
     }
@@ -344,6 +346,39 @@ public class ManagementCharacterHud : MonoBehaviour
     {
         characterUi.inventoryUi.elapsedTime = 5;
     }
+    [NaughtyAttributes.Button]
+    public void CreateMap()
+    {
+        foreach (Transform child in characterUi.mapUi.mapContainer.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        Vector2 rectSize = new Vector2
+        {
+            x = 36 * characterUi.mapUi.sizeMap.x + 24,
+            y = 36 * characterUi.mapUi.sizeMap.y + 24
+        };
+        characterUi.mapUi.mapContainer.rectTransform.sizeDelta = rectSize;
+        for (int x = 0; x < characterUi.mapUi.sizeMap.x; x++)
+        {
+            for (int y = 0; y < characterUi.mapUi.sizeMap.y; y++)
+            {
+                Image roomMap = Instantiate(Resources.Load<GameObject>("Prefabs/UI/RoomMap/RoomMap"), characterUi.mapUi.mapContainer.transform).GetComponent<Image>();
+                roomMap.name += $"{x},y";
+                characterUi.mapUi.rooms.Add(new Vector2(x, y), roomMap);
+            }
+        }
+    }
+    public void UpdateMap(Vector2 currentRoomPos)
+    {
+        characterUi.mapUi.rooms.TryGetValue(characterUi.mapUi.lastRoom, out Image lastRoom);
+        lastRoom.color = Color.white;
+
+        characterUi.mapUi.rooms.TryGetValue(currentRoomPos, out Image currentRoom);
+        currentRoom.color = Color.yellow;
+
+        currentRoom.enabled = true;
+    }
     [Serializable]
     public class CharacterUi
     {
@@ -355,19 +390,11 @@ public class ManagementCharacterHud : MonoBehaviour
         public StatisticsUi statisticsUi;
         public StatusEffectsUi statusEffectsUi;
         public InformationMessageUi informationMessageUi;
-        public GameObject[] mobileHud;
-        public CharacterUi(HudUi hudUi, ObjectsUi objectsUi, SkillsUi skillsUi, StatisticsUi statisticsUi, StatusEffectsUi statusEffectsUi, InformationMessageUi informationMessageUi)
-        {
-            this.hudUi = hudUi;
-            this.objectsUi = objectsUi;
-            this.skillsUi = skillsUi;
-            this.statisticsUi = statisticsUi;
-            this.statusEffectsUi = statusEffectsUi;
-            this.informationMessageUi = informationMessageUi;
-        }
-        public Image windUpFillAmount;
         public InventoryUi inventoryUi;
+        public MapUi mapUi;
+        public Image windUpFillAmount;
         public TMP_Text levelText;
+        public GameObject[] mobileHud;
     }
     [Serializable]
     public class HudUi
@@ -490,5 +517,28 @@ public class ManagementCharacterHud : MonoBehaviour
     {
         public Animator inventoryAnimator;
         public float elapsedTime = 0;
+    }
+    [Serializable]
+    public class MapUi
+    {
+        public Image mapContainer;
+        public Vector2 sizeMap;
+        public Vector2 lastRoom;
+        public Vector2 _currentRoom;
+        public Action<Vector2> OnCurrentRoomChange;
+        public Vector2 currentRoom
+        {
+            get => _currentRoom;
+            set
+            {
+                if (_currentRoom != value)
+                {
+                    lastRoom = _currentRoom;
+                    _currentRoom = value;
+                    OnCurrentRoomChange?.Invoke(_currentRoom);
+                }
+            }
+        }
+        public SerializedDictionary<Vector2, Image> rooms = new SerializedDictionary<Vector2, Image>();
     }
 }

@@ -19,6 +19,18 @@ public class MapBlock : MonoBehaviour
     public bool detectRight = false;
     public bool detectForward = false;
     public bool detectBack = false;
+    public bool detectUpLeft = false;
+    public bool detectUpRight = false;
+    public bool detectDownLeft = false;
+    public bool detectDownRight = false;
+    public bool detectUpForward = false;
+    public bool detectUpBack = false;
+    public bool detectDownForward = false;
+    public bool detectDownBack = false;
+    public bool detectForwardLeft = false;
+    public bool detectForwardRight = false;
+    public bool detectBackLeft = false;
+    public bool detectBackRight = false;
     private Vector3 up = new Vector3(0, 1, 0);
     private Vector3 down = new Vector3(0, -1, 0);
     private Vector3 left = new Vector3( -1, 0, 0);
@@ -63,9 +75,21 @@ public class MapBlock : MonoBehaviour
         {
             if (detectDown) CheckDirection(down, TypeDirections.Down);
             if (detectLeft) CheckDirection(left, TypeDirections.Left);
-            if (detectRight) CheckDirection(right, TypeDirections.Rigth);
+            if (detectRight) CheckDirection(right, TypeDirections.Right);
             if (detectForward) CheckDirection(forward, TypeDirections.Forward);
             if (detectBack) CheckDirection(back, TypeDirections.Back);
+            if (detectUpLeft) CheckDirection(up + left, TypeDirections.UpLeft);
+            if (detectUpRight) CheckDirection(up + Vector3.right, TypeDirections.UpRight);
+            if (detectDownLeft) CheckDirection(down + left, TypeDirections.DownLeft);
+            if (detectDownRight) CheckDirection(down + right, TypeDirections.DownRight);
+            if (detectUpForward) CheckDirection(up + forward, TypeDirections.UpForward);
+            if (detectUpBack) CheckDirection(up + back, TypeDirections.UpBack);
+            if (detectDownForward) CheckDirection(down + forward, TypeDirections.DownForward);
+            if (detectDownBack) CheckDirection(down + back, TypeDirections.DownBack);
+            if (detectForwardLeft) CheckDirection(forward + left, TypeDirections.ForwardLeft);
+            if (detectForwardRight) CheckDirection(forward + right, TypeDirections.ForwardRight);
+            if (detectBackLeft) CheckDirection(back + left, TypeDirections.BackLeft);
+            if (detectBackRight) CheckDirection(back + right, TypeDirections.BackRight);
         }
     }
     [NaughtyAttributes.Button]
@@ -200,9 +224,9 @@ public class MapBlock : MonoBehaviour
     //         if (detectDownForward) DrawGizmo(center, down + forward);
     //         if (detectDownBack) DrawGizmo(center, down + back);
     //         if (detectForwardLeft) DrawGizmo(center, forward + left);
-    //         if (detectForwardRigth) DrawGizmo(center, forward + right);
+    //         if (detectForwardRight) DrawGizmo(center, forward + right);
     //         if (detectBackLeft) DrawGizmo(center, back + left);
-    //         if (detectBackRigth) DrawGizmo(center, back + right);
+    //         if (detectBackRight) DrawGizmo(center, back + right);
     //     }
     // }
     private void DrawGizmo(Vector3 center, Vector3 direction)
@@ -262,13 +286,13 @@ public class MapBlock : MonoBehaviour
         Up = 1,
         Down = 2,
         Left = 3,
-        Rigth = 4,
+        Right = 4,
         Forward = 5,
         Back = 6,
         UpLeft = 7,
-        UpRigth = 8,
+        UpRight = 8,
         DownLeft = 9,
-        DownRigth = 10,
+        DownRight = 10,
         UpForward = 11,
         UpBack = 12,
         DownForward = 13,

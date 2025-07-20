@@ -218,6 +218,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4124176878015565127}
+  - component: {fileID: 7312793784567001870}
   - component: {fileID: 8037985617533267367}
   - component: {fileID: 6596037152061669268}
   m_Layer: 0
@@ -226,7 +227,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4124176878015565127
 Transform:
   m_ObjectHideFlags: 0
@@ -247,6 +248,27 @@ Transform:
   - {fileID: 2334759875977179979}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &7312793784567001870
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4232035065926128751}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 2048
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 3331839
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 15, y: 15, z: 15}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8037985617533267367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -562,6 +584,8 @@ MonoBehaviour:
   - {x: 1, y: 1, z: -6}
   - {x: 2, y: 1, z: -6}
   autoInit: 0
+  size: 0
+  chunkPos: {x: 0, y: 0}
 --- !u!114 &6596037152061669268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -576,12 +600,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SerializedVersion: 0
   m_AgentTypeID: 0
-  m_CollectObjects: 0
+  m_CollectObjects: 2
   m_Size: {x: 10, y: 10, z: 10}
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 328191
+    m_Bits: 328190
   m_UseGeometry: 0
   m_DefaultArea: 0
   m_GenerateLinks: 0
@@ -590,7 +614,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.083333336
+  m_VoxelSize: 0.11666667
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 9b2dba54225c4174e90790441dbcfab8, type: 2}
   m_BuildHeightMesh: 0

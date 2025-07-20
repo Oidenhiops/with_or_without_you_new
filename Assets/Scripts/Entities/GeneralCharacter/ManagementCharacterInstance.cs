@@ -24,7 +24,7 @@ public class ManagementCharacterInstance : MonoBehaviour, ManagementCharacterAni
         while (true)
         {
             SetTextureFromAtlas(objectInstanceAnimation.spritesInfoUp[objectInstanceAnimationInfo.currentSpriteIndex].generalSprite);
-            yield return new WaitForSeconds(objectInstanceAnimationInfo.currentSpritePerTime);
+            yield return new WaitForSeconds(objectInstanceAnimationInfo.baseSpritePerTime / objectInstanceAnimation.speedSpritesPerTimeMultplier);
             objectInstanceAnimationInfo.currentSpriteIndex++;
             if (objectInstanceAnimationInfo.currentSpriteIndex > objectInstanceAnimation.spritesInfoUp.Length - 1)
             {

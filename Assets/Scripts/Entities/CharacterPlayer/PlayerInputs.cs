@@ -70,7 +70,7 @@ public class PlayerInputs : MonoBehaviour
     {
         if (GameManager.Instance.startGame)
         {
-            character.gameManagerHelper.ChangeScene(1);
+            GameManager.Instance.ChangeSceneSelector(GameManager.TypeScene.OptionsScene);
         }
     }
     void OnMoveCamera(InputAction.CallbackContext context)

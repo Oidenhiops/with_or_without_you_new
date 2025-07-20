@@ -25,19 +25,19 @@ public class EnemyPathFollower : CharacterMovement
     public float frecuenciaChequeo = 0.5f;
 
     private NavMeshPath path;
-    private int currentCornerIndex = 0;
+    public int currentCornerIndex = 0;
     private bool hasPath = false;
     private Vector3 ultimaPosicionObjetivo;
     Vector3 targetCorner;
     public Transform testTarget;
-    void Start()
+    void Awake()
     {
         path = new NavMeshPath();
 
         if (target != null) ultimaPosicionObjetivo = target.position;
 
-        InvokeRepeating(nameof(ChequearSiRecalcularPath), 0f, frecuenciaChequeo);
         OnTargetChange += OnTargetChangeValue;
+        InvokeRepeating(nameof(ChequearSiRecalcularPath), 0f, frecuenciaChequeo);
     }
     void OnTargetChangeValue(Transform target)
     {
@@ -60,6 +60,11 @@ public class EnemyPathFollower : CharacterMovement
         {
             targetCharacter = null;
             target = null;
+            character.characterModelDirection.SetTarget(null);
+        }
+        else if (targetCharacter && targetCharacter.isActive && !targetCharacter.characterModelDirection.characterTarget)
+        {
+            character.characterModelDirection.SetTarget(target);
         }
 
         if (hasPath && path.corners.Length > 0)
@@ -85,16 +90,25 @@ public class EnemyPathFollower : CharacterMovement
             hasPath = false;
             movementDirection = new Vector3(0, character.rb.linearVelocity.y, 0);
         }
-        CalculateDirectionForce();
+        CalculateDirectionForce(ref direction);
         DiscountOtherForces();
         character.rb.linearVelocity = movementDirection;
+        character.characterModelDirection.movementCharacter = new Vector2(direction.x, direction.z);
     }
-    void CalculateDirectionForce()
+    void CalculateDirectionForce(ref Vector3 camDirection)
     {
-        movementDirection.x = direction.x * character.GetStatisticByType(Character.TypeStatistics.Spd).currentValue;
-        movementDirection.y = character.rb.linearVelocity.y;
-        movementDirection.z = direction.z * character.GetStatisticByType(Character.TypeStatistics.Spd).currentValue;
-        movementDirection += otherForceMovement;
+        unclampedValue = new Vector3
+        (
+            camDirection.x,
+            0,
+            camDirection.z
+        ).normalized;
+        unclampedValue.x *= character.GetStatisticByType(Character.TypeStatistics.Spd).currentValue;
+        unclampedValue.y = character.rb.linearVelocity.y;
+        unclampedValue.z *= character.GetStatisticByType(Character.TypeStatistics.Spd).currentValue;
+        unclampedValue += otherForceMovement;
+
+        movementDirection = new Vector3(Mathf.Clamp(unclampedValue.x, -maxVelocity, maxVelocity), Mathf.Clamp(unclampedValue.y, -maxVelocity, maxVelocity), Mathf.Clamp(unclampedValue.z, -maxVelocity, maxVelocity));
     }
     void ChequearSiRecalcularPath()
     {
@@ -127,10 +141,9 @@ public class EnemyPathFollower : CharacterMovement
             hasPath = false;
         }
     }
-    [NaughtyAttributes.Button]
-    public void SetTarget()
+    public override void SetTarget(Transform newTarget)
     {
-        target = testTarget;
+        target = newTarget;
     }
     void OnDrawGizmos()
     {

@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
-
+using AYellowpaper.SerializedCollections;
 public class ManagementCharacterAttack : MonoBehaviour
 {
     [SerializeField] protected Character character;
@@ -10,7 +10,7 @@ public class ManagementCharacterAttack : MonoBehaviour
     float distAttack = 1;
     public float distLostTarget = 1;
     public float cooldownAttack = 0;
-    protected Character.Statistics costsAttack = new Character.Statistics(Character.TypeStatistics.Sp, 10, 0, 0, 0, 0);
+    protected Character.Statistics costsAttack = new Character.Statistics(Character.TypeStatistics.Sp, 10, new SerializedDictionary<StatusEffectSO.TypeStatusEffect, Character.BuffStatistic>(), 0, 0, 0);
     void Start()
     {
         characterDirection = GetComponent<PlayerModelDirection>();

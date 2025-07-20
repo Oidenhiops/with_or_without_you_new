@@ -177,10 +177,7 @@ public class GameData : MonoBehaviour
     {
         SaveData dataInfo = new SaveData();
         dataInfo.configurationsInfo.currentLanguage = TypeLanguage.English;
-        for (int i = 0; i < charactersDBSO.characters.Count; i++)
-        {
-            charactersDBSO.characters[i].isUnlock = true;
-        }
+        charactersDBSO.characters[0].isUnlock = true;
         SetStartingDataSound(dataInfo);
         SetStartingPlayerData(dataInfo);
         if (GameManager.Instance.currentDevice == GameManager.TypeDevice.PC) SetStartingResolution(ref dataInfo);

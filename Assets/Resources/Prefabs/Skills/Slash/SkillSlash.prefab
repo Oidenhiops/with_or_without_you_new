@@ -99,7 +99,8 @@ MonoBehaviour:
   baseStatistics:
   - typeStatistics: 4
     baseValue: 200
-    buffValue: 0
+    buffStatistic:
+      _serializedList: []
     objectValue: 0
     currentValue: 0
     maxValue: 0
@@ -191,7 +192,7 @@ VisualEffect:
       - m_Value: {x: 1, y: 0, z: 0, w: 1}
         m_Name: GroundColor
         m_Overridden: 1
-      - m_Value: {x: 13.735849, y: 1.4902103, z: 1.4902103, w: 0}
+      - m_Value: {x: 0.8584906, y: 0.09313814, z: 0.09313814, w: 0}
         m_Name: SlashColor
         m_Overridden: 1
     m_Uint:
@@ -207,7 +208,10 @@ VisualEffect:
     m_NamedObject:
       m_Array: []
     m_Bool:
-      m_Array: []
+      m_Array:
+      - m_Value: 1
+        m_Name: ShowEffects
+        m_Overridden: 1
 --- !u!73398921 &9168748613201068567
 VFXRenderer:
   serializedVersion: 1
