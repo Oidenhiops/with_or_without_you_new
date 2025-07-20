@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DisarmEffect : StatusEffectBase
 {
-    public override void Apply(GameObject objectMakeEffect, GameObject objectTakeEffect)
+    public override void Apply(ManagementStatusEffect.StatusEffectsData statusEffectsData, GameObject objectMakeEffect, GameObject objectTakeEffect)
     {
         if (objectTakeEffect.TryGetComponent<Character>(out Character characterTakeEffect))
         {
@@ -19,8 +19,8 @@ public class DisarmEffect : StatusEffectBase
             }
         }
     }
-    public override void ReApply(GameObject objectMakeEffect, GameObject objectTakeEffect)
+    public override void ReApply(ManagementStatusEffect.StatusEffectsData statusEffectsData, GameObject objectMakeEffect, GameObject objectTakeEffect)
     {
-        Apply(objectMakeEffect, objectTakeEffect);
+        Apply(statusEffectsData, objectMakeEffect, objectTakeEffect);
     }
 }

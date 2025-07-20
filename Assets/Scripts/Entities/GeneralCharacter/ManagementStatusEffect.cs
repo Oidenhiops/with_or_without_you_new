@@ -27,15 +27,39 @@ public class ManagementStatusEffect : MonoBehaviour
                     status.currentTime -= Time.deltaTime;
                     if (status.currentTime <= 0)
                     {
-                        status.currentAccumulations--;
-                        status.currentTime = status.statusEffectSO.timePerAccumulation;
-                        if(status.currentAccumulations > 0) status.statusEffectSO.statusEffectInstance.GetComponent<StatusEffectBase>().DecreaseAccumulation(status.objectMakeEffect, status.objectTakeEffect);
-                    }
-                    else if (status.currentAccumulations <= 0)
-                    {
-                        character.characterHud.DestroyStatusEffect(status.statusEffectSO.typeStatusEffect);
-                        statusEffects.Remove(status.statusEffectSO.typeStatusEffect);
-                        status.statusEffectSO.statusEffectInstance.GetComponent<StatusEffectBase>().Finish(status.objectMakeEffect, status.objectTakeEffect);
+                        if (!status.statusEffectSO.increaseTime)
+                        {
+                            status.currentAccumulations--;
+                            status.currentTime = status.statusEffectSO.timePerAccumulation;
+                            if (status.currentAccumulations > 0)
+                            {
+                                status.statusEffectSO.statusEffectInstance.GetComponent<StatusEffectBase>().IncreaseAccumulation(status, status.objectMakeEffect, status.objectTakeEffect);
+                                character.characterHud.UpdateStatusEffect(statusEffects[status.statusEffectSO.typeStatusEffect]);
+                            }
+                            else
+                            {
+                                character.characterHud.DestroyStatusEffect(status.statusEffectSO.typeStatusEffect);
+                                statusEffects.Remove(status.statusEffectSO.typeStatusEffect);
+
+                                status.statusEffectSO.statusEffectInstance.GetComponent<StatusEffectBase>().Finish(status, status.objectMakeEffect, status.objectTakeEffect);
+                            }
+                        }
+                        else
+                        {
+                            status.currentAccumulations++;
+                            status.currentTime = status.statusEffectSO.timePerAccumulation;
+                            if (status.currentAccumulations <= status.statusEffectSO.maxAccumulations)
+                            {
+                                status.statusEffectSO.statusEffectInstance.GetComponent<StatusEffectBase>().IncreaseAccumulation(status, status.objectMakeEffect, status.objectTakeEffect);
+                                character.characterHud.UpdateStatusEffect(statusEffects[status.statusEffectSO.typeStatusEffect]);
+                            }
+                            else
+                            {
+                                character.characterHud.DestroyStatusEffect(status.statusEffectSO.typeStatusEffect);
+                                statusEffects.Remove(status.statusEffectSO.typeStatusEffect);
+                                status.statusEffectSO.statusEffectInstance.GetComponent<StatusEffectBase>().Finish(status, status.objectMakeEffect, status.objectTakeEffect);
+                            }
+                        }
                     }
                 }
             }
@@ -45,23 +69,33 @@ public class ManagementStatusEffect : MonoBehaviour
     {
         if (statusEffects.TryGetValue(statusEffectSO.typeStatusEffect, out StatusEffectsData statusEffectsData))
         {
-            statusEffectsData.currentAccumulations++;
-            
+            if (!statusEffectsData.statusEffectSO.increaseTime)
+            {
+                statusEffectsData.currentAccumulations += statusEffectSO.amountPerAccumulation;
+            }
+            else
+            {
+                statusEffectsData.currentAccumulations = 1;
+            }
+
+            statusEffectsData.currentTime = statusEffectSO.timePerAccumulation;
+
             if (statusEffectsData.currentAccumulations > statusEffectSO.maxAccumulations)
             {
                 statusEffectsData.currentAccumulations = statusEffectSO.maxAccumulations;
                 statusEffectsData.currentTime = statusEffectSO.timePerAccumulation;
-                statusEffectsData.statusEffectSO.statusEffectInstance.GetComponent<StatusEffectBase>().AllAccumulationsReached(objectMakeEffect, objectTakeEffect);
+                statusEffectsData.statusEffectSO.statusEffectInstance.GetComponent<StatusEffectBase>().AllAccumulationsReached(statusEffectsData, objectMakeEffect, objectTakeEffect);
             }
             else
             {
-                statusEffectsData.statusEffectSO.statusEffectInstance.GetComponent<StatusEffectBase>().ReApply(objectMakeEffect, objectTakeEffect);
+                statusEffectsData.statusEffectSO.statusEffectInstance.GetComponent<StatusEffectBase>().ReApply(statusEffectsData, objectMakeEffect, objectTakeEffect);
             }
         }
         else
         {
-            statusEffects.Add(statusEffectSO.typeStatusEffect, new StatusEffectsData(statusEffectSO, statusEffectSO.timePerAccumulation, 1, objectMakeEffect, objectTakeEffect));
-            statusEffectSO.statusEffectInstance.GetComponent<StatusEffectBase>().Apply(objectMakeEffect, objectTakeEffect);
+            statusEffects.Add(statusEffectSO.typeStatusEffect, new StatusEffectsData(statusEffectSO, statusEffectSO.timePerAccumulation, statusEffectSO.amountPerAccumulation, objectMakeEffect, objectTakeEffect));
+            statusEffects.TryGetValue(statusEffectSO.typeStatusEffect, out StatusEffectsData newEffectData);
+            statusEffectSO.statusEffectInstance.GetComponent<StatusEffectBase>().Apply(newEffectData, objectMakeEffect, objectTakeEffect);
         }
         character.characterHud.UpdateStatusEffect(statusEffects[statusEffectSO.typeStatusEffect]);
     }
@@ -78,6 +112,20 @@ public class ManagementStatusEffect : MonoBehaviour
         }
         statusEffectsData = null;
         return false;
+    }
+    [NaughtyAttributes.Button]
+    public void CleanAllDebuffs()
+    {
+        for (int i = 0; i < statusEffects.Count; i++)
+        {
+            StatusEffectsData status = statusEffects.ElementAt(i).Value;
+            if (status.statusEffectSO.GetTypeEffect(status.currentAccumulations) == StatusEffectSO.TypeEffect.Debuff)
+            {
+                character.characterHud.DestroyStatusEffect(status.statusEffectSO.typeStatusEffect);
+                statusEffects.Remove(status.statusEffectSO.typeStatusEffect);
+                status.statusEffectSO.statusEffectInstance.GetComponent<StatusEffectBase>().Clean(status, status.objectMakeEffect, status.objectTakeEffect);
+            }
+        }
     }
     [Serializable]
     public class StatusEffectsData

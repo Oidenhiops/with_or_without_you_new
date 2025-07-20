@@ -6,7 +6,7 @@ public class BleedingEffect : StatusEffectBase
     public StatusEffectSO statusEffectSO;
     [Range(0f, 1f)]
     public float porcentDamage;
-    public override void Apply(GameObject objectMakeEffect, GameObject objectTakeEffect)
+    public override void Apply(ManagementStatusEffect.StatusEffectsData statusEffectsData, GameObject objectMakeEffect, GameObject objectTakeEffect)
     {
         if (objectTakeEffect.TryGetComponent<Character>(out Character characterTakeEffect))
         {
@@ -14,15 +14,15 @@ public class BleedingEffect : StatusEffectBase
             Bleeding(characterMakeEffect, characterTakeEffect);
         }
     }
-    public override void AllAccumulationsReached(GameObject objectMakeEffect, GameObject objectTakeEffect)
+    public override void AllAccumulationsReached(ManagementStatusEffect.StatusEffectsData statusEffectsData, GameObject objectMakeEffect, GameObject objectTakeEffect)
     {
         Bleeding(objectMakeEffect.GetComponent<Character>(), objectTakeEffect.GetComponent<Character>());
     }
-    public override void DecreaseAccumulation(GameObject objectMakeEffect, GameObject objectTakeEffect)
+    public override void DecreaseAccumulation(ManagementStatusEffect.StatusEffectsData statusEffectsData, GameObject objectMakeEffect, GameObject objectTakeEffect)
     {
         Bleeding(objectMakeEffect.GetComponent<Character>(), objectTakeEffect.GetComponent<Character>());
     }
-    public override void Finish(GameObject objectMakeEffect, GameObject objectTakeEffect)
+    public override void Finish(ManagementStatusEffect.StatusEffectsData statusEffectsData, GameObject objectMakeEffect, GameObject objectTakeEffect)
     {
         Bleeding(objectMakeEffect.GetComponent<Character>(), objectTakeEffect.GetComponent<Character>());
     }

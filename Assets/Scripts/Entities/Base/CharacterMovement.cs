@@ -7,6 +7,8 @@ public class CharacterMovement : MonoBehaviour
 {
     public Character character;
     public Vector3 movementDirection;
+    protected Vector3 unclampedValue;
+    public float maxVelocity = 5;
     public SerializedDictionary<string, OtherForceMovements> otherForceMovements = new SerializedDictionary<string, OtherForceMovements>();
     protected Vector3 otherForceMovement;
     protected Vector3 direction;

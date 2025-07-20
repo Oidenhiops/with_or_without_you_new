@@ -43,4 +43,4 @@ MonoBehaviour:
       Value:
         initialDataSO: {fileID: 11400000, guid: a81b68bccdb2c0f48a76a3302331d7f3,
           type: 2}
-        isUnlock: 1
+        isUnlock: 0

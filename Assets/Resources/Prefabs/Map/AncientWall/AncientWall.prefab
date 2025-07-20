@@ -39334,10 +39334,10 @@ MonoBehaviour:
   detectDownForward: 0
   detectDownBack: 0
   detectForwardLeft: 1
-  detectForwardRigth: 1
+  detectForwardRight: 1
   detectBackLeft: 1
-  detectBackRigth: 1
-  drawGizmos: 0
+  detectBackRight: 1
+  drawGizmos: 1
   blockSelectedIndex: 0
   newRuleInfo:
     bitMask: 0

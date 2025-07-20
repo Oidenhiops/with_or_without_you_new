@@ -17,6 +17,9 @@ MonoBehaviour:
     - Key: Die
       Value:
       - {fileID: 8300000, guid: 264b0252b25142742b2cc346096c4f9b, type: 3}
+    - Key: DieEnemy
+      Value:
+      - {fileID: 8300000, guid: 14c88e525bc6ead4088186ee286ec59d, type: 3}
     - Key: NotPickUp
       Value:
       - {fileID: 8300000, guid: a30c5ad86ff145c40bb6e8aed66e9838, type: 3}

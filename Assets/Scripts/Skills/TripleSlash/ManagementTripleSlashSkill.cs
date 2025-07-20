@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using AYellowpaper.SerializedCollections;
 
 public class ManagementTripleSlashSkill : MonoBehaviour, ManagementCharacterSkills.ISkill
 {
@@ -13,7 +14,7 @@ public class ManagementTripleSlashSkill : MonoBehaviour, ManagementCharacterSkil
         characterMakeDamage = character;
         foreach (Character.Statistics statistic in baseStatistics)
         {
-            currentStatistics.Add(new Character.Statistics(statistic.typeStatistics, 0, 0, 0, 0, 0));
+            currentStatistics.Add(new Character.Statistics(statistic.typeStatistics, 0, new SerializedDictionary<StatusEffectSO.TypeStatusEffect, Character.BuffStatistic>(), 0, 0, 0));
         }
         for (int i = 0; i < currentStatistics.Count; i++)
         {

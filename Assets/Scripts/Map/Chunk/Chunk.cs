@@ -6,6 +6,7 @@ using UnityEngine;
 public class Chunk : MonoBehaviour
 {
     public int chunkSize;
+    public Vector2 chunkId;
     public RoomDrawer drawerMap;
     public bool autoDrawChunk = false;
     public bool autoCombineChunk = false;

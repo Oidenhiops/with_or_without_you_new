@@ -2,20 +2,17 @@ using UnityEngine;
 
 public class DecreaseAtkSpd : StatusEffectBase
 {
-    public override void Apply(GameObject objectMakeEffect, GameObject objectTakeEffect)
+    public override void Apply(ManagementStatusEffect.StatusEffectsData statusEffectsData, GameObject objectMakeEffect, GameObject objectTakeEffect)
     {
         if (objectTakeEffect.TryGetComponent<Character>(out Character characterTakeEffect))
         {
-            if (characterTakeEffect.statusEffect.GetStatusEffect(StatusEffectSO.TypeStatusEffect.DecreaseAtkSpeed, out ManagementStatusEffect.StatusEffectsData statusEffectsData))
+            if (characterTakeEffect.GetStatisticByType(Character.TypeStatistics.AtkSpd).buffStatistic.TryGetValue(StatusEffectSO.TypeStatusEffect.DecreaseAtkSpeed, out Character.BuffStatistic buffStatistic))
             {
-                if (statusEffectsData.currentAccumulations == statusEffectsData.statusEffectSO.maxAccumulations)
-                {
-                    characterTakeEffect.GetStatisticByType(Character.TypeStatistics.AtkSpd).buffValue -= 40f;
-                }
-                else
-                {
-                    characterTakeEffect.GetStatisticByType(Character.TypeStatistics.AtkSpd).buffValue -= 10f;
-                }
+                buffStatistic.valuePorcent = -10 * GetCharges(statusEffectsData);
+            }
+            else
+            {
+                characterTakeEffect.GetStatisticByType(Character.TypeStatistics.AtkSpd).buffStatistic.Add(StatusEffectSO.TypeStatusEffect.DecreaseAtkSpeed, new Character.BuffStatistic(StatusEffectSO.TypeEffect.Debuff, 0, -10 * GetCharges(statusEffectsData)));
             }
             characterTakeEffect.RefreshCurrentStatistics();
             if (characterTakeEffect.isPlayer)
@@ -24,26 +21,57 @@ public class DecreaseAtkSpd : StatusEffectBase
             }
         }
     }
-    public override void ReApply(GameObject objectMakeEffect, GameObject objectTakeEffect)
+    int GetCharges(ManagementStatusEffect.StatusEffectsData statusEffectsData)
     {
-        Apply(objectMakeEffect, objectTakeEffect);
+        return statusEffectsData.currentAccumulations == statusEffectsData.statusEffectSO.maxAccumulations ? 8 : statusEffectsData.currentAccumulations;
     }
-    public override void DecreaseAccumulation(GameObject objectMakeEffect, GameObject objectTakeEffect)
-    {
-        Finish(objectMakeEffect, objectTakeEffect);
-    }
-    public override void Finish(GameObject objectMakeEffect, GameObject objectTakeEffect)
+    public override void ReApply(ManagementStatusEffect.StatusEffectsData statusEffectsData, GameObject objectMakeEffect, GameObject objectTakeEffect)
     {
         if (objectTakeEffect.TryGetComponent<Character>(out Character characterTakeEffect))
         {
-            characterTakeEffect.GetStatisticByType(Character.TypeStatistics.AtkSpd).buffValue += 10f;
-            if (characterTakeEffect.statusEffect.GetStatusEffect(StatusEffectSO.TypeStatusEffect.DecreaseAtkSpeed, out ManagementStatusEffect.StatusEffectsData statusEffectsData))
+            if (characterTakeEffect.GetStatisticByType(Character.TypeStatistics.AtkSpd).buffStatistic.TryGetValue(StatusEffectSO.TypeStatusEffect.DecreaseAtkSpeed, out Character.BuffStatistic buffStatistic))
             {
-                if (statusEffectsData.currentAccumulations == statusEffectsData.statusEffectSO.maxAccumulations - 1)
-                {
-                    characterTakeEffect.GetStatisticByType(Character.TypeStatistics.AtkSpd).buffValue += 30f;
-                }
+                buffStatistic.valuePorcent = -10 * GetCharges(statusEffectsData);
             }
+            characterTakeEffect.RefreshCurrentStatistics();
+            if (characterTakeEffect.isPlayer)
+            {
+                characterTakeEffect.characterHud.RefreshCurrentStatistics();
+            }
+        }
+    }
+    public override void DecreaseAccumulation(ManagementStatusEffect.StatusEffectsData statusEffectsData, GameObject objectMakeEffect, GameObject objectTakeEffect)
+    {
+        if (objectTakeEffect.TryGetComponent<Character>(out Character characterTakeEffect))
+        {
+            if (characterTakeEffect.GetStatisticByType(Character.TypeStatistics.AtkSpd).buffStatistic.TryGetValue(StatusEffectSO.TypeStatusEffect.DecreaseAtkSpeed, out Character.BuffStatistic buffStatistic))
+            {
+                buffStatistic.valuePorcent = -10 * GetCharges(statusEffectsData);
+            }
+            characterTakeEffect.RefreshCurrentStatistics();
+            if (characterTakeEffect.isPlayer)
+            {
+                characterTakeEffect.characterHud.RefreshCurrentStatistics();
+            }
+        }
+    }
+    public override void Finish(ManagementStatusEffect.StatusEffectsData statusEffectsData, GameObject objectMakeEffect, GameObject objectTakeEffect)
+    {
+        if (objectTakeEffect.TryGetComponent<Character>(out Character characterTakeEffect))
+        {
+            characterTakeEffect.GetStatisticByType(Character.TypeStatistics.AtkSpd).buffStatistic.Remove(StatusEffectSO.TypeStatusEffect.DecreaseAtkSpeed);
+            characterTakeEffect.RefreshCurrentStatistics();
+            if (characterTakeEffect.isPlayer)
+            {
+                characterTakeEffect.characterHud.RefreshCurrentStatistics();
+            }
+        }
+    }
+    public override void Clean(ManagementStatusEffect.StatusEffectsData statusEffectsData, GameObject objectMakeEffect, GameObject objectTakeEffect)
+    {
+        if (objectTakeEffect.TryGetComponent<Character>(out Character characterTakeEffect))
+        {
+            characterTakeEffect.GetStatisticByType(Character.TypeStatistics.AtkSpd).buffStatistic.Remove(StatusEffectSO.TypeStatusEffect.DecreaseAtkSpeed);
             characterTakeEffect.RefreshCurrentStatistics();
             if (characterTakeEffect.isPlayer)
             {

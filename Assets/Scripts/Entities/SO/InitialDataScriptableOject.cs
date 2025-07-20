@@ -8,17 +8,17 @@ public class InitialDataSO : ScriptableObject
     public Texture2D atlas;
     public Texture2D atlasHand;
     public SerializedDictionary<Character.TypeStatistics, Character.Statistics> characterStatistics = new SerializedDictionary<Character.TypeStatistics, Character.Statistics>{
-        {Character.TypeStatistics.Hp, new Character.Statistics (Character.TypeStatistics.Hp, 0, 0, 0, 0, 0)},
-        {Character.TypeStatistics.Sp, new Character.Statistics (Character.TypeStatistics.Sp, 0, 0, 0, 0, 0)},
-        {Character.TypeStatistics.Mp, new Character.Statistics (Character.TypeStatistics.Mp, 0, 0, 0, 0, 0)},
-        {Character.TypeStatistics.Atk, new Character.Statistics (Character.TypeStatistics.Atk, 0, 0, 0, 0, 0)},
-        {Character.TypeStatistics.AtkSpd, new Character.Statistics (Character.TypeStatistics.AtkSpd, 0, 0, 0, 0, 0)},
-        {Character.TypeStatistics.Int, new Character.Statistics (Character.TypeStatistics.Int, 0, 0, 0, 0, 0)},
-        {Character.TypeStatistics.Def, new Character.Statistics (Character.TypeStatistics.Def, 0, 0, 0, 0, 0)},
-        {Character.TypeStatistics.Res, new Character.Statistics (Character.TypeStatistics.Res, 0, 0, 0, 0, 0)},
-        {Character.TypeStatistics.Spd, new Character.Statistics (Character.TypeStatistics.Spd, 0, 0, 0, 0, 0)},
-        {Character.TypeStatistics.Crit, new Character.Statistics (Character.TypeStatistics.Crit, 0, 0, 0, 0, 0)},
-        {Character.TypeStatistics.CritDmg, new Character.Statistics (Character.TypeStatistics.CritDmg, 0, 0, 0, 0, 0)},
+        {Character.TypeStatistics.Hp, new Character.Statistics (Character.TypeStatistics.Hp, 0, new SerializedDictionary<StatusEffectSO.TypeStatusEffect, Character.BuffStatistic>(), 0, 0, 0)},
+        {Character.TypeStatistics.Sp, new Character.Statistics (Character.TypeStatistics.Sp, 0, new SerializedDictionary<StatusEffectSO.TypeStatusEffect, Character.BuffStatistic>(), 0, 0, 0)},
+        {Character.TypeStatistics.Mp, new Character.Statistics (Character.TypeStatistics.Mp, 0, new SerializedDictionary<StatusEffectSO.TypeStatusEffect, Character.BuffStatistic>(), 0, 0, 0)},
+        {Character.TypeStatistics.Atk, new Character.Statistics (Character.TypeStatistics.Atk, 0, new SerializedDictionary<StatusEffectSO.TypeStatusEffect, Character.BuffStatistic>(), 0, 0, 0)},
+        {Character.TypeStatistics.AtkSpd, new Character.Statistics (Character.TypeStatistics.AtkSpd, 0, new SerializedDictionary<StatusEffectSO.TypeStatusEffect, Character.BuffStatistic>(), 0, 0, 0)},
+        {Character.TypeStatistics.Int, new Character.Statistics (Character.TypeStatistics.Int, 0, new SerializedDictionary<StatusEffectSO.TypeStatusEffect, Character.BuffStatistic>(), 0, 0, 0)},
+        {Character.TypeStatistics.Def, new Character.Statistics (Character.TypeStatistics.Def, 0, new SerializedDictionary<StatusEffectSO.TypeStatusEffect, Character.BuffStatistic>(), 0, 0, 0)},
+        {Character.TypeStatistics.Res, new Character.Statistics (Character.TypeStatistics.Res, 0, new SerializedDictionary<StatusEffectSO.TypeStatusEffect, Character.BuffStatistic>(), 0, 0, 0)},
+        {Character.TypeStatistics.Spd, new Character.Statistics (Character.TypeStatistics.Spd, 0, new SerializedDictionary<StatusEffectSO.TypeStatusEffect, Character.BuffStatistic>(), 0, 0, 0)},
+        {Character.TypeStatistics.Crit, new Character.Statistics (Character.TypeStatistics.Crit, 0, new SerializedDictionary<StatusEffectSO.TypeStatusEffect, Character.BuffStatistic>(), 0, 0, 0)},
+        {Character.TypeStatistics.CritDmg, new Character.Statistics (Character.TypeStatistics.CritDmg, 0, new SerializedDictionary<StatusEffectSO.TypeStatusEffect, Character.BuffStatistic>(), 0, 0, 0)},
     };
     public ManagementCharacterSkills.SkillInfo[] skills;
     public ManagementCharacterObjects.ObjectsInfo[] objects = new ManagementCharacterObjects.ObjectsInfo[0];

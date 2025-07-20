@@ -82,7 +82,7 @@ public class GameManager : MonoBehaviour
                 break;
         }
     }
-    public async Awaitable ChangeScene(TypeScene typeScene)
+    async Awaitable ChangeScene(TypeScene typeScene)
     {
         try
         {

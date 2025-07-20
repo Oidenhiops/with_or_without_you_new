@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using AYellowpaper.SerializedCollections;
 using UnityEngine;
 
@@ -11,5 +13,10 @@ public class CharactersDBSO : ScriptableObject
     {
         public InitialDataSO initialDataSO;
         public bool isUnlock = false;
+    }
+    public InitialDataSO GetRandomCharacter()
+    {
+        int index = Random.Range(0, characters.Count);
+        return characters.ElementAt(index).Value.initialDataSO;
     }
 }

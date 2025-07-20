@@ -21,7 +21,6 @@ public class ChunksGenerator : MonoBehaviour
         GameObject chunkPrefab = Resources.Load<GameObject>("Prefabs/Map/Chunk");
         float offsetX = chunksX * chunkSize / 2f - (chunkSize / 2f);
         float offsetZ = chunksZ * chunkSize / 2f - (chunkSize / 2f);
-
         for (int c = 0; c < positionsChunks.Count; c++)
         {
             Vector3Int chunkCoord = positionsChunks[c].positionChunk;
@@ -39,6 +38,7 @@ public class ChunksGenerator : MonoBehaviour
 
             positionsChunks[c].chunkInstance = chunkGO;
             positionsChunks[c].managementChunk = chunkComponent;
+            chunkComponent.chunkId = new Vector2(chunkCoord.x, chunkCoord.z);
         }
         GameManager.Instance.openCloseScene.AdjustLoading(10);
         yield return null;
@@ -61,8 +61,8 @@ public class ChunksGenerator : MonoBehaviour
             if (!instanciedRooms.ContainsKey(positionsChunks[i].room.name))
             {
                 RoomDrawer room = Instantiate(positionsChunks[i].room).GetComponent<RoomDrawer>();
+                room.size = chunkSize;
                 instanciedRooms.Add(positionsChunks[i].room.name, room);
-
             }
         }
         GameManager.Instance.openCloseScene.AdjustLoading(30);
@@ -94,6 +94,12 @@ public class ChunksGenerator : MonoBehaviour
                 positionChunks.managementChunk.drawerMap.gameObject.transform.localPosition = Vector3.zero;
             }
         }
+
+        foreach (PositionChunk positionChunks in positionsChunks)
+        {
+            positionChunks.managementChunk.drawerMap.chunkPos = positionChunks.managementChunk.chunkId;
+        }
+        
         GameManager.Instance.openCloseScene.AdjustLoading(50);
         yield return new WaitForSeconds(0.5f);
         #endregion
@@ -129,6 +135,10 @@ public class ChunksGenerator : MonoBehaviour
         foreach (var character in characters)
         {
             character.transform.position = new Vector3(spawnPosition.x, 1, spawnPosition.z);
+            character.TryGetComponent<Character>(out Character component);
+            component.characterHud.characterUi.mapUi.sizeMap = new Vector2(chunksX, chunksZ);
+            component.characterHud.CreateMap();
+            component.characterHud.characterUi.mapUi.currentRoom = new Vector2(initalRoomPos.x, initalRoomPos.z);
         }
         GameManager.Instance.openCloseScene.AdjustLoading(100);
     }

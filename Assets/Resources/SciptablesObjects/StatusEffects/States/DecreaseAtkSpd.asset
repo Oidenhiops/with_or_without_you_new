@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92648e2aae4d8174fb0e4c189dc5b093, type: 3}
   m_Name: DecreaseAtkSpd
   m_EditorClassIdentifier: 
-  spriteStatusEffect: {fileID: -412875083, guid: 91db74d8f8fc68a4fbce8adb870dd336,
-    type: 3}
+  spriteStatusEffect:
+  - {fileID: -412875083, guid: 91db74d8f8fc68a4fbce8adb870dd336, type: 3}
   typeStatusEffect: 4
-  typeEffect: 2
+  typeEffect: 02000000
   statusEffectInstance: {fileID: 5782676205259397931, guid: d35d05614b29bbe43816ba9da925202c,
     type: 3}
+  increaseTime: 0
   maxAccumulations: 5
   timePerAccumulation: 3
+  amountPerAccumulation: 5

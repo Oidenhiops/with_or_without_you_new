@@ -5,7 +5,7 @@ public class CharacterModelDirection : MonoBehaviour
     public Character character;
     [SerializeField] protected float rayDistanceTarget = 10f;
     [SerializeField] protected LayerMask targetMask;
-    [SerializeField] protected Character characterTarget;
+    [SerializeField] public Character characterTarget;
     public Vector2 movementDirectionAnimation = new Vector2();
     public Vector2 movementCharacter = new Vector2();
     public GameObject directionPlayer;
@@ -24,8 +24,6 @@ public class CharacterModelDirection : MonoBehaviour
     private void LookToTarget()
     {
         movementDirectionAnimation = Camera.main.WorldToViewportPoint(characterTarget.transform.position) - Camera.main.WorldToViewportPoint(transform.position);
-        movementCharacter.x = character.rb.linearVelocity.x;
-        movementCharacter.y = character.rb.linearVelocity.z;
         character.characterAnimations.GetCharacterSprite().transform.localRotation =
             Quaternion.Euler(0, movementDirectionAnimation.x > 0 ? -180 : 0, 0);
         directionPlayer.transform.LookAt(new Vector3(characterTarget.transform.position.x, directionPlayer.transform.position.y, characterTarget.transform.position.z));
