@@ -48,6 +48,11 @@ public class ManagementCharacterInteract : MonoBehaviour
         OnInteractsChanged += HandleInteracts;
         playerInputs.characterActions.CharacterInputs.Interact.performed += OnInteract;
     }
+    void OnDestroy()
+    {
+        OnInteractsChanged -= HandleInteracts;
+        playerInputs.characterActions.CharacterInputs.Interact.performed -= OnInteract;
+    }
     public void Update()
     {
         if (character.isPlayer && GameManager.Instance.startGame)

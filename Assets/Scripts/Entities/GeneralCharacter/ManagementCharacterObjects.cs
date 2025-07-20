@@ -20,6 +20,16 @@ public class ManagementCharacterObjects : MonoBehaviour
             GameManager.Instance.OnDeviceChanged += ValidateShowItemPos;
         }
     }
+    public void OnDestroy()
+    {
+        if (character.isPlayer)
+        {
+            playerInputs.characterActions.CharacterInputs.ChangeItem.performed -= OnChangeItemGamepad;
+            playerInputs.characterActions.CharacterInputs.ChangeItemPos.performed -= OnChangeItemPc;
+            playerInputs.characterActions.CharacterInputs.UseItem.performed -= OnUseObject;
+            GameManager.Instance.OnDeviceChanged -= ValidateShowItemPos;
+        }
+    }
     public void ValidateShowItemPos(GameManager.TypeDevice typeDevice)
     {
         if (typeDevice != GameManager.TypeDevice.GAMEPAD)

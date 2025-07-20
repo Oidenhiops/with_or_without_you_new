@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System;
 using AYellowpaper.SerializedCollections;
 using UnityEngine.EventSystems;
+using JetBrains.Annotations;
 
 public class ManagementCharacterHud : MonoBehaviour
 {
@@ -22,16 +23,17 @@ public class ManagementCharacterHud : MonoBehaviour
             InitializeHUD();
         }
     }
-    void InitializeHUD()
-    {
-        characterUi.levelText.text = character.level.ToString();
-    }
     void OnDestroy()
     {
         if (character.isPlayer)
         {
             GameManager.Instance.OnDeviceChanged -= EnabledMobileHUD;
+            characterUi.mapUi.OnCurrentRoomChange -= UpdateMap;
         }
+    }
+    void InitializeHUD()
+    {
+        characterUi.levelText.text = character.level.ToString();
     }
     void EnabledMobileHUD(GameManager.TypeDevice typeDevice)
     {
@@ -40,6 +42,8 @@ public class ManagementCharacterHud : MonoBehaviour
         {
             hud.SetActive(isActive);
         }
+        RefreshSkillsSprites(character.characterSkills.currentSkills);
+        RefreshSkillsTimer(character.characterSkills.currentSkills);
     }
     public void ToggleSecondaryAction(bool value)
     {
@@ -277,32 +281,69 @@ public class ManagementCharacterHud : MonoBehaviour
     }
     public void RefreshSkillsSprites(ManagementCharacterSkills.SkillInfo[] skills)
     {
-        for (int i = 0; i < characterUi.skillsUi.skills.Length; i++)
+        if (GameManager.Instance.currentDevice != GameManager.TypeDevice.MOBILE)
         {
-            if (skills[i].skillData != null)
+            for (int i = 0; i < characterUi.skillsUi.skills.Length; i++)
             {
-                characterUi.skillsUi.skills[i].skillSprite.sprite = skills[i].skillData.skillSprite;
-                characterUi.skillsUi.skills[i].skillSprite.gameObject.SetActive(true);
+                if (skills[i].skillData != null)
+                {
+                    characterUi.skillsUi.skills[i].skillSprite.sprite = skills[i].skillData.skillSprite;
+                    characterUi.skillsUi.skills[i].skillSprite.gameObject.SetActive(true);
+                }
+                else
+                {
+                    characterUi.skillsUi.skills[i].skillSprite.gameObject.SetActive(false);
+                }
             }
-            else
+        }
+        else
+        {
+            for (int i = 0; i < characterUi.skillsUi.skillsMobile.Length; i++)
             {
-                characterUi.skillsUi.skills[i].skillSprite.gameObject.SetActive(false);
+                if (skills[i].skillData != null)
+                {
+                    characterUi.skillsUi.skillsMobile[i].skillSprite.sprite = skills[i].skillData.skillSprite;
+                    characterUi.skillsUi.skillsMobile[i].skillSprite.gameObject.SetActive(true);
+                }
+                else
+                {
+                    characterUi.skillsUi.skillsMobile[i].skillSprite.gameObject.SetActive(false);
+                }
             }
         }
     }
     public void RefreshSkillsTimer(ManagementCharacterSkills.SkillInfo[] skills)
     {
-        for (int i = 0; i < skills.Length; i++)
+        if (GameManager.Instance.currentDevice != GameManager.TypeDevice.MOBILE)
         {
-            if (skills[i].skillData != null)
+            for (int i = 0; i < skills.Length; i++)
             {
-                characterUi.skillsUi.skills[i].skillTimer.text = skills[i].cdInfo.currentCD > 0 ? Math.Round(skills[i].cdInfo.currentCD, 2).ToString() : "";
-                characterUi.skillsUi.skills[i].skillFillamount.fillAmount = skills[i].cdInfo.currentCD / skills[i].cdInfo.cd;
+                if (skills[i].skillData != null)
+                {
+                    characterUi.skillsUi.skills[i].skillTimer.text = skills[i].cdInfo.currentCD > 0 ? skills[i].cdInfo.currentCD.ToString("0.0") : "";
+                    characterUi.skillsUi.skills[i].skillFillamount.fillAmount = skills[i].cdInfo.currentCD / skills[i].cdInfo.cd;
+                }
+                else
+                {
+                    characterUi.skillsUi.skills[i].skillTimer.text = "";
+                    characterUi.skillsUi.skills[i].skillFillamount.fillAmount = 0;
+                }
             }
-            else
+        }
+        else
+        {
+            for (int i = 0; i < skills.Length; i++)
             {
-                characterUi.skillsUi.skills[i].skillTimer.text = "";
-                characterUi.skillsUi.skills[i].skillFillamount.fillAmount = 0;
+                if (skills[i].skillData != null)
+                {
+                    characterUi.skillsUi.skillsMobile[i].skillTimer.text = skills[i].cdInfo.currentCD > 0 ? skills[i].cdInfo.currentCD.ToString("0.0") : "";
+                    characterUi.skillsUi.skillsMobile[i].skillFillamount.fillAmount = skills[i].cdInfo.currentCD / skills[i].cdInfo.cd;
+                }
+                else
+                {
+                    characterUi.skillsUi.skills[i].skillTimer.text = "";
+                    characterUi.skillsUi.skills[i].skillFillamount.fillAmount = 0;
+                }
             }
         }
     }
@@ -443,6 +484,7 @@ public class ManagementCharacterHud : MonoBehaviour
     public class SkillsUi
     {
         public SkillsData[] skills = new SkillsData[4];
+        public SkillsData[] skillsMobile = new SkillsData[4];        
         public Color highlightColor;
     }
     [Serializable]

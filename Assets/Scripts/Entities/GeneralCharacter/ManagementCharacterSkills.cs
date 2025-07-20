@@ -9,12 +9,16 @@ public class ManagementCharacterSkills : MonoBehaviour
     [SerializeField] Character character;
     [SerializeField] ManagementCharacterHud managementCharacterHud;
     [SerializeField] ManagementCharacterAnimations managementCharacterAnimations;
-    [SerializeField] SkillInfo[] currentSkills = new SkillInfo[5];
+    public SkillInfo[] currentSkills = new SkillInfo[4];
     public int currentSkillIndex = 0;
     bool usingSkill;
     public void InitializeSkillsEvents()
     {
         if (playerInputs) playerInputs.characterActions.CharacterInputs.UseSkill.performed += OnUseSkill;
+    }
+    void OnDestroy()
+    {
+        if (playerInputs) playerInputs.characterActions.CharacterInputs.UseSkill.performed -= OnUseSkill;
     }
     public void Update()
     {

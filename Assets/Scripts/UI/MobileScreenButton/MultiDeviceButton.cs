@@ -20,7 +20,15 @@ public class MultiDeviceButton : MonoBehaviour
     {
         foreach (var button in buttons)
         {
-            button.Value.SetActive(button.Key == device);
+            if (device == GameManager.TypeDevice.PC && button.Key == GameManager.TypeDevice.GAMEPAD ||
+                device == GameManager.TypeDevice.GAMEPAD && button.Key == GameManager.TypeDevice.PC)
+            {
+                button.Value.SetActive(buttons[GameManager.TypeDevice.PC] == buttons[GameManager.TypeDevice.GAMEPAD]);
+            }
+            else
+            {
+                button.Value.SetActive(button.Key == device);
+            }
         }
     }
 }

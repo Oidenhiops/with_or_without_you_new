@@ -127,9 +127,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 16
-        y: 257
-        width: 256
-        height: 20
+        y: 252
+        width: 355
+        height: 24
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -148,7 +148,7 @@ TextureImporter:
       name: UiBars_1
       rect:
         serializedVersion: 2
-        x: 320
+        x: 422
         y: 209
         width: 66
         height: 66
@@ -170,9 +170,9 @@ TextureImporter:
       name: UiBars_2
       rect:
         serializedVersion: 2
-        x: 400
+        x: 493
         y: 209
-        width: 148
+        width: 147
         height: 147
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -194,8 +194,8 @@ TextureImporter:
         serializedVersion: 2
         x: 16
         y: 209
-        width: 270
-        height: 34
+        width: 369
+        height: 38
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -214,10 +214,10 @@ TextureImporter:
       name: UiBars_4
       rect:
         serializedVersion: 2
-        x: 288
+        x: 394
         y: 209
-        width: 23
-        height: 23
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -238,7 +238,7 @@ TextureImporter:
         serializedVersion: 2
         x: 16
         y: 3
-        width: 480
+        width: 582
         height: 201
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -258,7 +258,7 @@ TextureImporter:
       name: UiBars_6
       rect:
         serializedVersion: 2
-        x: 512
+        x: 608
         y: 3
         width: 11
         height: 152
@@ -280,7 +280,7 @@ TextureImporter:
       name: UiBars_7
       rect:
         serializedVersion: 2
-        x: 528
+        x: 624
         y: 3
         width: 7
         height: 148
@@ -302,12 +302,12 @@ TextureImporter:
       name: UiBars_8
       rect:
         serializedVersion: 2
-        x: 276
-        y: 279
-        width: 121
+        x: 359
+        y: 281
+        width: 120
         height: 121
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
