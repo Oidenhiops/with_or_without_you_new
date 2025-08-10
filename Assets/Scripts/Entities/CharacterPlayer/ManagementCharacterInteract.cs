@@ -4,12 +4,13 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 using System.Threading.Tasks;
+using System.Linq;
 
 public class ManagementCharacterInteract : MonoBehaviour
 {
     public PlayerInputs playerInputs;
-    RaycastHit[] hitBuffer = new RaycastHit[20];
-    List<GameObject> interactables = new List<GameObject>(20);
+    public List<GameObject> bufferInteracts = new List<GameObject>();
+    public RaycastHit[] bufferHits = new RaycastHit[0];
     public Character character;
     public GameObject[] _currentInteracts;
     public event Action<GameObject[]> OnInteractsChanged;
@@ -18,7 +19,7 @@ public class ManagementCharacterInteract : MonoBehaviour
         get => _currentInteracts;
         set
         {
-            if (_currentInteracts.Length != value.Length)
+            if (!_currentInteracts.SequenceEqual(value))
             {
                 _currentInteracts = value;
                 OnInteractsChanged?.Invoke(_currentInteracts);
@@ -81,6 +82,14 @@ public class ManagementCharacterInteract : MonoBehaviour
         await character.characterHud.RefreshInteracts(objects);
         if (objects.Length > 0)
         {
+            if (currentInteractIndex > currentInteracts.Length - 1)
+            {
+                currentInteract = objects[currentInteracts.Length - 1];
+            }
+            else
+            {
+                currentInteract = objects[currentInteractIndex];
+            }
             character.characterHud.characterUi.interactUi.bannerInteract.SetActive(true);
         }
         else
@@ -98,32 +107,29 @@ public class ManagementCharacterInteract : MonoBehaviour
     }
     public void CheckInteracts()
     {
-        int count = Physics.BoxCastNonAlloc(
+        bufferHits = Physics.BoxCastAll(
             transform.position + offset,
             size / 2,
             Vector3.up,
-            hitBuffer,
             Quaternion.identity,
             0,
             layerMask
         );
 
-        interactables.Clear();
+        bufferInteracts.Clear();
 
         if (!character.statusEffect.StatusEffectExist(StatusEffectSO.TypeStatusEffect.Disarm))
         {
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < bufferHits.Length; i++)
             {
-                var hit = hitBuffer[i];
-                var interact = hit.collider.GetComponent<ManagementInteract>();
-                if (interact != null && interact.canInteract)
+                if (bufferHits[i].collider.gameObject.TryGetComponent<ManagementInteract>(out ManagementInteract managementInteract) && managementInteract.canInteract)
                 {
-                    interactables.Add(hit.collider.gameObject);
+                    bufferInteracts.Add(bufferHits[i].collider.gameObject);
                 }
             }
         }
 
-        currentInteracts = interactables.ToArray();
+        currentInteracts = bufferInteracts.ToArray();
     }
     void OnDrawGizmos()
     {

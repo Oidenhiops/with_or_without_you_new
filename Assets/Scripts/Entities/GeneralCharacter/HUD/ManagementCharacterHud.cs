@@ -19,7 +19,6 @@ public class ManagementCharacterHud : MonoBehaviour
             GameManager.Instance.OnDeviceChanged += EnabledMobileHUD;
             characterUi.mapUi.OnCurrentRoomChange += UpdateMap;
             EnabledMobileHUD(GameManager.Instance.currentDevice);
-            UpdateMap(characterUi.mapUi.currentRoom);
             InitializeHUD();
         }
     }

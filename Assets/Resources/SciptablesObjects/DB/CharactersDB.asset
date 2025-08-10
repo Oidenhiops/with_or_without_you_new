@@ -23,24 +23,24 @@ MonoBehaviour:
       Value:
         initialDataSO: {fileID: 11400000, guid: 34c2ad1c338389e40a9ca8d4b9c15af9,
           type: 2}
-        isUnlock: 0
+        isUnlock: 1
     - Key: 2
       Value:
         initialDataSO: {fileID: 11400000, guid: 69b787e98e827bf4cb8749046079af01,
           type: 2}
-        isUnlock: 0
+        isUnlock: 1
     - Key: 3
       Value:
         initialDataSO: {fileID: 11400000, guid: fbcd7d4f710bf254a81b8d8d0fe93deb,
           type: 2}
-        isUnlock: 0
+        isUnlock: 1
     - Key: 4
       Value:
         initialDataSO: {fileID: 11400000, guid: 5bf8a6aa8a1a7fa4ea1fb4496c143f63,
           type: 2}
-        isUnlock: 0
+        isUnlock: 1
     - Key: 5
       Value:
         initialDataSO: {fileID: 11400000, guid: a81b68bccdb2c0f48a76a3302331d7f3,
           type: 2}
-        isUnlock: 0
+        isUnlock: 1

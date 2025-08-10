@@ -52,9 +52,7 @@ public class EnemyPathFollower : CharacterMovement
             character.characterModelDirection.movementCharacter = Vector2.zero;
         }
     }
-    public override void Move() { }
-
-    void FixedUpdate()
+    public override void Move()
     {
         if (targetCharacter && !targetCharacter.isActive)
         {

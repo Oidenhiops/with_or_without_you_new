@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using AYellowpaper.SerializedCollections;
 using UnityEngine;
 
 public class ChunksGenerator : MonoBehaviour
@@ -8,8 +9,9 @@ public class ChunksGenerator : MonoBehaviour
     public int chunkSize = 17;
     public int chunksX = 5;
     public int chunksZ = 5;
-    public List<PositionChunk> positionsChunks = new List<PositionChunk>();
+    public SerializedDictionary<Vector3Int,PositionChunk> positionsChunks = new SerializedDictionary<Vector3Int, PositionChunk>();
     public GameObject[] characters;
+    GameObject chunkPrefab;
     private void Start()
     {
         StartCoroutine(GenerateChunks());
@@ -18,38 +20,33 @@ public class ChunksGenerator : MonoBehaviour
     {
         #region CreateGrid
         positionsChunks = GenerateMap(chunksX, chunksZ, out Vector3Int initalRoomPos, out Vector3Int finalRoomPos);
-        GameObject chunkPrefab = Resources.Load<GameObject>("Prefabs/Map/Chunk");
-        float offsetX = chunksX * chunkSize / 2f - (chunkSize / 2f);
-        float offsetZ = chunksZ * chunkSize / 2f - (chunkSize / 2f);
+        chunkPrefab = Resources.Load<GameObject>("Prefabs/Map/Chunk");
+        Vector2 offset = new Vector2(chunksX * chunkSize / 2f - (chunkSize / 2f), chunksZ * chunkSize / 2f - (chunkSize / 2f));
         for (int c = 0; c < positionsChunks.Count; c++)
         {
-            Vector3Int chunkCoord = positionsChunks[c].positionChunk;
-            Vector3 chunkPosition = new Vector3(chunkCoord.x * chunkSize - offsetX, 0, chunkCoord.z * chunkSize - offsetZ);
-
-            GameObject chunkGO = Instantiate(chunkPrefab, chunkPosition, Quaternion.identity);
-            chunkGO.name = $"Chunk_{chunkCoord.x}_{chunkCoord.z}";
-            chunkGO.transform.parent = transform;
-
-            Chunk chunkComponent = chunkGO.GetComponent<Chunk>();
-            BoxCollider collider = chunkGO.GetComponent<BoxCollider>();
-
-            chunkComponent.chunkSize = chunkSize;
-            collider.size = chunkSize * Vector3.one;
-
-            positionsChunks[c].chunkInstance = chunkGO;
-            positionsChunks[c].managementChunk = chunkComponent;
-            chunkComponent.chunkId = new Vector2(chunkCoord.x, chunkCoord.z);
+            InstanceChunk(offset, positionsChunks.ElementAt(c).Key);
         }
+
+        positionsChunks[initalRoomPos].managementChunk.typeChunk = Chunk.TypeChunk.Initial;
+        positionsChunks[finalRoomPos].managementChunk.typeChunk = Chunk.TypeChunk.Final;
+
+        InstanceOtherRooms(Chunk.TypeChunk.RoomKey, out Vector3Int positionRoomKey);
+        Vector3Int positionRoomKeyOut = positionRoomKey + Vector3Int.up * 2;
+        positionsChunks.Add(positionRoomKeyOut, new PositionChunk());
+        InstanceChunk(offset, positionRoomKeyOut);
+        positionsChunks[positionRoomKeyOut].managementChunk.typeChunk = Chunk.TypeChunk.RoomKeyOut;
+        // InstanceChunkWhitPortal(positionRoomKey, Chunk.TypeChunk.RoomKeyOut);
+        // InstanceOtherRooms(offset, initalRoomPos, finalRoomPos, Chunk.TypeChunk.Special);
+
+        // SetOtherRoom(initalRoomPos, finalRoomPos, Chunk.TypeChunk.Traps);
+        // SetOtherRoom(initalRoomPos, finalRoomPos, Chunk.TypeChunk.Store);
         GameManager.Instance.openCloseScene.AdjustLoading(10);
-        yield return null;
         #endregion
+        yield return null;
         #region GetRoom
-        for (int i = 0; i < positionsChunks.Count; i++)
+        foreach (var potitionChunk in positionsChunks)
         {
-            PositionChunk chunkData = positionsChunks[i];
-            bool isInitial = chunkData.positionChunk == initalRoomPos;
-            bool isFinal = chunkData.positionChunk == finalRoomPos;
-            chunkData.room = chunkData.managementChunk.GetRandomRoom(isInitial, isFinal);
+            potitionChunk.Value.room = potitionChunk.Value.managementChunk.GetRandomRoom();
         }
         GameManager.Instance.openCloseScene.AdjustLoading(20);
         yield return null;
@@ -58,11 +55,11 @@ public class ChunksGenerator : MonoBehaviour
         Dictionary<string, RoomDrawer> instanciedRooms = new Dictionary<string, RoomDrawer>();
         for (int i = 0; i < positionsChunks.Count; i++)
         {
-            if (!instanciedRooms.ContainsKey(positionsChunks[i].room.name))
+            if (!instanciedRooms.ContainsKey(positionsChunks.ElementAt(i).Value.room.name))
             {
-                RoomDrawer room = Instantiate(positionsChunks[i].room).GetComponent<RoomDrawer>();
+                RoomDrawer room = Instantiate(positionsChunks.ElementAt(i).Value.room).GetComponent<RoomDrawer>();
                 room.size = chunkSize;
-                instanciedRooms.Add(positionsChunks[i].room.name, room);
+                instanciedRooms.Add(positionsChunks.ElementAt(i).Value.room.name, room);
             }
         }
         GameManager.Instance.openCloseScene.AdjustLoading(30);
@@ -80,33 +77,47 @@ public class ChunksGenerator : MonoBehaviour
         yield return null;
         #endregion
         #region DuplicateRooms
-        foreach (PositionChunk positionChunks in positionsChunks)
+        foreach (var positionChunks in positionsChunks)
         {
-            if (instanciedRooms.TryGetValue(positionChunks.room.name, out RoomDrawer roomDrawer))
+            if (instanciedRooms.TryGetValue(positionChunks.Value.room.name, out RoomDrawer roomDrawer))
             {
-                positionChunks.managementChunk.drawerMap = Instantiate
+                positionChunks.Value.managementChunk.drawerMap = Instantiate
                 (
                     roomDrawer.gameObject,
                     transform.position,
                     Quaternion.identity,
-                    positionChunks.managementChunk.transform
+                    positionChunks.Value.managementChunk.transform
                 ).GetComponent<RoomDrawer>();
-                positionChunks.managementChunk.drawerMap.gameObject.transform.localPosition = Vector3.zero;
+                positionChunks.Value.managementChunk.drawerMap.gameObject.transform.localPosition = Vector3.zero;
             }
         }
 
-        foreach (PositionChunk positionChunks in positionsChunks)
+        #region SetPortals
+        positionsChunks[positionRoomKey].managementChunk.drawerMap.portal.otherPortal = positionsChunks[positionRoomKeyOut].managementChunk.drawerMap.portal;
+        positionsChunks[positionRoomKeyOut].managementChunk.drawerMap.portal.otherPortal = positionsChunks[positionRoomKey].managementChunk.drawerMap.portal;
+        #endregion
+
+        foreach (var positionChunks in positionsChunks)
         {
-            positionChunks.managementChunk.drawerMap.chunkPos = positionChunks.managementChunk.chunkId;
+            positionChunks.Value.managementChunk.drawerMap.chunkPos = positionChunks.Value.managementChunk.chunkId;
         }
         
         GameManager.Instance.openCloseScene.AdjustLoading(50);
         yield return new WaitForSeconds(0.5f);
+
+        foreach (var room in instanciedRooms.Values)
+        {
+            Destroy(room.gameObject);
+            yield return null;
+        }
+        instanciedRooms.Clear();
+
+        yield return new WaitForSeconds(0.5f);
         #endregion
         #region ActiveRooms
-        foreach (PositionChunk positionChunk in positionsChunks)
+        foreach (var positionChunk in positionsChunks)
         {
-            positionChunk.managementChunk.drawerMap.gameObject.SetActive(true);
+            positionChunk.Value.managementChunk.drawerMap.gameObject.SetActive(true);
         }
         GameManager.Instance.openCloseScene.AdjustLoading(60);
         yield return null;
@@ -117,21 +128,21 @@ public class ChunksGenerator : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         #endregion
         #region DrawRoom
-        foreach (PositionChunk positionChunk in positionsChunks)
+        foreach (var positionChunk in positionsChunks)
         {
-            positionChunk.managementChunk.drawerMap.DrawMap();
+            positionChunk.Value.managementChunk.drawerMap.DrawMap();
         }
         GameManager.Instance.openCloseScene.AdjustLoading(80);
         yield return new WaitForSeconds(0.5f);
         #endregion
         foreach (var chunk in positionsChunks)
         {
-            chunk.managementChunk.CombineBlocks();
+            chunk.Value.managementChunk.CombineBlocks();
         }
         GameManager.Instance.openCloseScene.AdjustLoading(90);
         yield return null;
         characters = GameObject.FindGameObjectsWithTag("Player");
-        Vector3 spawnPosition = FindSpawnPosition(initalRoomPos);
+        Vector3 spawnPosition = positionsChunks[initalRoomPos].chunkInstance.transform.position;
         foreach (var character in characters)
         {
             character.transform.position = new Vector3(spawnPosition.x, 1, spawnPosition.z);
@@ -139,39 +150,66 @@ public class ChunksGenerator : MonoBehaviour
             component.characterHud.characterUi.mapUi.sizeMap = new Vector2(chunksX, chunksZ);
             component.characterHud.CreateMap();
             component.characterHud.characterUi.mapUi.currentRoom = new Vector2(initalRoomPos.x, initalRoomPos.z);
+            component.characterHud.UpdateMap(component.characterHud.characterUi.mapUi.currentRoom);
         }
         GameManager.Instance.openCloseScene.AdjustLoading(100);
     }
-    public Vector3 FindSpawnPosition(Vector3 initalRoomPos)
+    public void SetOtherRoom(Vector3Int initialRoomPos, Vector3Int finalRoomPos, Chunk.TypeChunk typeChunk)
     {
-        foreach (PositionChunk chunk in positionsChunks)
+        while (true)
         {
-            if (chunk.positionChunk == initalRoomPos)
+            Vector3Int selected = new Vector3Int(Random.Range(0, chunksX), 0, Random.Range(0, chunksZ));
+            if (positionsChunks.ContainsKey(selected) &&
+                positionsChunks[selected].managementChunk.typeChunk != Chunk.TypeChunk.Initial &&
+                positionsChunks[selected].managementChunk.typeChunk != Chunk.TypeChunk.Final &&
+                positionsChunks[selected].managementChunk.typeChunk != Chunk.TypeChunk.RoomKey &&
+                positionsChunks[selected].managementChunk.typeChunk != Chunk.TypeChunk.Special &&
+                positionsChunks[selected].managementChunk.typeChunk != Chunk.TypeChunk.Traps &&
+                positionsChunks[selected].managementChunk.typeChunk != Chunk.TypeChunk.Store)
             {
-                return chunk.chunkInstance.transform.position;
+                positionsChunks[selected].managementChunk.typeChunk = typeChunk;
+                break;
             }
         }
-        return Vector3.zero;
+    }
+    public void InstanceOtherRooms(Chunk.TypeChunk typeChunk, out Vector3Int position)
+    {
+        while (true)
+        {
+            Vector3Int selected = new Vector3Int(Random.Range(0, chunksX), 0, Random.Range(0, chunksZ));
+            if (positionsChunks.ContainsKey(selected) &&
+                positionsChunks[selected].managementChunk.typeChunk != Chunk.TypeChunk.Initial &&
+                positionsChunks[selected].managementChunk.typeChunk != Chunk.TypeChunk.Final &&
+                positionsChunks[selected].managementChunk.typeChunk != Chunk.TypeChunk.RoomKey &&
+                positionsChunks[selected].managementChunk.typeChunk != Chunk.TypeChunk.Special &&
+                positionsChunks[selected].managementChunk.typeChunk != Chunk.TypeChunk.Traps &&
+                positionsChunks[selected].managementChunk.typeChunk != Chunk.TypeChunk.Store)
+            {
+                position = selected;
+                positionsChunks[selected].managementChunk.typeChunk = typeChunk;
+                break;
+            }
+        }
     }
     public void ActiveBridges()
     {
         for (int i = 0; i < positionsChunks.Count; i++)
         {
-            if (ValidateBridge(positionsChunks[i].positionChunk + Vector3Int.forward))
+            if (ValidateBridge(positionsChunks.ElementAt(i).Key + Vector3Int.forward))
             {
-                ActiveBridges(positionsChunks[i].managementChunk, RoomDrawer.DirectionBridges.Forward);
+                ActiveBridges(positionsChunks.ElementAt(i).Value.managementChunk, RoomDrawer.DirectionBridges.Forward);
             }
-            if (ValidateBridge(positionsChunks[i].positionChunk + Vector3Int.back))
+            if (ValidateBridge(positionsChunks.ElementAt(i).Key + Vector3Int.back))
             {
-                ActiveBridges(positionsChunks[i].managementChunk, RoomDrawer.DirectionBridges.Back);
+                ActiveBridges(positionsChunks.ElementAt(i).Value.managementChunk, RoomDrawer.DirectionBridges.Back);
             }
-            if (ValidateBridge(positionsChunks[i].positionChunk + Vector3Int.left))
+            if (ValidateBridge(positionsChunks.ElementAt(i).Key + Vector3Int.left))
             {
-                ActiveBridges(positionsChunks[i].managementChunk, RoomDrawer.DirectionBridges.Left);
+                ActiveBridges(positionsChunks.ElementAt(i).Value.managementChunk, RoomDrawer.DirectionBridges.Left);
             }
-            if (ValidateBridge(positionsChunks[i].positionChunk + Vector3Int.right))
+            if (ValidateBridge(positionsChunks.ElementAt(i).Key + Vector3Int.right))
             {
-                ActiveBridges(positionsChunks[i].managementChunk, RoomDrawer.DirectionBridges.Rigth);
+                ActiveBridges(positionsChunks.ElementAt(i).Value.managementChunk, RoomDrawer.DirectionBridges.Rigth);
             }
         }
     }
@@ -184,7 +222,7 @@ public class ChunksGenerator : MonoBehaviour
         bool contains = false;
         foreach (var chunk in positionsChunks)
         {
-            if (chunk.positionChunk == pos)
+            if (chunk.Key == pos)
             {
                 contains = true;
                 break;
@@ -192,7 +230,27 @@ public class ChunksGenerator : MonoBehaviour
         }
         return contains;
     }
-    List<PositionChunk> GenerateMap(int ancho, int alto, out Vector3Int initalRoomPos, out Vector3Int finalRoomPos)
+
+    public void InstanceChunk(Vector2 offset, Vector3Int position)
+    {
+        Vector3 chunkPosition = new Vector3(position.x * chunkSize - offset.x, position.y * chunkSize, position.z * chunkSize - offset.y);
+
+        GameObject chunkGO = Instantiate(chunkPrefab, chunkPosition, Quaternion.identity);
+        chunkGO.name = $"Chunk_{position.x}_{position.z}";
+        chunkGO.transform.parent = transform;
+
+        Chunk chunkComponent = chunkGO.GetComponent<Chunk>();
+
+        BoxCollider collider = chunkGO.GetComponent<BoxCollider>();
+
+        chunkComponent.chunkSize = chunkSize;
+        collider.size = chunkSize * Vector3.one;
+
+        positionsChunks[position].chunkInstance = chunkGO;
+        positionsChunks[position].managementChunk = chunkComponent;
+        chunkComponent.chunkId = new Vector2(position.x, position.z);
+    }
+    SerializedDictionary<Vector3Int, PositionChunk> GenerateMap(int ancho, int alto, out Vector3Int initalRoomPos, out Vector3Int finalRoomPos)
     {
         Vector3Int initPos = new Vector3Int(Random.Range(0, ancho), 0, 0);
         initalRoomPos = initPos;
@@ -203,10 +261,11 @@ public class ChunksGenerator : MonoBehaviour
         }
         finalRoomPos = finalPos;
 
-        List<PositionChunk> camino = new List<PositionChunk>
+        SerializedDictionary<Vector3Int, PositionChunk> camino = new SerializedDictionary<Vector3Int, PositionChunk>
         {
-            new PositionChunk { positionChunk = initPos }
+            { initPos, new PositionChunk() }
         };
+
         HashSet<Vector3Int> visitados = new HashSet<Vector3Int> { initPos };
         Vector3Int actual = initPos;
 
@@ -234,14 +293,14 @@ public class ChunksGenerator : MonoBehaviour
             actual = movimientos[0];
 
             visitados.Add(actual);
-            camino.Add(new PositionChunk { positionChunk = actual });
+            camino.Add(actual, new PositionChunk());
         }
 
         int cantidadRamas = Random.Range(3, 6);
         for (int i = 0; i < cantidadRamas; i++)
         {
             int indiceCamino = Random.Range(1, camino.Count - 1);
-            Vector3Int puntoRama = camino[indiceCamino].positionChunk;
+            Vector3Int puntoRama = camino.ElementAt(indiceCamino).Key;
             int longitudRama = Random.Range(2, 5);
 
             Vector3Int ramaActual = puntoRama;
@@ -264,7 +323,7 @@ public class ChunksGenerator : MonoBehaviour
 
                 ramaActual = movimientosRama[0];
                 visitados.Add(ramaActual);
-                camino.Add(new PositionChunk { positionChunk = ramaActual });
+                camino.Add(ramaActual, new PositionChunk());
             }
         }
         return camino;
@@ -277,7 +336,6 @@ public class ChunksGenerator : MonoBehaviour
     }
     [System.Serializable] public class PositionChunk
     {
-        public Vector3Int positionChunk = new Vector3Int();
         public Chunk managementChunk;
         public GameObject room;
         public GameObject chunkInstance;

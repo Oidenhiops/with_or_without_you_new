@@ -8,6 +8,7 @@ public class Chunk : MonoBehaviour
     public int chunkSize;
     public Vector2 chunkId;
     public RoomDrawer drawerMap;
+    public TypeChunk typeChunk;
     public bool autoDrawChunk = false;
     public bool autoCombineChunk = false;
     public bool dontDisableMesh = false;
@@ -24,10 +25,9 @@ public class Chunk : MonoBehaviour
     {
         StartCoroutine(CombineMeshes());
     }
-    public GameObject GetRandomRoom(bool isInitialRoom, bool isFinalRoom)
+    public GameObject GetRandomRoom()
     {
-        string path = isInitialRoom || isFinalRoom ? isInitialRoom ? "Prefabs/Map/AncientWall/Rooms/Initial" : "Prefabs/Map/AncientWall/Rooms/Final" : "Prefabs/Map/AncientWall/Rooms/General";
-        GameObject[] rooms = Resources.LoadAll<GameObject>(path);
+        GameObject[] rooms = Resources.LoadAll<GameObject>($"Prefabs/Map/AncientWall/Rooms/{typeChunk}");
         GameObject room = rooms[Random.Range(0, rooms.Length)];
         return room;
     }
@@ -124,9 +124,31 @@ public class Chunk : MonoBehaviour
             }
         }
     }
+    public Color GetColorByType()
+    {
+        if (typeChunk == TypeChunk.Initial) return Color.green;
+        else if (typeChunk == TypeChunk.Final) return Color.red;
+        else if (typeChunk == TypeChunk.RoomKey) return Color.yellow;
+        else if (typeChunk == TypeChunk.Special) return Color.cyan;
+        else if (typeChunk == TypeChunk.Traps) return Color.grey;
+        else if (typeChunk == TypeChunk.Store) return Color.blue;
+        else if (typeChunk == TypeChunk.RoomKeyOut) return Color.yellow + Color.red;
+        return Color.black;
+    }
+    public enum TypeChunk
+    {
+        General = 0,
+        Initial = 1,
+        Final = 2,
+        RoomKey = 3,
+        Special = 4,
+        Traps = 5,
+        Store = 6,
+        RoomKeyOut = 7,
+    }
     public void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(transform.position, chunkSize * Vector3.one);
+        Gizmos.color = GetColorByType();
+        Gizmos.DrawWireCube(transform.position, chunkSize * (Vector3.one * 0.95f));
     }
 }

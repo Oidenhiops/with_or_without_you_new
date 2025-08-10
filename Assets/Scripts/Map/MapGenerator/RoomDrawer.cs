@@ -8,15 +8,13 @@ using UnityEngine;
 public class RoomDrawer : MonoBehaviour
 {
     [SerializeField] NavMeshSurface navMeshSurface;
-    public GameObject blocksContainer;
     public List<MapBlock> mapBlocks = new List<MapBlock>();
     public List<MapDecoration> decorationsBlocks = new List<MapDecoration>();
     public SerializedDictionary<DirectionBridges, BridgesInfo> bridges;
-    public MapBlock[] mapBlocksForSpawn;
-    public Vector3[] spawnPos;
     public bool autoInit;
     public int size;
     public Vector2 chunkPos;
+    public Portal portal;
     void Start()
     {
         if (autoInit) DrawMap();
@@ -86,16 +84,6 @@ public class RoomDrawer : MonoBehaviour
     void UpdateNavMesh()
     {
         //navMeshSurface.UpdateNavMesh(navMeshSurface.navMeshData);
-    }
-    [NaughtyAttributes.Button]
-    public void GetSpawnPos()
-    {
-        List<Vector3> newSpawnPos = new List<Vector3>();
-        foreach (MapBlock mapBlock in mapBlocksForSpawn)
-        {
-            newSpawnPos.Add(mapBlock.transform.position + Vector3.up);
-        }
-        spawnPos = newSpawnPos.ToArray();
     }
     void OnTriggerEnter(Collider other)
     {

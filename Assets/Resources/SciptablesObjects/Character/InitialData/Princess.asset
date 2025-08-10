@@ -20,7 +20,7 @@ MonoBehaviour:
     - Key: 1
       Value:
         typeStatistics: 1
-        baseValue: 1100
+        baseValue: 420
         buffStatistic:
           _serializedList: []
         objectValue: 0
